@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --card-bg-color: 12,12,12;
+  --card-bg-hover-color: 18,18,18;
+  --card-border-color: 155,155,155,0.3;
+  --card-border-hover-color: 155,155,155,0.4;
+  --border-focus-color: 155,155,155,0.6;
+  --text-secondary-color: 155,155,155;
+  --text-secondary-low-color: 120,120,120;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+         -webkit-appearance: none;
+      }
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  color: white;
+  background: rgb(37, 4, 52);
+  background: linear-gradient(
+    315deg,
+    rgb(27, 2, 35) 0%,
+    rgba(21, 10, 26, 1) 18%,
+    rgba(10, 10, 10, 1) 50%,
+    rgba(6, 7, 27, 1) 85%,
+    rgb(2, 5, 50) 100%
+  );
+  word-break: break-all;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.pageLoader{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: white;
+  border-radius: 8px;
+  width: 0px;
+  height: 2px;
+  animation: pageLoaderAnime 1.5s infinite forwards;
+  transition: all 0.5s;
+}
+@keyframes pageLoaderAnime {
+  0%{
+    width: 0px;
+    transform: translateX(-100px);
+  }
+  10%{
+    width: 100px;
+    transform: translateX(0px);
+  }
+  100%{
+    width: 100px;
+    transform: translateX(700px);
+  }
+}
+

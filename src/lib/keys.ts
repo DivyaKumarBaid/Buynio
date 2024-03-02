@@ -1,0 +1,1 @@
+export const refreshTokenKey = "refresk_token_call"
