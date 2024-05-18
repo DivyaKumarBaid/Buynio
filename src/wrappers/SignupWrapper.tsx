@@ -2,8 +2,8 @@
 import React, { ReactNode } from "react";
 
 type UserCredType = {
-  email: String;
-  password: String;
+  email: string;
+  password: string;
 }
 
 export type PasswordProviderType = {

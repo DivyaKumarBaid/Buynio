@@ -2,22 +2,24 @@
 //custom hook that handles the form
 import { ChangeEvent, useState } from 'react';
 
-const useForm = (initialValues: any) => { 
+const useForm = (initialValues: Record<string, any>) : [values : Record<string, any>, handleChange: (event: ChangeEvent<HTMLInputElement>) => void] => {
     //storing initial values of the form
-    const [values, setValues] = useState(initialValues);
+    const [values, setValues] = useState<Record<string, any>>(initialValues);
 
     //function that handles the change in the form
 
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
 
         //destruct the event.target object
-        const { name, value, type, checked } = event.target
+        // event.target.files?.[0]
+        const { name, value, type, checked, files} = event.target
+
         //checked and unchecked for check box
 
-        setValues((prevFormData : any) => {
+        setValues((prevFormData : Record<string, any>) => {
             return {
                 ...prevFormData,
-                [name]: type === "checkbox" ? checked : value
+                [name]: type === "checkbox" ? checked : type==="file" ? files?.[0] : value
             }
         })
     }

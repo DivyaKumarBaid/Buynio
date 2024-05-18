@@ -1,0 +1,18 @@
+/* navbar */
+
+.navLinks:hover .navLinksBottomBorder {
+  animation: borderBottomAnimation 300ms 1 forwards;
+}
+
+@keyframes borderBottomAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+/* navbar */

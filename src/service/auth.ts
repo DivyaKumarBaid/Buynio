@@ -11,7 +11,7 @@ import { Session } from "next-auth";
 import { redirect } from "next/navigation";
 
 export const fetchRefreshToken = async (session: Session | null) => {
-  if (session && session.user && session.user?.refresh_token) {
+  if (session?.user?.refresh_token) {
     const config = {
       headers: {
         Authorization: `Bearer ${session.user.refresh_token}`,
@@ -21,9 +21,23 @@ export const fetchRefreshToken = async (session: Session | null) => {
       "auth/refresh",
       config
     );
-    if (payload.status !== 201 && payload.status !== 200) {
-      redirect("/api/auth/signin");
-    }
+    return payload.data;
+  } else {
+    redirect("/api/auth/signin");
+  }
+};
+
+export const getUser = async (session: Session | null) => {
+  if (session && session.user && session.user?.access_token) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${session.user.access_token}`,
+      },
+    };
+    const payload: AxiosResponse<User, any> = await api.get(
+      "user",
+      config
+    );
     return payload.data;
   } else {
     redirect("/api/auth/signin");

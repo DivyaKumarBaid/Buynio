@@ -1,0 +1,1 @@
+export const passwordStrengthError = "Codeword must contain atleast eight characters, including at least one special character and one number."

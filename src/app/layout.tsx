@@ -1,7 +1,8 @@
+import GlobalWrapper from "@/wrappers/GlobalWrapper";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
-import GlobalWrapper from "@/wrappers/GlobalWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,15 @@ export default function RootLayout({
   return (
     <GlobalWrapper>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+            <Toaster
+              position="bottom-center"
+              toastOptions={{ duration: 5000 }}
+              />
+            <div className="w-full min-h-[100vh]">
+              {children}
+            </div>
+        </body>
       </html>
     </GlobalWrapper>
   );

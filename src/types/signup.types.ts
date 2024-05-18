@@ -1,24 +1,25 @@
 import { User } from "./global.types";
 
 export type CredentialForm = {
-  username: String;
-  email: String;
-  password: String;
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 };
 export type CreateUserResp = {
-  id: Number;
-  createdAt: String;
-  updatedAt: String;
-  email: String;
-  username: String;
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  email: string;
+  username: string;
 };
 
 export type VerifyOTPResp = {
-  message: String;
+  message: string;
   user: User;
 };
 
 export type VerifyOTPPayload = {
-  id: String;
-  otp: String;
+  id: string;
+  otp: string;
 };

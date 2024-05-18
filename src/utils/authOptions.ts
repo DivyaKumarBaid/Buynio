@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         // Replace with your actual username/email fetching logic
-        const user = await api.post("/auth/local/login", {
+        const user = await api.post("auth/local/login", {
           email:credentials?.email,
           password:credentials?.password
         });
@@ -36,6 +36,7 @@ export const authOptions: NextAuthOptions = {
         if (user?.status==201) {
           return user.data;
         }
+
         // Return the user object if successful
         // Handle non-existent user
         throw new Error('No user found');
@@ -51,10 +52,12 @@ export const authOptions: NextAuthOptions = {
       if (!profile?.email) {
         throw new Error("No profile");
       }
+
       // check for user and if it doesnt exit then create - call backend
-      const user: AxiosResponse<User> = await api.post("/auth/google/login", {
+      const user: AxiosResponse<User> = await api.post("auth/google/login", {
         token: account?.id_token,
       });
+
       // check if the response from server is ok
       if (account && user.status === 201) {
         account.user = user.data;
@@ -77,6 +80,6 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages:{
-    signIn:'/login'
+    signIn:'/home/login'
   }
 };

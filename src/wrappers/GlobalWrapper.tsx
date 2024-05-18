@@ -1,14 +1,23 @@
-"use client"
-import Auth from "@/lib/Auth";
-import { CustomQueryClientProvider } from "@/lib/CustomQueryClientProvider";
+"use client";
+import Auth from "@/wrappers/Auth";
+import { CustomQueryClientProvider } from "@/wrappers/CustomQueryClientProvider";
 import { SessionProvider } from "next-auth/react";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
+import StyledComponentsRegistry from "./StyledCompManager";
+import UserWrapper from "./UserWrapper";
+
+// import StyledComponentsRegistry from "./StyledCompManager";
+// import UserWrapper from "./UserWrapper";
 
 const GlobalWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <CustomQueryClientProvider>
       <SessionProvider>
-        <Auth>{children}</Auth>
+        <Auth>
+          <UserWrapper>
+            <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          </UserWrapper>
+        </Auth>
       </SessionProvider>
     </CustomQueryClientProvider>
   );

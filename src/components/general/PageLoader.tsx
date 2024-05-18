@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PageLoader = ({isLoading}:{isLoading:Boolean}) => {
+const PageLoader = ({isLoading}:{isLoading:boolean}) => {
   return (
     isLoading ? <div className='pageLoader'/> : null
   )
