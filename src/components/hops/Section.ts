@@ -1,7 +1,7 @@
 import {
   GlobalInputIncomingType,
   InputTypeEnum,
-} from "./formComponents/types/input.types";
+} from "../formComponents/types/input.types";
 
 export type singleSectionType = {
   heading: string;

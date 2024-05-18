@@ -1,14 +1,14 @@
 "use client";
 import React, { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import { singleSectionType } from "../Section";
-import Checkbox from "../formComponents/components/Checkbox";
-import ImapeUploader from "../formComponents/components/ImapeUploader";
-import NumberInput from "../formComponents/components/NumberInput";
-import TextAreaInput from "../formComponents/components/TextAreaInput";
-import TextInput from "../formComponents/components/TextInput";
+import Checkbox from "../../formComponents/components/Checkbox";
+import ImapeUploader from "../../formComponents/components/ImapeUploader";
+import NumberInput from "../../formComponents/components/NumberInput";
+import TextAreaInput from "../../formComponents/components/TextAreaInput";
+import TextInput from "../../formComponents/components/TextInput";
 import {
   InputTypeEnum
-} from "../formComponents/types/input.types";
+} from "../../formComponents/types/input.types";
 
 type BasicInfoType = {
   value: Record<string, any>;

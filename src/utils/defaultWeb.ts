@@ -10,7 +10,7 @@ export const web = {
         "linkFontColor" : "#eee",
         "linkFontStyle" : "poppins",
         "headerFontStyle" : "poppins",
-        "type": "NAV_V3",
+        "type": "NAV_V2",
         "links": [{"link": "Instagram", "redirection": "https://insta"}],
         "collapsable" : true,
         "logo": "https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png",
@@ -32,7 +32,7 @@ export const web = {
         {
             "type": "CAROUSEL",
             "backgroud": "#282828",
-            "subType": "CAROUSEL_V1",
+            "subType": "CAROUSEL_V2",
             "config":{
                 "images": [
                     {
@@ -47,7 +47,7 @@ export const web = {
                     },
                 ],
                 "sliderBtnColor": "#fff",
-                "interval": 3000,
+                "interval": 5000,
 
             }
         }

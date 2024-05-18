@@ -25,7 +25,7 @@ export const NavbarV1 = (props: NavbarProps) => {
         $headerFontColor={props.headerFontColor}
         className={`w-full top-0 z-10 ${
           props.isSticky && "fixed"
-        } md:px-8 md;py-4 px-4 py-2 rounded-b-lg flex justify-between items-center`}
+        } md:px-8 md:py-4 px-4 py-2 flex justify-between items-center`}
       >
         <div className="flex gap-4 items-center">
           <img

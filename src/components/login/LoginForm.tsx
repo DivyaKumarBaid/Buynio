@@ -119,7 +119,7 @@ const LoginForm = () => {
           />
           <div className="text-xs tracking-widest text-[var(--text-secondary-color)]">
             Dont have an account?
-            <Link href="/signup" className="text-white cursor-pointer ml-1">
+            <Link href="/home/signup" className="text-white cursor-pointer ml-1">
               Sign up
             </Link>
           </div>

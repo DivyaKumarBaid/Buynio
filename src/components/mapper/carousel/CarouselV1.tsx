@@ -52,8 +52,8 @@ export const CarouselV1 = (props: CarouselProps): JSX.Element => {
   }, []);
 
   return (
-    <CarouselLayout className="flex w-full flex-col items-center gap-4 md:my-2 my-[1rem]" $textColor={props.sliderBtnColor}>
-      <div className="w-full min-h-[40vh] md:h-[60vh] h-[40vh] flex justify-between items-center md:gap-2 gap-0">
+    <CarouselLayout className="flex w-full flex-col items-center gap-4 md:pt-12 md:pb-4 pt-4 pb-2" $textColor={props.sliderBtnColor}>
+      <div className="w-full min-h-[40vh] md:h-[70vh] h-[40vh] flex justify-between items-center md:gap-2 gap-0">
         <div
           className="md:ml-2 flex items-center justify-center rounded-[100%] md:p-2 p-0 duration-[0.3s] cursor-pointer transition-all"
           onClick={() => handleChange(-1)}
@@ -81,9 +81,7 @@ export const CarouselV1 = (props: CarouselProps): JSX.Element => {
         {props.images.map((_, i) => (
           <Indicator
             key={`imageButton${i}`}
-            className={`cursor-pointer w-[8px] h-[8px] rounded-[100%] ${
-              i == index ? "bg-secondary" : "bg-[rgba(36,36,36,0.1)]"
-            } transition-all duration-300`}
+            className={`cursor-pointer w-[8px] h-[8px] rounded-[100%] transition-all duration-300`}
             $bgColor={props.sliderBtnColor}
             $opacity={i==index ? "1.0" : "0.3"}
             onClick={() => handleChange(i - index)}

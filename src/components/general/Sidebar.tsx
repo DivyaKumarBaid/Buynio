@@ -132,7 +132,7 @@ const Sidebar = ({ canHide }: { canHide: boolean }) => {
   if (hideSidebarPaths.includes(usePathname())) return null;
 
   return (
-    <div className="fixed top-0 left-0 w-max flex group justify-center items-center z-[10]">
+    <div className="fixed top-0 left-0 w-max flex group justify-center items-center z-[101]">
       <MovableSidebar
         $ismovable={canHide.toString()}
         className={`${shadow.className} top-0 left-0 w-max md:min-w-[100px] min-w-full md:h-[100vh] h-max bg-[var(--background-color)] flex md:flex-col flex-row md:py-6 p-2 items-center justify-start shadow-[3px_3px_16px_rgba(0,0,0,0.3)] border-r-[1px] border-r-[var(--card-border-color)] group/sidebar z-[10] duration-500 md:w-[5vw] group-hover:translate-x-0`}

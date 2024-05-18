@@ -14,7 +14,7 @@ import {
   basicInfoSection,
   brandInfoSection
 } from "./Section";
-import { InputTypeEnum } from "./formComponents/types/input.types";
+import { InputTypeEnum } from "../formComponents/types/input.types";
 import BasicInfo from "./steps/BasicInfo";
 
 const createBaseValue = () => {

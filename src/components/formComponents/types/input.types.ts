@@ -6,10 +6,11 @@ export enum InputTypeEnum {
   NUMBER_INPUT = "numberInput",
   TEXT_AREA_INPUT = "textAreaInput",
   CHECKBOX_INPUT = "checkboxInput",
+  TOGGLE_BUTTON_INPUT = "toggleButtonInput"
 }
 
-export type GlobalInputType = ImageFileUploaderType | TextInputType | NumberInputType | TextAreaInputType | CheckboxType;
-export type GlobalInputIncomingType = ImageFileUploaderIncomingType | TextInputIncomingType | NumberInputIncomingType | TextAreaInputIncomingType | CheckboxIncomingType | CheckboxIncomingMultiSelectType;
+export type GlobalInputType = ImageFileUploaderType | TextInputType | NumberInputType | TextAreaInputType | CheckboxType | ToggleButtonInputType;
+export type GlobalInputIncomingType = ImageFileUploaderIncomingType | TextInputIncomingType | NumberInputIncomingType | TextAreaInputIncomingType | CheckboxIncomingType | CheckboxIncomingMultiSelectType | ToggleButtonIncomingType;
 
 export type TextInputIncomingType = {
   type: InputTypeEnum.TEXT_INPUT;
@@ -53,6 +54,12 @@ export type NumberInputType = TextInputIncomingType & {
   value: string;
 };
 
+export type ToggleButtonIncomingType = {
+  type: InputTypeEnum.TOGGLE_BUTTON_INPUT;
+  name: string;
+  header: string;
+}
+
 export type TextAreaInputIncomingType = {
   type: InputTypeEnum.TEXT_AREA_INPUT;
   name: string;
@@ -67,6 +74,12 @@ export type TextAreaInputIncomingType = {
   rows?: number;
   required: boolean;
 };
+
+export type ToggleButtonInputType = ToggleButtonIncomingType & {
+  onChange: (e: any)  => void;
+  value: boolean
+}
+
 export type TextAreaInputType = TextAreaInputIncomingType & {
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   value: string;
