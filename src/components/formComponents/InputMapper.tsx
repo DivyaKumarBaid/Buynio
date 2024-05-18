@@ -1,11 +1,10 @@
-import { ChangeEvent } from "react";
-import TextInput from "./components/TextInput";
-import { GlobalInputIncomingType, GlobalInputType, InputTypeEnum } from "./types/input.types";
+import Checkbox from "./components/Checkbox";
+import ImapeUploader from "./components/ImapeUploader";
 import NumberInput from "./components/NumberInput";
 import TextAreaInput from "./components/TextAreaInput";
-import ImapeUploader from "./components/ImapeUploader";
-import Checkbox from "./components/Checkbox";
+import TextInput from "./components/TextInput";
 import ToggleButton from "./components/ToggleButton";
+import { InputTypeEnum } from "./types/input.types";
 
 export const createBaseValue = (fields:any[]) => {
     const initialValue: Record<string, any> = {};
