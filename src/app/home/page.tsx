@@ -1,11 +1,9 @@
-"use client";
+"use client"
 import ToggleButton from "@/components/formComponents/components/ToggleButton";
 import { InputTypeEnum } from "@/components/formComponents/types/input.types";
 import FileUpload from "@/components/Test";
-import React from "react";
 
 export default async function Home() {
-
   return (
     <div>
       {/* {JSON.stringify(user)} */}

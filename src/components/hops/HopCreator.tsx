@@ -34,6 +34,9 @@ const createBaseValue = () => {
         case InputTypeEnum.IMAGE_UPLOADER:
           initialValue[inp.name] = null;
           break;
+        case InputTypeEnum.COLOR_PICKET_INPUT:
+          initialValue[inp.name] = "#eee";
+          break;
         case InputTypeEnum.CHECKBOX_INPUT:
           initialValue[inp.name] = inp.multiSelect ? [] : "";
           break;

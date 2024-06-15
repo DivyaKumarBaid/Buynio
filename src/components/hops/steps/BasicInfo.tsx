@@ -6,9 +6,8 @@ import ImapeUploader from "../../formComponents/components/ImapeUploader";
 import NumberInput from "../../formComponents/components/NumberInput";
 import TextAreaInput from "../../formComponents/components/TextAreaInput";
 import TextInput from "../../formComponents/components/TextInput";
-import {
-  InputTypeEnum
-} from "../../formComponents/types/input.types";
+import { InputTypeEnum } from "../../formComponents/types/input.types";
+import ColorPicker from "@/components/formComponents/components/ColorPicker";
 
 type BasicInfoType = {
   value: Record<string, any>;
@@ -33,17 +32,23 @@ const BasicInfo = ({
           case InputTypeEnum.TEXT_AREA_INPUT:
             error =
               error ||
-              (inp.required && !!inp.regexMatch && !inp.regexMatch.test(value[inp.name]));
+              (inp.required &&
+                !!inp.regexMatch &&
+                !inp.regexMatch.test(value[inp.name]));
             break;
           case InputTypeEnum.TEXT_INPUT:
             error =
               error ||
-              (inp.required && !!inp.regexMatch && !inp.regexMatch.test(value[inp.name]));
+              (inp.required &&
+                !!inp.regexMatch &&
+                !inp.regexMatch.test(value[inp.name]));
             break;
           case InputTypeEnum.NUMBER_INPUT:
             error =
               error ||
-              (inp.required && !!inp.regexMatch && !inp.regexMatch.test(value[inp.name]));
+              (inp.required &&
+                !!inp.regexMatch &&
+                !inp.regexMatch.test(value[inp.name]));
             break;
           case InputTypeEnum.IMAGE_UPLOADER:
             error = error || (value[inp.name] == null && inp.required);
@@ -87,6 +92,17 @@ const BasicInfo = ({
               <div className="flex flex-col w-[40%] items-start">
                 {sect.inputs.map((inp: any, idx: number) => {
                   switch (inp.type) {
+                    case InputTypeEnum.COLOR_PICKET_INPUT:
+                      return (
+                        <ColorPicker
+                          {...{
+                            ...inp,
+                            value: value[inp.name],
+                            onChange: handleChange}
+                          }
+                          key={inp.name + idx}
+                        />
+                      );
                     case InputTypeEnum.TEXT_INPUT:
                       return (
                         <TextInput

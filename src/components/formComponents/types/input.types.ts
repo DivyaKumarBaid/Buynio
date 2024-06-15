@@ -6,11 +6,12 @@ export enum InputTypeEnum {
   NUMBER_INPUT = "numberInput",
   TEXT_AREA_INPUT = "textAreaInput",
   CHECKBOX_INPUT = "checkboxInput",
-  TOGGLE_BUTTON_INPUT = "toggleButtonInput"
+  TOGGLE_BUTTON_INPUT = "toggleButtonInput",
+  COLOR_PICKET_INPUT = "colorPickerInput"
 }
 
-export type GlobalInputType = ImageFileUploaderType | TextInputType | NumberInputType | TextAreaInputType | CheckboxType | ToggleButtonInputType;
-export type GlobalInputIncomingType = ImageFileUploaderIncomingType | TextInputIncomingType | NumberInputIncomingType | TextAreaInputIncomingType | CheckboxIncomingType | CheckboxIncomingMultiSelectType | ToggleButtonIncomingType;
+export type GlobalInputType = ImageFileUploaderType | TextInputType | NumberInputType | TextAreaInputType | CheckboxType | ToggleButtonInputType | ColorPickerInputType;
+export type GlobalInputIncomingType = ImageFileUploaderIncomingType | TextInputIncomingType | NumberInputIncomingType | TextAreaInputIncomingType | CheckboxIncomingType | CheckboxIncomingMultiSelectType | ToggleButtonIncomingType | ColorPickerIncomingType;
 
 export type TextInputIncomingType = {
   type: InputTypeEnum.TEXT_INPUT;
@@ -60,6 +61,12 @@ export type ToggleButtonIncomingType = {
   header: string;
 }
 
+export type ColorPickerIncomingType = {
+  type: InputTypeEnum.COLOR_PICKET_INPUT;
+  name: string;
+  header: string;
+}
+
 export type TextAreaInputIncomingType = {
   type: InputTypeEnum.TEXT_AREA_INPUT;
   name: string;
@@ -78,6 +85,11 @@ export type TextAreaInputIncomingType = {
 export type ToggleButtonInputType = ToggleButtonIncomingType & {
   onChange: (e: any)  => void;
   value: boolean
+}
+
+export type ColorPickerInputType = ColorPickerIncomingType & {
+  onChange: (e: any)  => void;
+  value: string
 }
 
 export type TextAreaInputType = TextAreaInputIncomingType & {

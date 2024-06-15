@@ -58,7 +58,7 @@ const FileUpload: React.FC = () => {
       <FormButton
         onClickFunc={() => {
           // enqueueSnackbar("I love hooks");
-          toast('Here is your toast.');
+          toast("Here is your toast.");
         }}
         text="Clickme"
         disabled={false}

@@ -1,0 +1,22 @@
+/* RippleButton.module.css */
+.rippleButton {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(200, 200, 200, 0.7);
+    transform: scale(0);
+    animation: ripple-animation 600ms linear;
+  }
+
+  @keyframes ripple-animation {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
