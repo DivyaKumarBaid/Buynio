@@ -1,9 +1,9 @@
 "use client";
+import { SECTION_TYPE } from "@/types/mapper.types";
 import { useState } from "react";
-import styles from "./navbar.module.css";
 import styled from "styled-components";
+import styles from "./navbar.module.css";
 import { NavbarProps } from "./Navbar.types";
-import { NAV_TYPE, SECTION_TYPE } from "@/types/mapper.types";
 
 const NavMain = styled.div<{ $bgColor: string; $headerFontColor: string }>`
   background: ${(props) => props.$bgColor};

@@ -7,8 +7,8 @@ type MapperContextType = {
 };
 
 export type SelectedElem = {
-  type: String,
-  subType: String
+  type: string,
+  subType: string
 }
 
 export const MapperContext = React.createContext<MapperContextType | null>(

@@ -4,7 +4,6 @@ import { navBarTopPosition } from "@/mapper/ComponentConstants";
 import { switchNav, switchSection } from "@/mapper/ComponentMap";
 import { web as outline } from "@/utils/defaultWeb";
 import styled from "styled-components";
-import { isStringObject } from "util/types";
 
 const Main = styled.div<{ $bgColor: string }>`
   background: ${(props) => props.$bgColor};
@@ -14,7 +13,7 @@ const Main = styled.div<{ $bgColor: string }>`
   padding-top: ${(props) => props.$paddingTop};
   background: ${(props) => props.$bgColor};
 `;
-const page = () => {
+const Mapper = () => {
   const useMapper = useMapperContext();
   return (
     <Main
@@ -43,4 +42,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Mapper;
