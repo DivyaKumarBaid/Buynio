@@ -10,7 +10,7 @@ export const web = {
         "linkFontColor" : "#eee",
         "linkFontStyle" : "poppins",
         "headerFontStyle" : "poppins",
-        "type": "NAV_V3",
+        "type": "NAV_V1",
         "links": [{"link": "Instagram", "redirection": "https://insta"}],
         "collapsable" : true,
         "logo": "https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png",

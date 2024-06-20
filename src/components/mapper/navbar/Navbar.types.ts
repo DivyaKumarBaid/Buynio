@@ -1,4 +1,8 @@
+import { NAV_TYPE } from "@/types/mapper.types";
+import { SelectedElem } from "../hooks/selectedElemContext";
+
 export type NavbarProps = {
+    type: NAV_TYPE
     background: string;
     headerFontColor: string;
     linkFontColor: string;
@@ -9,4 +13,6 @@ export type NavbarProps = {
     logoSize: number;
     logoVisibility: boolean;
     headerVisibility: boolean;
+    isSelectMode?: boolean;
+    setSelectedElement?: React.Dispatch<React.SetStateAction<SelectedElem | null>>;
   };

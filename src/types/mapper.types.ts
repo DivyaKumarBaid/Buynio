@@ -5,6 +5,7 @@ export enum NAV_TYPE {
 }
 
 export enum SECTION_TYPE {
+    NAV_BAR = "NAVBAR",
     CAROUSEL = "CAROUSEL"
 }
 
@@ -14,9 +15,11 @@ export enum CAROUSEL_TYPE {
     CAROUSEL_V3 = "CAROUSEL_V3"
 }
 
+export type SectionSubType = CAROUSEL_TYPE | NAV_TYPE
+
 export type SectionType = {
     type: SECTION_TYPE,
-    subType: CAROUSEL_TYPE,
+    subType: SectionSubType,
     background: string,
     config: SectionConfigs
 }

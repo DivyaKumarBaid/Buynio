@@ -1,8 +1,10 @@
 "use client";
+import { useMapperContext } from "@/components/mapper/hooks/selectedElemContext";
 import { navBarTopPosition } from "@/mapper/ComponentConstants";
 import { switchNav, switchSection } from "@/mapper/ComponentMap";
 import { web as outline } from "@/utils/defaultWeb";
 import styled from "styled-components";
+import { isStringObject } from "util/types";
 
 const Main = styled.div<{ $bgColor: string }>`
   background: ${(props) => props.$bgColor};
@@ -13,12 +15,13 @@ const Main = styled.div<{ $bgColor: string }>`
   background: ${(props) => props.$bgColor};
 `;
 const page = () => {
+  const useMapper = useMapperContext();
   return (
     <Main
       $bgColor={outline.backgroud}
       className={`w-full min-h-[100vh] relative`}
       >
-      {switchNav(outline.nav?.type, outline.nav)}
+      {switchNav(outline.nav?.type, {...outline.nav, isSelectMode: true, setSelectedElement: useMapper?.setSelectedElement})}
       {outline.sections?.map((section, index) => {
         return (
           <SectionContainer

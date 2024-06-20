@@ -43,7 +43,8 @@ body {
   min-height: 100vh;
   min-width: 100vw;
   color: white;
-  /* background: var(--background-color); */
+  background: var(--background-color);
+  scroll-behavior: smooth;
   /* background: rgb(37, 4, 52);
   background: linear-gradient(
     315deg,
