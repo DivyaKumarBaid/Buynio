@@ -63,9 +63,9 @@ export default function Auth({ children }: { children: ReactNode }) {
       } else if (
         session != null &&
         !session?.user?.onBoarded &&
-        pathName != "/onboard"
+        pathName != "/home/onboard"
       ) {
-        router.push("/onboard");
+        router.push("/home/onboard");
       }
       else if(
         session != null &&

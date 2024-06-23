@@ -44,7 +44,7 @@ const OnBoardingMenu = () => {
         onBoardingMutation.mutate("Explore",{
           onSuccess: () => {
             userModule?.updateUser();
-            router.push("/explore");
+            router.push("/home/explore");
           },
           onError: () => {
               toast.error("Something went wrong!");
@@ -63,7 +63,7 @@ const OnBoardingMenu = () => {
         onBoardingMutation.mutate("Create",{
           onSuccess: () => {
             userModule?.updateUser();
-            router.push("/hop/create");
+            router.push("/home/hop/create");
           },
           onError: (_) => {
               toast.error("Something went wrong!");

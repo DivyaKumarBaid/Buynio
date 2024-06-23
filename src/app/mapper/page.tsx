@@ -37,7 +37,6 @@ const Mapper = () => {
           </SectionContainer>
         );
       })}
-      {/* {switchCarousel(outline.nav?.type, outline.nav)} */}
     </Main>
   );
 };
