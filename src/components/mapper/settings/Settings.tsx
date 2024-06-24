@@ -5,7 +5,7 @@ const Settings = () => {
   const useMapper = useMapperContext();
   console.log(useMapper);
   return (
-    <div>Settings</div>
+    <div></div>
   )
 }
 

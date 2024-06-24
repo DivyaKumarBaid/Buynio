@@ -14,10 +14,10 @@ const ToggleButton = ({
   onChange,
 }: ToggleButtonInputType) => {
   return (
-    <div className="flex items-center gap-2 text-md md:text-xl text-[var(--text-secondary-color)]">
+    <div className="flex items-center gap-2 text-md text-[var(--text-secondary-color)]">
       <div>{header}</div>
       <div
-        className="relative w-[5.5vh] m-2 h-[3vh] bg-[var(--card-border-hover-color)] rounded-3xl flex items-center  cursor-pointer"
+        className="relative w-[40px] m-2 h-[20px] bg-[var(--card-border-hover-color)] rounded-3xl flex items-center  cursor-pointer"
         onClick={() => {
           const val = !value;
           const e = {
@@ -29,13 +29,14 @@ const ToggleButton = ({
           };
           onChange(e);
         }}
+        style={{boxShadow:"inset 0 0 10px rgba(0,0,0,0.5)"}}
       >
         <ToggleBtn
           $bgColor={
             value ? "var(--text-primary-color)" : "var(--text-secondary-color)"
           }
-          className="absolute w-[3vh] h-[3vh] rounded-[50%] border duration-300 transition-all"
-          style={{ left: value ? "calc(100% - 3vh)" : "0" }}
+          className="absolute w-[22px] h-[22px] rounded-[50%] border duration-300 transition-all"
+          style={{ left: value ? "calc(100% - 22px)" : "0", boxShadow: value ? "" : "inset 0 0 10px rgba(0,0,0,0.4)" }}
         />
       </div>
     </div>

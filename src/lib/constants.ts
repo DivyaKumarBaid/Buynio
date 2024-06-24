@@ -9,5 +9,6 @@ export const PASSWORD_REGEX =
 export const unrestrictedPaths = ['/','/home','/home/login','/home/signup','/home/explore','/home/categories','/home/trending','/home/brands', '/mapper'];
 export const unrestrictedPathsWithParam = ['/home/signup/verify', '/mapper/editor', '/mapper/simulator'];
 export const loggedInRestrictedPaths = ['/home/login','/home/signup','/home/signup/verify'];
-export const hideSidebarPaths = ['/home/onbording']
+export const hideSidebarPaths = ['/home/onboarding', '/mapper/']
+export const hideSidebarPathsWithParam = ['/mapper/simulator']
 export const autoHideSidebarPath = ['/home/mapper'];

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { NavbarProps } from "./Navbar.types";
+import { SECTION_TYPE } from "@/types/mapper.types";
 
 
 const NavMain = styled.div<{ $bgColor: string; $headerFontColor: string }>`
@@ -37,6 +38,11 @@ export const NavbarV3 = (props: NavbarProps) => {
         className={`w-full h-max top-10 z-[100] ${
           props.isSticky && "fixed"
         } flex justify-center items-center`}
+        onClick={() => {
+          if(props.isSelectMode && props.setSelectedElement){
+            props.setSelectedElement({type: SECTION_TYPE.NAV_BAR, subType: props.type})
+          }
+        }}
       >
         <NavMain
           $bgColor={props.background}

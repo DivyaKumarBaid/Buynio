@@ -25,16 +25,23 @@ export const NavbarV1 = (props: NavbarProps) => {
         props.isSticky && "fixed"
       } md:px-8 md:py-4 px-4 py-2 flex justify-between items-center`}
       onClick={() => {
-        if(props.isSelectMode && props.setSelectedElement){
-          props.setSelectedElement({type: SECTION_TYPE.NAV_BAR, subType: props.type})
+        if (props.isSelectMode && props.setSelectedElement) {
+          props.setSelectedElement({
+            type: SECTION_TYPE.NAV_BAR,
+            subType: props.type,
+          });
         }
       }}
     >
       <div className="flex gap-4 items-center">
-        <img src={props.logo} alt="" width={25} className="self-center" />
-        <span className="text-xl font-bold opacity-[0.6]">
-          {props.brandName}
-        </span>
+        {props.logoVisibility && (
+          <img src={props.logo} alt="" width={25} className="self-center" />
+        )}
+        {props.headerVisibility && (
+          <span className="text-xl font-bold opacity-[0.6]">
+            {props.brandName}
+          </span>
+        )}
       </div>
       {!isMobile && (
         <div className="flex gap-4">

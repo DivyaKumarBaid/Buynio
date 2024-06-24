@@ -1,10 +1,16 @@
-"use client"
+"use client";
+import Topbar from "@/components/mapper/bars/Topbar";
+import {
+  SelectedElem,
+  useMapperContext,
+  View,
+} from "@/components/mapper/hooks/selectedElemContext";
 import socket from "@/utils/socket";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const Editor = ({ params }: { params: { id: string } }) => {
-  const [message, setMessage] = useState<string>("");
-  const roomId = params.id; // This should be dynamic based on your logic
+  const useMapper = useMapperContext();
+  const roomId = params.id;
 
   useEffect(() => {
     socket.emit("joinRoom", roomId);
@@ -17,30 +23,31 @@ const Editor = ({ params }: { params: { id: string } }) => {
       console.log("Message from server:", data);
     });
 
+    socket.on("elemSelectedToClient", (data: SelectedElem) => {
+      useMapper?.setSelectedElement(data)
+    });
+
     return () => {
       socket.off("joinedRoom");
       socket.off("messageToClient");
     };
   }, [roomId]);
 
-  const sendMessage = () => {
-    socket.emit("messageToRoom", { room: roomId, message });
-  };
+  // const sendMessage = () => {
+  //   socket.emit("messageToRoom", { room: roomId, message });
+  // };
 
   return (
-    <div className="flex justify-center items-center">
-      <h1>Editor</h1>
+    <div className="flex justify-center items-center w-[100vw] h-[100vh] relative">
+      <Topbar />
       <iframe
         src={`/mapper/simulator/${roomId}`}
-        className="w-[80vw] h-[80vh]"
+        className="rounded-xl border-[#aaa9ad] border-4"
+        style={{
+          width: useMapper?.view === View.WEB ? "70vw" : "400px",
+          height: useMapper?.view === View.WEB ? "744px" : "744px",
+        }}
       ></iframe>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        className="text-black"
-      />
-      <button onClick={sendMessage}>Send Message</button>
     </div>
   );
 };

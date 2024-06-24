@@ -1,5 +1,5 @@
 "use client";
-import { hideSidebarPaths } from "@/lib/constants";
+import { hideSidebarPaths, hideSidebarPathsWithParam } from "@/lib/constants";
 import { dela, shadow } from "@/lib/Fonts";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -129,7 +129,7 @@ const groupedTabs = subCategories.map((category) =>
 const Sidebar = ({ canHide }: { canHide: boolean }) => {
   const path = usePathname();
   const { data: session, status } = useSession();
-  if (hideSidebarPaths.includes(usePathname())) return null;
+  if (hideSidebarPaths.includes(usePathname()) || hideSidebarPathsWithParam.find(path => usePathname().startsWith(path))) return null;
 
   return (
     <div className="fixed top-0 left-0 w-max flex group justify-center items-center z-[101]">
