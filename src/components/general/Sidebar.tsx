@@ -129,7 +129,7 @@ const groupedTabs = subCategories.map((category) =>
 const Sidebar = ({ canHide }: { canHide: boolean }) => {
   const path = usePathname();
   const { data: session, status } = useSession();
-  if (hideSidebarPaths.includes(usePathname()) || hideSidebarPathsWithParam.find(path => usePathname().startsWith(path))) return null;
+  if (hideSidebarPaths.includes(path) || hideSidebarPathsWithParam.find(path => path.startsWith(path))) return null;
 
   return (
     <div className="fixed top-0 left-0 w-max flex group justify-center items-center z-[101]">
