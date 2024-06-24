@@ -3,6 +3,7 @@ import Loader from "@/components/general/Loader";
 import { SelectedElem } from "@/components/mapper/hooks/selectedElemContext";
 import { navBarTopPosition } from "@/mapper/ComponentConstants";
 import { switchNav, switchSection } from "@/mapper/ComponentMap";
+import { SECTION_TYPE } from "@/types/mapper.types";
 import { web as outline } from "@/utils/defaultWeb";
 import socket from "@/utils/socket";
 import React, { useEffect } from "react";
@@ -19,6 +20,7 @@ const SectionContainer = styled.div<{ $paddingTop: string; $bgColor: string }>`
 
 const Simulator = ({ params }: { params: { id: string } }) => {
   const [loading, setLoading] = React.useState<boolean>(true);
+  const [selectedElem, setSelectedElem] = React.useState<SelectedElem | null>(null);
 
   useEffect(() => {
     if (params.id) {
@@ -49,6 +51,7 @@ const Simulator = ({ params }: { params: { id: string } }) => {
 
   const handleElemSelection = (name: SelectedElem | null) => {
     socket.emit("elemSelectedToRoom", { room: params.id, message: name });
+    setSelectedElem(name)
   };
 
   if (loading) return <Loader />;
@@ -57,11 +60,13 @@ const Simulator = ({ params }: { params: { id: string } }) => {
     <Main
       $bgColor={outline.backgroud}
       className={`w-full min-h-[100vh] relative`}
+      onClick={() => handleElemSelection(null)}
     >
       {switchNav(outline.nav?.type, {
         ...outline.nav,
         isSelectMode: true,
         setSelectedElement: handleElemSelection,
+        selected: selectedElem?.type == SECTION_TYPE.NAV_BAR
       })}
       {outline.sections?.map((section, index) => {
         return (

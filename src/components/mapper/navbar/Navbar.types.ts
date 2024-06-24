@@ -15,4 +15,5 @@ export type NavbarProps = {
     headerVisibility: boolean;
     isSelectMode?: boolean;
     setSelectedElement?: React.Dispatch<React.SetStateAction<SelectedElem | null>>;
+    selected?: boolean
   };
