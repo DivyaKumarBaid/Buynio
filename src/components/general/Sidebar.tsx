@@ -116,7 +116,7 @@ const navigations = [
 ];
 
 const MovableSidebar = styled.div<{$ismovable: string }>`
-  transform: ${(props) => (props.$ismovable === "true" ? "translateX(-10vw)" : "")};
+  transform: ${(props) => (props.$ismovable === "true" ? "translateX(-100px)" : "")};
 `;
 
 const restrictedSubCategory = ["user", "hop"];
@@ -132,10 +132,9 @@ const Sidebar = ({ canHide }: { canHide: boolean }) => {
   if (hideSidebarPaths.includes(path) || hideSidebarPathsWithParam.find(pathWithParam => path.startsWith(pathWithParam))) return null;
 
   return (
-    <div className="fixed top-0 left-0 w-max flex group justify-center items-center z-[101]">
-      <MovableSidebar
-        $ismovable={canHide.toString()}
-        className={`${shadow.className} top-0 left-0 w-max md:min-w-[100px] min-w-full md:h-[100vh] h-max bg-[var(--background-color)] flex md:flex-col flex-row md:py-6 p-2 items-center justify-start shadow-[3px_3px_16px_rgba(0,0,0,0.3)] border-r-[1px] border-r-[var(--card-border-color)] group/sidebar z-[10] duration-500 md:w-[5vw] group-hover:translate-x-0`}
+    <MovableSidebar $ismovable={canHide.toString()} className="fixed top-0 left-0 w-max flex group justify-center items-center z-[101]">
+      <div
+        className={`${shadow.className} top-0 left-0 w-max md:min-w-[100px] min-w-full md:h-[100vh] h-max bg-[var(--background-color)] flex md:flex-col flex-row md:py-6 p-2 items-center justify-start shadow-[3px_3px_16px_rgba(0,0,0,0.3)] border-r-[1px] border-r-[var(--card-border-color)] group/sidebar z-[10] duration-500 md:w-[5vw] ${canHide && 'group-hover:translate-x-[100px]'}`}
       >
         <div
           className={`${dela.className} md:visible md:flex hidden flex-col items-center justify-center gap-4 md:mb-12 w-full`}
@@ -193,9 +192,9 @@ const Sidebar = ({ canHide }: { canHide: boolean }) => {
             );
           })}
         </div>
-      </MovableSidebar>
-      <LuChevronsRight className="bg-[var(--background-color)] text-4xl p-2  text-[var(--text-secondary-color)] absolute left-0 rounded-r-[50%] group-hover:translate-x-[-40px] duration-500 shadow-[2px_2px_8px_rgba(0,0,0,0.4)] cursor-pointer" />
-    </div>
+      </div>
+      <LuChevronsRight className={`bg-[var(--background-color)] text-4xl p-2  text-[var(--text-secondary-color)] left-0 rounded-r-[50%] group-hover:translate-x-[-40px] duration-500 shadow-[2px_2px_8px_rgba(0,0,0,0.4)] cursor-pointer ${!canHide && 'hidden'}`} />
+    </MovableSidebar>
   );
 };
 

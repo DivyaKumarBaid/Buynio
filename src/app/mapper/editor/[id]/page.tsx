@@ -1,4 +1,5 @@
 "use client";
+import Settingbar from "@/components/mapper/bars/Settingbar";
 import Topbar from "@/components/mapper/bars/Topbar";
 import {
   SelectedElem,
@@ -17,6 +18,7 @@ const Editor = ({ params }: { params: { id: string } }) => {
 
     socket.on("joinedRoom", (room: string) => {
       console.log(`Joined room: ${room}`);
+      if (useMapper?.setRoomId) useMapper.setRoomId(room);
     });
 
     socket.on("messageToClient", (data: string) => {
@@ -24,7 +26,7 @@ const Editor = ({ params }: { params: { id: string } }) => {
     });
 
     socket.on("elemSelectedToClient", (data: SelectedElem) => {
-      useMapper?.setSelectedElement(data)
+      useMapper?.setSelectedElement(data);
     });
 
     return () => {
@@ -38,16 +40,21 @@ const Editor = ({ params }: { params: { id: string } }) => {
   // };
 
   return (
-    <div className="flex justify-center items-center w-[100vw] h-[100vh] relative">
-      <Topbar />
-      <iframe
-        src={`/mapper/simulator/${roomId}`}
-        className="rounded-xl border-[#aaa9ad] border-4"
-        style={{
-          width: useMapper?.view === View.WEB ? "70vw" : "400px",
-          height: useMapper?.view === View.WEB ? "744px" : "744px",
-        }}
-      ></iframe>
+    <div className="flex justify-center items-center w-[100vw] min-h-[100vh]">
+      <div className="flex w-full h-full justify-between">
+        <div className="w-full h-[100vh] flex justify-center items-center relative">
+          <Topbar />
+          <iframe
+            src={`/mapper/simulator/${roomId}`}
+            className="rounded-xl border-[#aaa9ad] border-4 duration-300"
+            style={{
+              width: useMapper?.view === View.WEB ? "72vw" : "400px",
+              height: useMapper?.view === View.WEB ? "744px" : "744px",
+            }}
+          />
+        </div>
+        <Settingbar />
+      </div>
     </div>
   );
 };

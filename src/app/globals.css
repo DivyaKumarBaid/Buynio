@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --card-bg-color: rgba(18,18,18);
+  --card-bg-color: rgba(20,20,20);
   --card-bg-hover-color: rgba(18,18,18);
   --card-border-color: rgba(155,155,155,0.3);
   --card-border-hover-color: rgba(155,155,155,0.4);

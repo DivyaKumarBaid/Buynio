@@ -15,6 +15,14 @@ export enum CAROUSEL_TYPE {
     CAROUSEL_V3 = "CAROUSEL_V3"
 }
 
+export enum JSONHeaders {
+    OUTER = "outer",
+    NAV = "nav",
+    SECTION = "sections",
+    HEADER_CONFIG = "headerConfig",
+    TEXT_CONFIG = "textConfig"
+}
+
 export type SectionSubType = CAROUSEL_TYPE | NAV_TYPE
 
 export type SectionType = {
