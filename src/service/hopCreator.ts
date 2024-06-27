@@ -70,8 +70,6 @@ export const createHop = async (session: Session | null, value: any) => {
         updatedValue,
         config
       );
-
-      console.log(payload.data);
       return payload.data;
     } catch (error) {
       console.error("Error creating hop:", error);

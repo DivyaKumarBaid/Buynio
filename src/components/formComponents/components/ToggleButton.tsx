@@ -14,10 +14,10 @@ const ToggleButton = ({
   onChange,
 }: ToggleButtonInputType) => {
   return (
-    <div className="flex items-center gap-2 text-md text-[var(--text-secondary-color)]">
+    <div className="flex items-center gap-2 text-md text-[var(--text-secondary-color)] mx-4 my-2">
       <div>{header}</div>
       <div
-        className="relative w-[40px] m-2 h-[20px] bg-[var(--card-border-hover-color)] rounded-3xl flex items-center  cursor-pointer"
+        className="relative w-[40px] mx-2 h-[20px] bg-[var(--card-border-hover-color)] rounded-3xl flex items-center  cursor-pointer"
         onClick={() => {
           const val = !value;
           const e = {

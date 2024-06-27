@@ -6,7 +6,8 @@ export enum NAV_TYPE {
 
 export enum SECTION_TYPE {
     NAV_BAR = "NAVBAR",
-    CAROUSEL = "CAROUSEL"
+    CAROUSEL = "CAROUSEL",
+    GENERAL = "GENERAL"
 }
 
 export enum CAROUSEL_TYPE {
@@ -23,7 +24,7 @@ export enum JSONHeaders {
     TEXT_CONFIG = "textConfig"
 }
 
-export type SectionSubType = CAROUSEL_TYPE | NAV_TYPE
+export type SectionSubType = CAROUSEL_TYPE | NAV_TYPE | SECTION_TYPE.GENERAL
 
 export type SectionType = {
     type: SECTION_TYPE,

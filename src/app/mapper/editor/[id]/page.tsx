@@ -14,10 +14,18 @@ const Editor = ({ params }: { params: { id: string } }) => {
   const roomId = params.id;
 
   useEffect(() => {
+    sendMessage();
+  },[useMapper?.webJson])
+
+  useEffect(()=>{
+    socket.emit("updateJsonToRoom", {room: roomId, message: useMapper?.webJson})
+  },[useMapper?.webJson])
+
+  useEffect(() => {
     socket.emit("joinRoom", roomId);
 
     socket.on("joinedRoom", (room: string) => {
-      console.log(`Joined room: ${room}`);
+      socket.emit("updateJsonToRoom", {room: roomId, message: useMapper?.webJson});
       if (useMapper?.setRoomId) useMapper.setRoomId(room);
     });
 
@@ -35,9 +43,10 @@ const Editor = ({ params }: { params: { id: string } }) => {
     };
   }, [roomId]);
 
-  // const sendMessage = () => {
-  //   socket.emit("messageToRoom", { room: roomId, message });
-  // };
+
+  const sendMessage = () => {
+    socket.emit("messageToRoom", { room: roomId, message: useMapper?.webJson });
+  };
 
   return (
     <div className="flex justify-center items-center w-[100vw] min-h-[100vh]">

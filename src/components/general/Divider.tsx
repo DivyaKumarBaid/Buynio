@@ -1,6 +1,6 @@
 import React from "react";
 
-const Divider = () => {
+export const Divider = () => {
   return (
     <div className="flex justify-center items-center gap-4 w-full">
       <div className="w-full h-[1px] bg-[var(--text-secondary-color)]"></div>
@@ -9,6 +9,12 @@ const Divider = () => {
       </div>
       <div className="w-full h-[1px] bg-[var(--text-secondary-color)]"></div>
     </div>
+  );
+};
+
+export const HorizontalDivider = () => {
+  return (
+      <div className="w-full h-[1px] bg-[var(--card-border-color)]"/>
   );
 };
 

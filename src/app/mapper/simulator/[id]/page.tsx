@@ -4,7 +4,6 @@ import { SelectedElem } from "@/components/mapper/hooks/selectedElemContext";
 import { navBarTopPosition } from "@/mapper/ComponentConstants";
 import { switchNav, switchSection } from "@/mapper/ComponentMap";
 import { SECTION_TYPE } from "@/types/mapper.types";
-import { web as outline } from "@/utils/defaultWeb";
 import socket from "@/utils/socket";
 import React, { useEffect } from "react";
 import styled from "styled-components";
@@ -20,14 +19,16 @@ const SectionContainer = styled.div<{ $paddingTop: string; $bgColor: string }>`
 
 const Simulator = ({ params }: { params: { id: string } }) => {
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [selectedElem, setSelectedElem] = React.useState<SelectedElem | null>(null);
+  const [selectedElem, setSelectedElem] = React.useState<SelectedElem | null>(
+    null
+  );
+  const [webJson, setJson] = React.useState<Record<string, any>>({});
 
   useEffect(() => {
     if (params.id) {
       socket.emit("joinRoom", params.id);
 
       socket.on("joinedRoom", (room: string) => {
-        setLoading(false);
         console.log(`Simulator Joined room: ${room}`);
       });
 
@@ -42,6 +43,12 @@ const Simulator = ({ params }: { params: { id: string } }) => {
         );
       });
 
+      socket.on("updateJsonToClient", (data: Record<string, any>) => {
+        console.log("updatedData",data)
+        setJson(data);
+        if (loading) setLoading(false);
+      });
+
       return () => {
         socket.off("joinedRoom");
         socket.off("messageToClient");
@@ -51,30 +58,30 @@ const Simulator = ({ params }: { params: { id: string } }) => {
 
   const handleElemSelection = (name: SelectedElem | null) => {
     socket.emit("elemSelectedToRoom", { room: params.id, message: name });
-    setSelectedElem(name)
+    setSelectedElem(name);
   };
 
   if (loading) return <Loader />;
 
   return (
     <Main
-      $bgColor={outline.backgroud}
+      $bgColor={webJson[SECTION_TYPE.GENERAL].backgroud}
       className={`w-full min-h-[100vh] relative`}
       onClick={() => handleElemSelection(null)}
     >
-      {switchNav(outline.nav?.type, {
-        ...outline.nav,
+      {switchNav(webJson[SECTION_TYPE.NAV_BAR]?.type, {
+        ...webJson[SECTION_TYPE.NAV_BAR],
         isSelectMode: true,
         setSelectedElement: handleElemSelection,
-        selected: selectedElem?.type == SECTION_TYPE.NAV_BAR
+        selected: selectedElem?.type == SECTION_TYPE.NAV_BAR,
       })}
-      {outline.sections?.map((section, index) => {
+      {webJson.sections?.map((section: any, index: number) => {
         return (
           <SectionContainer
             $bgColor={section.backgroud}
             $paddingTop={
-              outline.nav && index === 0
-                ? navBarTopPosition[outline.nav.type]
+              webJson[SECTION_TYPE.NAV_BAR] && index === 0
+                ? navBarTopPosition[webJson[SECTION_TYPE.NAV_BAR].type]
                 : "0"
             }
             key={`${section.type}${section.subType}${index}`}

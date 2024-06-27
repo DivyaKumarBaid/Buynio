@@ -1,32 +1,40 @@
+import { ChangeEvent, useEffect, useState } from "react";
 
-//custom hook that handles the form
-import { ChangeEvent, useState } from 'react';
-
-const useForm = (initialValues: Record<string, any>) : [values : Record<string, any>, handleChange: (event: ChangeEvent<HTMLInputElement>) => void] => {
-    //storing initial values of the form
-    const [values, setValues] = useState<Record<string, any>>(initialValues);
-
-    //function that handles the change in the form
-
-    function handleChange(event: ChangeEvent<HTMLInputElement>) {
-
-        //destruct the event.target object
-        // event.target.files?.[0]
-        const { name, value, type, checked, files} = event.target
-
-        //checked and unchecked for check box
-
-        setValues((prevFormData : Record<string, any>) => {
-            return {
-                ...prevFormData,
-                [name]: type === "checkbox" ? checked : type==="file" ? files?.[0] : value
-            }
-        })
+const useForm = (
+  initialValues: Record<string, any>
+): [
+  values: Record<string, any>,
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void,
+] => {
+  // Ensure all initial values are defined
+  const getDefinedInitialValues = (values: Record<string, any>) => {
+    const definedValues: Record<string, any> = {};
+    for (const key in values) {
+      definedValues[key] = values[key] !== undefined ? values[key] : "";
     }
+    return definedValues;
+  };
 
-    //returning an array that contains an object and the funtion that changes the value
+  const [values, setValues] = useState<Record<string, any>>(
+    getDefinedInitialValues(initialValues)
+  );
 
-    return [values,handleChange]
-}
+  useEffect(() => {
+    setValues(getDefinedInitialValues(initialValues));
+  }, [initialValues]);
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value, type, checked, files } = event.target;
+    setValues((prevFormData: Record<string, any>) => {
+      return {
+        ...prevFormData,
+        [name]:
+          type === "checkbox" ? checked : type === "file" ? files?.[0] : value,
+      };
+    });
+  }
+
+  return [values, handleChange];
+};
 
 export default useForm;
