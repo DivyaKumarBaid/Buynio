@@ -55,7 +55,7 @@ const TextInput = ({
         </div>
       )}
       <div
-        className={`flex justify-start items-center border-[1px] ${error ? "border-[var(--danger-secondary-low-color)]" : focus ? "border-[var(--input-focus-border)]" : "border-[var(--card-border-color)]"} rounded-md duration-300`}
+        className={`flex justify-start items-center border-[1px] ${error ? "border-[var(--danger-secondary-low-color)]" : focus ? "border-[var(--input-focus-border)]" : "border-[var(--card-border-color)]"} rounded-md duration-300 w-[300px]`}
       >
         {preText! && (
           <div
@@ -78,7 +78,7 @@ const TextInput = ({
           ref={inputRef}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          className={`border-none outline-none bg-transparent min-w-[300px] placeholder-[var(--text-secondary-low-color)] placeholder-opacity-50 duration-500 ${(preText.trim() == "" || postText.trim() == "") && "py-3 px-4"}`}
+          className={`border-none outline-none w-full bg-transparent placeholder-[var(--text-secondary-low-color)] placeholder-opacity-50 duration-500 ${(preText.trim() == "" || postText.trim() == "") && "py-3 px-4"}`}
         />
         {postText! && (
           <div

@@ -13,14 +13,27 @@ const ColorPicker = ({
   header,
   name,
   onChange,
+  subHeading,
+  flexEnd
 }: ColorPickerInputType) => {
   return (
-    <div className="m-4 flex gap-4 text-md md:text-xl text-[var(--text-secondary-color)] items-center justify-center">
-      <div>{header}</div>
+    <div className={`m-4 flex gap-4 text-md items-center max-w-[300px] ${flexEnd && 'w-full justify-between'}`}>
+      <div className="flex flex-col gap-1">
+        <div
+          className={`text-[var(--text-primary-color)] ${subHeading! && "text-sm"}`}
+        >
+          {header}
+        </div>
+        {subHeading! && (
+          <div className="text-[var(--text-secondary-color)] text-xs">
+            {subHeading}
+          </div>
+        )}
+      </div>
       <Popover placement="bottom-start">
         <PopoverTrigger>
           <div
-            className="w-[25px] h-[25px] rounded-[4px] cursor-pointer"
+            className="w-[25px] h-[25px] rounded-[4px] cursor-pointer border-[1px] border-[var(--text-secondary-low-color)]"
             style={{ background: value }}
           />
         </PopoverTrigger>
@@ -28,6 +41,7 @@ const ColorPicker = ({
           <BlockPicker
             triangle="hide"
             color={value}
+            className="border-[1px] border-[var(--text-secondary-low-color)]"
             onChange={(ec) => {
               const e = {
                 target: {

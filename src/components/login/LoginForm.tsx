@@ -56,7 +56,7 @@ const LoginForm = () => {
   }, [value]);
 
   return (
-    <div className="shadow-[3px_3px_16px_rgba(0,0,0.3)] flex justify-center items-center flex-col relative overflow-hidden rounded-xl md:min-w-[25vw] min-w-full md:min-h-[25vh]">
+    <div className="shadow-[3px_3px_16px_rgba(0,0,0,0.3)] flex justify-center items-center flex-col relative overflow-hidden rounded-xl md:min-w-[25vw] min-w-full md:min-h-[25vh]">
       <PageLoader isLoading={loading} />
       <div className="bg-[var(--card-bg-color)] md:min-w-[25vw] min-w-full md:min-h-[25vh] rounded-xl border-[0.1px] border-[var(--card-border-color)] p-8 flex justify-center items-center flex-col gap-8 w-full h-full">
         <GoogleSigninButton />

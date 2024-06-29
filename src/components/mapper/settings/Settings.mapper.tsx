@@ -4,6 +4,7 @@ import {
 } from "@/components/formComponents/InputMapper";
 import { HorizontalDivider } from "@/components/general/Divider";
 import useForm from "@/hooks/useForm";
+import { barlow, rajdhani } from "@/lib/Fonts";
 import { SECTION_TYPE } from "@/types/mapper.types";
 import { useEffect } from "react";
 import { useMapperContext } from "../hooks/selectedElemContext";
@@ -33,8 +34,8 @@ const SettingsMapper = ({
   }, [value]);
 
   return (
-    <div className="flex flex-col items-start gap-4 ">
-      <h3 className="text-[var(--text-primary-color)]"> {settings.heading} </h3>
+    <div className={`${barlow.className} min-w-[300px] flex flex-col items-start gap-2 tracking-wider`}>
+      <h3 className={`text-[var(--text-primary-color)] px-2 text-lg`}> {settings.heading} </h3>
       <HorizontalDivider />
       {settings.inputs.map((input, index) => {
         return (

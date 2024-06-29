@@ -14,7 +14,7 @@ export const Divider = () => {
 
 export const HorizontalDivider = () => {
   return (
-      <div className="w-full h-[1px] bg-[var(--card-border-color)]"/>
+      <div className="w-full h-[1px] bg-[var(--card-border-color)] my-2"/>
   );
 };
 

@@ -1,4 +1,5 @@
 import Checkbox from "./components/Checkbox";
+import ColorPicker from "./components/ColorPicker";
 import ImapeUploader from "./components/ImapeUploader";
 import NumberInput from "./components/NumberInput";
 import TextAreaInput from "./components/TextAreaInput";
@@ -34,7 +35,7 @@ export const SwitchInput = ({
   input,
   value,
   handleChange,
-  inputKey
+  inputKey,
 }: {
   input: any;
   value: Record<string, any>;
@@ -42,6 +43,17 @@ export const SwitchInput = ({
   inputKey: string;
 }) => {
   switch (input.type) {
+    case InputTypeEnum.COLOR_PICKET_INPUT:
+      return (
+        <ColorPicker
+          {...{
+            ...input,
+            value: value[input.name],
+            onChange: handleChange,
+          }}
+          key={inputKey}
+        />
+      );
     case InputTypeEnum.TEXT_INPUT:
       return (
         <TextInput

@@ -59,12 +59,16 @@ export type ToggleButtonIncomingType = {
   type: InputTypeEnum.TOGGLE_BUTTON_INPUT;
   name: string;
   header: string;
+  subHeading?: string;
+  flexEnd?: boolean;
 }
 
 export type ColorPickerIncomingType = {
   type: InputTypeEnum.COLOR_PICKET_INPUT;
   name: string;
   header: string;
+  subHeading?: string;
+  flexEnd?: boolean;
 }
 
 export type TextAreaInputIncomingType = {
@@ -84,7 +88,7 @@ export type TextAreaInputIncomingType = {
 
 export type ToggleButtonInputType = ToggleButtonIncomingType & {
   onChange: (e: any)  => void;
-  value: boolean
+  value: boolean;
 }
 
 export type ColorPickerInputType = ColorPickerIncomingType & {

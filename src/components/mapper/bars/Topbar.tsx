@@ -5,11 +5,12 @@ import { InputTypeEnum } from "@/components/formComponents/types/input.types";
 import VerticalDivider from "@/components/general/VerticalDivider";
 import { FaLink } from "react-icons/fa6";
 import Link from "next/link";
+import { rajdhani } from "@/lib/Fonts";
 
 const Topbar = () => {
   const useMapper = useMapperContext();
   return (
-    <div className="p-2 px-4 fixed z-[101] bg-[rgba(36,36,36)] shadow-xl top-8 rounded-xl flex items-center justify-center gap-2">
+    <div className={`${rajdhani.className} p-2 fixed z-[101] bg-[rgba(36,36,36)] shadow-xl top-8 rounded-xl flex items-center justify-center gap-2`}>
       <ToggleButton
         value={useMapper?.view === View.WEB ? true : false}
         header={"Toggle View"}

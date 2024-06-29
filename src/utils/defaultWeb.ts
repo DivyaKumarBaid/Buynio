@@ -75,7 +75,7 @@ export const web = {
         sliderBtnColor: "#fff",
         interval: 5000,
       },
-    },
+    }
   ],
 };
 

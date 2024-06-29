@@ -1,4 +1,5 @@
 import {
+  Barlow,
   Dela_Gothic_One,
   Konkhmer_Sleokchher,
   Major_Mono_Display,
@@ -19,3 +20,4 @@ export const shadow = Shadows_Into_Light({
 export const ranga = Ranga({ weight: ["400"], subsets: ["latin"] });
 export const Konkhmer = Konkhmer_Sleokchher({ weight: ["400"], subsets: ["latin"] ,display: 'swap', adjustFontFallback: false});
 export const rajdhani = Rajdhani({ weight: ["400", "500", "600", "700"], subsets: ["latin"] });
+export const barlow = Barlow({ weight: ["400", "500", "600", "700"], subsets: ["latin"] });
