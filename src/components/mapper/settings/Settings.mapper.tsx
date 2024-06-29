@@ -4,7 +4,7 @@ import {
 } from "@/components/formComponents/InputMapper";
 import { HorizontalDivider } from "@/components/general/Divider";
 import useForm from "@/hooks/useForm";
-import { barlow, rajdhani } from "@/lib/Fonts";
+import { barlow } from "@/lib/Fonts";
 import { SECTION_TYPE } from "@/types/mapper.types";
 import { useEffect } from "react";
 import { useMapperContext } from "../hooks/selectedElemContext";
