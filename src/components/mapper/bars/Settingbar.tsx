@@ -49,7 +49,7 @@ const Settingbar = () => {
   }, [useMapper?.selectedElement]);
 
   return (
-    <div className="w-max bg-[var(--card-bg-color)] border-l-[1px] border-l-[var(--card-border-color)] shadow-[-3px_-3px_16px_rgba(0,0,0,0.3)] h-[100vh] p-4 px-2">
+    <div className="w-max min-w-[370px] bg-[var(--card-bg-color)] border-l-[1px] border-l-[var(--card-border-color)] shadow-[-3px_-3px_16px_rgba(0,0,0,0.3)] h-[100vh] overflow-y-auto overflow-x-clip p-4 px-2">
       <SettingsMapper initValue={initValue} settings={settings} />
     </div>
   );

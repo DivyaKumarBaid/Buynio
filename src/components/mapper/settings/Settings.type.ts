@@ -81,6 +81,7 @@ export const navCommonSettings = {
       name: "isSticky",
       header: "Is Sticky",
       subHeading: "Fix the navbar at the top",
+      tag: "General",
       value: false, // Default value, adjust as necessary
     },
     {
@@ -89,6 +90,7 @@ export const navCommonSettings = {
       name: "background",
       header: "Background Color",
       subHeading: "Choose the navbar background color",
+      tag: "Appearance",
       value: "#FFFFFF", // Default value, adjust as necessary
     },
     {
@@ -97,6 +99,7 @@ export const navCommonSettings = {
       name: "headerFontColor",
       header: "Header Font Color",
       subHeading: "Select the font color for the header",
+      tag: "Appearance",
       value: "#000000", // Default value, adjust as necessary
     },
     {
@@ -105,6 +108,7 @@ export const navCommonSettings = {
       name: "linkFontColor",
       header: "Link Font Color",
       subHeading: "Pick the color for the links",
+      tag: "Appearance",
       value: "#000000", // Default value, adjust as necessary
     },
     {
@@ -113,6 +117,7 @@ export const navCommonSettings = {
       name: "collapsable",
       header: "Collapsable",
       subHeading: "In Mobile view, use sidebar",
+      tag: "General",
       value: false, // Default value, adjust as necessary
     },
     {
@@ -124,6 +129,7 @@ export const navCommonSettings = {
       header: "Logo URL",
       subHeading: "Enter the URL for the logo",
       label: "",
+      tag: "Logo",
       valueTransformer: (value: string) => value,
       showError: false,
       errorTextForRegex: "",
@@ -140,6 +146,7 @@ export const navCommonSettings = {
       header: "Logo Size (px)",
       subHeading: "Specify the size of the logo in pixels",
       label: "",
+      tag: "Logo",
       valueTransformer: (value: string) => value,
       showError: false,
       errorTextForRegex: "",
@@ -154,6 +161,7 @@ export const navCommonSettings = {
       name: "logoVisibility",
       header: "Logo Visibility",
       subHeading: "Show or hide the logo",
+      tag: "Logo",
       value: true, // Default value, adjust as necessary
     },
     {
@@ -162,6 +170,7 @@ export const navCommonSettings = {
       name: "headerVisibility",
       header: "Header Visibility",
       subHeading: "Show or hide the header",
+      tag: "General",
       value: true, // Default value, adjust as necessary
     },
     {
@@ -173,6 +182,7 @@ export const navCommonSettings = {
       header: "Brand Name",
       subHeading: "Enter the name of the brand",
       label: "",
+      tag: "General",
       valueTransformer: (value: string) => value,
       showError: false,
       errorTextForRegex: "",
