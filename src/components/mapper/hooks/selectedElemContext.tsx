@@ -1,7 +1,11 @@
 "use client"
 import { SECTION_TYPE, SectionSubType } from "@/types/mapper.types";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { web as outline } from "@/utils/defaultWeb";
+import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchSavedHops } from "@/lib/keys";
+import { getSingleSavedHop } from "@/service/hop";
 
 export enum View{
   WEB="web",
@@ -33,12 +37,36 @@ export const MapperContext = React.createContext<MapperContextType | null>(
 export const useMapperContext = () => React.useContext(MapperContext);
 
 export const MapperProvider = ({ children }: { children: ReactNode }) => {
+  const { data: session } = useSession();
+
   const [selectedElement, setSelectedElement] = React.useState<SelectedElem | null>(
     null
   );
   const [view,setView] = React.useState<View>(View.WEB);
   const [roomId,setRoomId] = React.useState<string | null>(null);
   const [webJson, setWebJson] = React.useState<Record<string,any>>(webOutlint);
+
+  const { data : savedHop, isLoading } = useQuery({
+    queryKey: [fetchSavedHops],
+    queryFn: () => getSingleSavedHop(session, roomId!),
+    enabled: roomId != null
+  });
+
+  console.log(savedHop);
+
+  useEffect(() => {
+    if(!isLoading && savedHop){
+      console.log("data", savedHop)
+      setWebJson(JSON.parse(savedHop.blueprint))
+    }
+  },[savedHop])
+
+
+  // useEffect(() => {
+  //   if (!isLoading && error) {
+  //     toast.error(error.message);
+  //   }
+  // }, [error]);
 
   // console.log("Mapper", { selectedElement, setSelectedElement, view, setView, roomId, setRoomId, webJson, setWebJson});
 

@@ -1,5 +1,9 @@
 "use client";
-import { hideSidebarPaths, hideSidebarPathsWithParam } from "@/lib/constants";
+import {
+  hideSidebarPaths,
+  hideSidebarPathsWithParam,
+  SiteName,
+} from "@/lib/constants";
 import { dela, shadow } from "@/lib/Fonts";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -12,9 +16,10 @@ import { PiShoppingCartSimpleFill } from "react-icons/pi";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { SiAzuredataexplorer } from "react-icons/si";
 import { TbLayoutGridAdd } from "react-icons/tb";
+import { CgWebsite } from "react-icons/cg";
 import styled from "styled-components";
 
-const subCategories = ["general", "hop", "user", "unauthorized"];
+const subCategories = ["general", "hop", "editor", "user", "unauthorized"];
 
 const navigations = [
   {
@@ -39,6 +44,18 @@ const navigations = [
     key: "brew",
     route: "/home/hop/create",
     subcategory: "hop",
+    visible: true,
+  },
+  {
+    icon: (isSelected: boolean) => (
+      <CgWebsite
+        className={`md:text-[26px] text-[var(--text-secondary-low-color)] group-hover/tab:!text-[var(--text-primary-color)] ${isSelected && "!text-[var(--text-primary-color)]"}`}
+      />
+    ),
+    name: "Editor",
+    key: "editor",
+    route: "/mapper/editor",
+    subcategory: "editor",
     visible: true,
   },
   {
@@ -115,11 +132,15 @@ const navigations = [
   },
 ];
 
-const MovableSidebar = styled.div<{$ismovable: string }>`
-  transform: ${(props) => (props.$ismovable === "true" ? "translateX(-100px)" : "")};
+const MovableSidebar = styled.div<{ $ismovable: string }>`
+  transform: ${(props) =>
+    props.$ismovable === "true" ? "translateX(-100px)" : ""};
 `;
 
-const restrictedSubCategory = ["user", "hop"];
+const restrictedSubCategory = ["user", "hop", "editor"];
+
+// const noBrandRender = ["hop"];
+// const ifBrandRender = ["editor"];
 const unauthenticatedCategory = ["unauthorized"];
 
 const groupedTabs = subCategories.map((category) =>
@@ -129,12 +150,21 @@ const groupedTabs = subCategories.map((category) =>
 const Sidebar = ({ canHide }: { canHide: boolean }) => {
   const path = usePathname();
   const { data: session, status } = useSession();
-  if (hideSidebarPaths.includes(path) || hideSidebarPathsWithParam.find(pathWithParam => path.startsWith(pathWithParam))) return null;
+  if (
+    hideSidebarPaths.includes(path) ||
+    hideSidebarPathsWithParam.find((pathWithParam) =>
+      path.startsWith(pathWithParam)
+    )
+  )
+    return null;
 
   return (
-    <MovableSidebar $ismovable={canHide.toString()} className="fixed top-0 left-0 w-max flex group justify-center items-center z-[101]">
+    <MovableSidebar
+      $ismovable={canHide.toString()}
+      className="fixed top-0 left-0 w-max flex group justify-center items-center z-[101]"
+    >
       <div
-        className={`${shadow.className} top-0 left-0 w-max md:min-w-[100px] min-w-full md:h-[100vh] h-max bg-[var(--background-color)] flex md:flex-col flex-row md:py-6 p-2 items-center justify-start shadow-[3px_3px_16px_rgba(0,0,0,0.3)] border-r-[1px] border-r-[var(--card-border-color)] group/sidebar z-[10] duration-500 md:w-[5vw] ${canHide && 'group-hover:translate-x-[100px]'}`}
+        className={`${shadow.className} top-0 left-0 w-max md:min-w-[100px] min-w-full md:h-[100vh] h-max bg-[var(--background-color)] flex md:flex-col flex-row md:py-6 p-2 items-center justify-start shadow-[3px_3px_16px_rgba(0,0,0,0.3)] border-r-[1px] border-r-[var(--card-border-color)] group/sidebar z-[10] duration-500 md:w-[5vw] ${canHide && "group-hover:translate-x-[100px]"}`}
       >
         <div
           className={`${dela.className} md:visible md:flex hidden flex-col items-center justify-center gap-4 md:mb-12 w-full`}
@@ -147,7 +177,7 @@ const Sidebar = ({ canHide }: { canHide: boolean }) => {
             className="opacity-[0.6] group-hover/sidebar:opacity-100 duration-500"
           />
           <div className="opacity-50 group-hover/sidebar:opacity-100 duration-700 text-xs break-keep text-bold tracking-wider">
-            Headhop
+            {SiteName}
           </div>
         </div>
         <div className="flex md:flex-col justify-between md:h-full md:w-max w-full">
@@ -164,8 +194,9 @@ const Sidebar = ({ canHide }: { canHide: boolean }) => {
                   if (
                     (status == "loading" || !session?.user.refresh_token) &&
                     restrictedSubCategory.includes(tab.subcategory)
-                  )
+                  ) {
                     return null;
+                  }
 
                   if (
                     (status == "loading" || !!session?.user.refresh_token) &&
@@ -193,7 +224,9 @@ const Sidebar = ({ canHide }: { canHide: boolean }) => {
           })}
         </div>
       </div>
-      <LuChevronsRight className={`bg-[var(--background-color)] text-4xl p-2  text-[var(--text-secondary-color)] left-0 rounded-r-[50%] group-hover:translate-x-[-40px] duration-500 shadow-[2px_2px_8px_rgba(0,0,0,0.4)] cursor-pointer ${!canHide && 'hidden'}`} />
+      <LuChevronsRight
+        className={`bg-[var(--background-color)] text-4xl p-2  text-[var(--text-secondary-color)] left-0 rounded-r-[50%] group-hover:translate-x-[-40px] duration-500 shadow-[2px_2px_8px_rgba(0,0,0,0.4)] cursor-pointer ${!canHide && "hidden"}`}
+      />
     </MovableSidebar>
   );
 };

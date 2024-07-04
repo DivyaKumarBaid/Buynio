@@ -4,6 +4,7 @@ import {
 } from "@/components/hops/Section";
 import api from "@/lib/axios";
 import { storage } from "@/lib/firebase";
+import { AllSavedHopQueryResp, SavedHopQueryResp } from "@/types/hopCreator.types";
 import { AxiosResponse } from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Session } from "next-auth";
@@ -53,11 +54,11 @@ const handleUploadFile = async (value: Record<string, any>) => {
 };
 
 export const createHop = async (session: Session | null, value: any) => {
-  if (session && session.user && session.user.refresh_token) {
+  if (session && session.user && session.user.access_token) {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${session.user.refresh_token}`,
+          Authorization: `Bearer ${session.user.access_token}`,
         },
       };
 
@@ -73,6 +74,50 @@ export const createHop = async (session: Session | null, value: any) => {
       return payload.data;
     } catch (error) {
       console.error("Error creating hop:", error);
+      throw error; // Rethrow the error to propagate it
+    }
+  }
+};
+
+export const getSavedHops = async (session: Session | null) => {
+  if (session && session.user && session.user.access_token) {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${session.user.access_token}`,
+        },
+      };
+
+      // Make API call with updated value containing file URLs
+      const payload: AxiosResponse<AllSavedHopQueryResp, any> = await api.get(
+        "hop/saved-hop/all",
+        config
+      );
+      return payload.data;
+    } catch (error) {
+      console.error("Error fetching hops:", error);
+      throw error; // Rethrow the error to propagate it
+    }
+  }
+};
+
+export const getSingleSavedHop = async (session: Session | null, id : string) => {
+  if (session && session.user && session.user.access_token) {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${session.user.access_token}`,
+        },
+      };
+
+      // Make API call with updated value containing file URLs
+      const payload: AxiosResponse<SavedHopQueryResp, any> = await api.get(
+        `hop/saved-hop/${id}`,
+        config
+      );
+      return payload.data;
+    } catch (error) {
+      console.error("Error fetching hops:", error);
       throw error; // Rethrow the error to propagate it
     }
   }

@@ -4,10 +4,11 @@ export const GOOGLE_PROVIDER_ID = "google"
 export const CREDENTIAL_PROVIDER_ID = "credentials"
 export const PASSWORD_REGEX =
 /^(?=.*[a-z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
+export const SiteName = "TheLocoop";
 
 // url related stuff
 export const unrestrictedPaths = ['/','/home','/home/login','/home/signup','/home/explore','/home/categories','/home/trending','/home/brands', '/mapper'];
-export const unrestrictedPathsWithParam = ['/home/signup/verify', '/mapper/editor', '/mapper/simulator'];
+export const unrestrictedPathsWithParam = ['/home/signup/verify', '/mapper/simulator'];
 export const loggedInRestrictedPaths = ['/home/login','/home/signup','/home/signup/verify'];
 export const hideSidebarPaths = ['/home/onboarding', '/mapper/']
 export const hideSidebarPathsWithParam = ['/mapper/simulator']

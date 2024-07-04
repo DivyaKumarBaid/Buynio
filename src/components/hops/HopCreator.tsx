@@ -1,7 +1,7 @@
 "use client";
 import useForm from "@/hooks/useForm";
 import { rajdhani } from "@/lib/Fonts";
-import { createHop } from "@/service/hopCreator";
+import { createHop } from "@/service/hop";
 import { useUser } from "@/wrappers/UserWrapper";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -9,12 +9,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { InputTypeEnum } from "../formComponents/types/input.types";
 import FormButton from "../general/FormButton";
+import Loader from "../general/Loader";
 import {
   basicInfoSection,
   brandInfoSection
 } from "./Section";
-import { InputTypeEnum } from "../formComponents/types/input.types";
 import BasicInfo from "./steps/BasicInfo";
 
 const createBaseValue = () => {
@@ -97,6 +98,9 @@ const HopCreator = () => {
   const onBoardingMutation = useMutation({
     mutationFn: async (payloadData: Record<string, any>) => {
       const payload = await createHop(session, payloadData);
+      if(payload.savedHop){
+        router.push(`/editor/${payload.savedHop.id}`)
+      }
       return payload;
     },
   });
@@ -115,6 +119,9 @@ const HopCreator = () => {
       }
     );
   };
+
+  if(status == "loading")
+      return <Loader/>
 
   return (
     <div
@@ -157,8 +164,6 @@ const HopCreator = () => {
             />
           </Link>
         </div>
-        {/* <div className="w-1/4 mb-8 mr-8">
-        </div> */}
       </div>
     </div>
   );

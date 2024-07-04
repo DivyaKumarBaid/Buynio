@@ -6,7 +6,6 @@ import { barlow } from "@/lib/Fonts";
 import { SECTION_TYPE } from "@/types/mapper.types";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import React, { useEffect } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LuWrapText } from "react-icons/lu";
 import { useMapperContext } from "../hooks/selectedElemContext";
 import { SettingsMapperSubType } from "./Settings.type";
@@ -19,7 +18,7 @@ const SettingsMapper = ({
   settings: SettingsMapperSubType;
 }) => {
   const useMapper = useMapperContext();
-  const [value, handleChange] = useForm(initValue);
+  const [value, handleChange] = useForm(initValue, true);
 
   const groupedByTag = () =>
     settings.inputs.reduce((acc: Record<string, any>, input) => {
@@ -103,9 +102,7 @@ const SettingsMapper = ({
                 key={tab}
                 aria-label={tab}
                 title={<div className="w-[100%]">{tab}</div>}
-                indicator={({ isOpen }) =>
-                  isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />
-                }
+                className="border-b border-[var(--card-border-hover-color)]"
               >
                 <div className="flex flex-col gap-2">
                   {tabsContent[tab].map(

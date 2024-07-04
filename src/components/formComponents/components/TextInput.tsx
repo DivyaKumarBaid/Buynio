@@ -55,11 +55,11 @@ const TextInput = ({
         </div>
       )}
       <div
-        className={`flex justify-start items-center border-[1px] ${error ? "border-[var(--danger-secondary-low-color)]" : focus ? "border-[var(--input-focus-border)]" : "border-[var(--card-border-color)]"} rounded-md duration-300 w-[300px]`}
+        className={`flex justify-start items-center border-[1px] ${error ? "border-[var(--danger-secondary-low-color)]" : focus ? "border-[var(--input-focus-border)]" : "border-[var(--card-border-color)]"} rounded-md duration-300 min-w-[300px]`}
       >
         {preText! && (
           <div
-            className={`text-[var(--text-secondary-color)] text-md bg-[var(--pretext-bg-color)] rounded-l-md py-3 px-4 border-r-[1px] ${error ? "border-[var(--danger-secondary-low-color)]" : "border-[var(--card-border-color)]"} duration-300 w-max`}
+            className={`text-[var(--text-secondary-color)] text-md bg-[var(--pretext-bg-color)] rounded-l-md py-3 px-4 border-r-[1px] ${error ? "border-[var(--danger-secondary-low-color)]" : "border-[var(--card-border-color)]"} duration-300 w-max text-nowrap`}
           >
             {preText}
           </div>

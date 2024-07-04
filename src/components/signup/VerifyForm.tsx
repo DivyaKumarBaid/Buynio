@@ -101,8 +101,10 @@ const VerifyForm = ({ id }: { id: string }) => {
                 autoFocus={i === 0}
                 value={value.otp.length - 1 < i ? "" : value.otp[i]}
                 ref={(el) => (inputRef.current[i] = el)}
-                onChange={(e) =>
+                onChange={(e) =>{
+                  console.log(e)
                   handleDigitChange(e, i)
+                }
                 }
                 className="outline-none bg-transparent focus:border-b-[var(--border-focus-color)] border-[var(--card-border-color)] hover:border-b-[var(--card-border-hover-color)] border-b-[1.2px] text-2xl flex justify-center text-center p-2 w-[4vw] min-w-[50px]"
               />

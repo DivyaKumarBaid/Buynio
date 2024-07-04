@@ -1,7 +1,8 @@
 import { ChangeEvent, useEffect, useState } from "react";
 
 const useForm = (
-  initialValues: Record<string, any>
+  initialValues: Record<string, any>,
+  updateOnEffect?: boolean
 ): [
   values: Record<string, any>,
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void,
@@ -20,7 +21,8 @@ const useForm = (
   );
 
   useEffect(() => {
-    setValues(getDefinedInitialValues(initialValues));
+    if (updateOnEffect)
+      setValues(getDefinedInitialValues(initialValues));
   }, [initialValues]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {

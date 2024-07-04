@@ -205,7 +205,7 @@ export const brandInfoSection: singleSectionType[] = [
         multiSelect: false,
         options: [
           {
-            value: "CLOTHING",
+            value: "CLOTH",
             label: "Clothing",
           },
           {
@@ -317,17 +317,3 @@ export const brandInfoSection: singleSectionType[] = [
     ],
   },
 ];
-
-// checkbox example
-// {
-//     type: InputTypeEnum.CHECKBOX_INPUT,
-//     multiSelect: true,
-//     options: [{
-//         value:"ABC",
-//         label:"ABC",
-//     },{value:"efg",
-//     label:"efg",}],
-//     name: "ABC",
-//     header: "EFG",
-//     required: true,
-// }
