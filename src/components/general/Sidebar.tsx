@@ -54,7 +54,7 @@ const navigations = [
     ),
     name: "Editor",
     key: "editor",
-    route: "/mapper/editor",
+    route: "/home/hop",
     subcategory: "editor",
     visible: true,
   },
@@ -164,7 +164,7 @@ const Sidebar = ({ canHide }: { canHide: boolean }) => {
       className="fixed top-0 left-0 w-max flex group justify-center items-center z-[101]"
     >
       <div
-        className={`${shadow.className} top-0 left-0 w-max md:min-w-[100px] min-w-full md:h-[100vh] h-max bg-[var(--background-color)] flex md:flex-col flex-row md:py-6 p-2 items-center justify-start shadow-[3px_3px_16px_rgba(0,0,0,0.3)] border-r-[1px] border-r-[var(--card-border-color)] group/sidebar z-[10] duration-500 md:w-[5vw] ${canHide && "group-hover:translate-x-[100px]"}`}
+        className={`${shadow.className} top-0 left-0 w-max md:min-w-[100px] min-w-full md:h-[100vh] h-max bg-[var(--background-color)] flex md:flex-col flex-row md:py-6 p-2 items-center justify-start shadow-[0px_4px_18px_rgba(0,0,0,0.4)] group/sidebar z-[10] duration-500 md:w-[5vw] ${canHide && "group-hover:translate-x-[100px]"}`}
       >
         <div
           className={`${dela.className} md:visible md:flex hidden flex-col items-center justify-center gap-4 md:mb-12 w-full`}

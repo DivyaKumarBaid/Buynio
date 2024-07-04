@@ -54,7 +54,7 @@ const Editor = ({ params }: { params: { id: string } }) => {
         <div className="w-full h-[100vh] flex justify-center items-center relative">
           <Topbar />
           <iframe
-            src={`/mapper/simulator/${roomId}`}
+            src={`/hops/simulator/${roomId}`}
             className="rounded-xl border-[#aaa9ad] border-4 duration-300"
             style={{
               width: useMapper?.view === View.WEB ? "72vw" : "400px",

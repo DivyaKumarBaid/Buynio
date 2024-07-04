@@ -99,7 +99,7 @@ const HopCreator = () => {
     mutationFn: async (payloadData: Record<string, any>) => {
       const payload = await createHop(session, payloadData);
       if(payload.savedHop){
-        router.push(`/editor/${payload.savedHop.id}`)
+        router.push(`/hops/editor/${payload.savedHop.id}`)
       }
       return payload;
     },

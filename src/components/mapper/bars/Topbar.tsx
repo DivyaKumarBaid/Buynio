@@ -37,7 +37,7 @@ const Topbar = () => {
             height="20px"
             backgroundColor="rgba(150,150,150)"
           />
-          <Link href={`/mapper/simulator/${useMapper?.roomId}`} target="_blank">
+          <Link href={`/hops/simulator/${useMapper?.roomId}`} target="_blank">
             <FaLink className="text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] duration-200 cursor-pointer text-xl mx-2" />
           </Link>
         </>

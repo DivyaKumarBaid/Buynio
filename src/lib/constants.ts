@@ -8,8 +8,8 @@ export const SiteName = "TheLocoop";
 
 // url related stuff
 export const unrestrictedPaths = ['/','/home','/home/login','/home/signup','/home/explore','/home/categories','/home/trending','/home/brands', '/mapper'];
-export const unrestrictedPathsWithParam = ['/home/signup/verify', '/mapper/simulator'];
+export const unrestrictedPathsWithParam = ['/home/signup/verify', '/hops/simulator'];
 export const loggedInRestrictedPaths = ['/home/login','/home/signup','/home/signup/verify'];
-export const hideSidebarPaths = ['/home/onboarding', '/mapper/']
-export const hideSidebarPathsWithParam = ['/mapper/simulator']
+export const hideSidebarPaths = ['/home/onboarding', '/hops/']
+export const hideSidebarPathsWithParam = ['/hops/simulator']
 export const autoHideSidebarPath = ['/home/mapper'];

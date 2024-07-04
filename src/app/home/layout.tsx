@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="relative md:pl-[6vw] w-full min-h-[100vh] bg-[var(--background-color)]">
+    <div className="relative md:pl-[calc(max(6vw,100px))] w-full min-h-[100vh] bg-[var(--background-color)]">
       <Sidebar canHide={false} />
       {children}
     </div>
