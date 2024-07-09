@@ -7,11 +7,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 
 const Page = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { data : savedHops, isLoading } = useQuery({
     queryKey: [fetchSavedHops],
     queryFn: () => getSavedHops(session),
-    enabled: true
+    enabled: status != "loading" && !!session?.user?.refresh_token,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true
   });
 
   // useEffect(() => {

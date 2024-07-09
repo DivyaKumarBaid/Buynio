@@ -49,7 +49,7 @@ const SettingsMapper = ({
   function updateValueInJson() {
     if (useMapper?.webJson) {
       useMapper?.setWebJson?.((prevJson) => {
-        const updatedJson = settings.patchJson(prevJson, value);
+        const updatedJson = settings.patchJson(prevJson || {}, value);
         return { ...prevJson, ...updatedJson };
       });
     }

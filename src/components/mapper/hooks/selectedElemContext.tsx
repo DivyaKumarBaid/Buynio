@@ -1,18 +1,15 @@
-"use client"
-import { SECTION_TYPE, SectionSubType } from "@/types/mapper.types";
-import React, { ReactNode, useEffect } from "react";
-import { web as outline } from "@/utils/defaultWeb";
-import { useSession } from "next-auth/react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchSavedHops } from "@/lib/keys";
+"use client";
+import { fetchSingleSavedHop } from "@/lib/keys";
 import { getSingleSavedHop } from "@/service/hop";
+import { SECTION_TYPE, SectionSubType } from "@/types/mapper.types";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import React, { ReactNode, useEffect } from "react";
 
-export enum View{
-  WEB="web",
-  MOBILE="mobile"
+export enum View {
+  WEB = "web",
+  MOBILE = "mobile",
 }
-
-const webOutlint = outline;
 
 type MapperContextType = {
   selectedElement: SelectedElem | null;
@@ -21,14 +18,14 @@ type MapperContextType = {
   setView: React.Dispatch<React.SetStateAction<View>>;
   roomId?: string | null;
   setRoomId?: React.Dispatch<React.SetStateAction<string | null>>;
-  webJson?: Record<string,any>;
-  setWebJson?: React.Dispatch<React.SetStateAction<Record<string, any>>>
+  webJson?: Record<string, any> | null;
+  setWebJson?: React.Dispatch<React.SetStateAction<Record<string, any> | null>>;
 };
 
 export type SelectedElem = {
-  type: SECTION_TYPE,
-  subType: SectionSubType
-}
+  type: SECTION_TYPE;
+  subType: SectionSubType;
+};
 
 export const MapperContext = React.createContext<MapperContextType | null>(
   null
@@ -37,30 +34,29 @@ export const MapperContext = React.createContext<MapperContextType | null>(
 export const useMapperContext = () => React.useContext(MapperContext);
 
 export const MapperProvider = ({ children }: { children: ReactNode }) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
-  const [selectedElement, setSelectedElement] = React.useState<SelectedElem | null>(
-    null
-  );
-  const [view,setView] = React.useState<View>(View.WEB);
-  const [roomId,setRoomId] = React.useState<string | null>(null);
-  const [webJson, setWebJson] = React.useState<Record<string,any>>(webOutlint);
+  const [selectedElement, setSelectedElement] =
+    React.useState<SelectedElem | null>(null);
+  const [view, setView] = React.useState<View>(View.WEB);
+  const [roomId, setRoomId] = React.useState<string | null>(null);
+  const [webJson, setWebJson] = React.useState<Record<string, any> | null>(null);
 
-  const { data : savedHop, isLoading } = useQuery({
-    queryKey: [fetchSavedHops],
+  const { data: savedHop, isLoading } = useQuery({
+    queryKey: [fetchSingleSavedHop],
     queryFn: () => getSingleSavedHop(session, roomId!),
-    enabled: roomId != null
+    enabled:
+      status != "loading" && !!session?.user?.refresh_token && roomId != null,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 
-  console.log(savedHop);
-
   useEffect(() => {
-    if(!isLoading && savedHop){
-      console.log("data", savedHop)
-      setWebJson(JSON.parse(savedHop.blueprint))
+    if (!isLoading && savedHop) {
+      setWebJson(JSON.parse(savedHop.blueprint));
     }
-  },[savedHop])
-
+  }, [savedHop]);
 
   // useEffect(() => {
   //   if (!isLoading && error) {
@@ -71,7 +67,18 @@ export const MapperProvider = ({ children }: { children: ReactNode }) => {
   // console.log("Mapper", { selectedElement, setSelectedElement, view, setView, roomId, setRoomId, webJson, setWebJson});
 
   return (
-    <MapperContext.Provider value={{ selectedElement, setSelectedElement, view, setView, roomId, setRoomId, webJson, setWebJson}}>
+    <MapperContext.Provider
+      value={{
+        selectedElement,
+        setSelectedElement,
+        view,
+        setView,
+        roomId,
+        setRoomId,
+        webJson,
+        setWebJson,
+      }}
+    >
       {children}
     </MapperContext.Provider>
   );

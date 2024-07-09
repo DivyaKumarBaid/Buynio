@@ -170,7 +170,7 @@ const Sidebar = ({ canHide }: { canHide: boolean }) => {
           className={`${dela.className} md:visible md:flex hidden flex-col items-center justify-center gap-4 md:mb-12 w-full`}
         >
           <Image
-            src="/light_logo.png"
+            src="/logoLight.png"
             alt={""}
             width={40}
             height={35}

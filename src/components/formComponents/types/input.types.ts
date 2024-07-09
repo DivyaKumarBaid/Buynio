@@ -8,6 +8,7 @@ export enum InputTypeEnum {
   CHECKBOX_INPUT = "checkboxInput",
   TOGGLE_BUTTON_INPUT = "toggleButtonInput",
   COLOR_PICKET_INPUT = "colorPickerInput",
+  DROPDOWN_INPUT = "dropdownInput",
 }
 
 export type GlobalInputType =
@@ -45,6 +46,19 @@ export type TextInputIncomingType = {
   required: boolean;
 };
 
+export type DropdownInputIncomingType = {
+  tag?: string;
+  type: InputTypeEnum.DROPDOWN_INPUT;
+  name: string;
+  preText: string;
+  postText: string;
+  header: string;
+  label: string;
+  required: boolean;
+  multiSelect: boolean;
+  options: OptionType[];
+};
+
 export type NumberInputIncomingType = {
   tag?: string;
   type: InputTypeEnum.NUMBER_INPUT;
@@ -65,6 +79,24 @@ export type NumberInputIncomingType = {
 export type TextInputType = TextInputIncomingType & {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   value: string;
+};
+
+export type DummyEvent = {
+  target: {
+    name: string;
+    type: string;
+    value: any;
+  };
+};
+
+export type DropdownOptionType = {
+  value: string;
+  label: string;
+};
+
+export type DropdownInputType = DropdownInputIncomingType & {
+  onChange: (e: DummyEvent) => void;
+  value: DropdownOptionType;
 };
 
 export type NumberInputType = TextInputIncomingType & {
@@ -107,12 +139,12 @@ export type TextAreaInputIncomingType = {
 };
 
 export type ToggleButtonInputType = ToggleButtonIncomingType & {
-  onChange: (e: any) => void;
+  onChange: (e: DummyEvent) => void;
   value: boolean;
 };
 
 export type ColorPickerInputType = ColorPickerIncomingType & {
-  onChange: (e: any) => void;
+  onChange: (e: DummyEvent) => void;
   value: string;
 };
 
@@ -157,10 +189,10 @@ export type CheckboxIncomingMultiSelectType = CheckboxBaseIncomingType & {
 
 export type CheckboxType =
   | (CheckboxIncomingType & {
-      onChange: (e: any) => void;
+      onChange: (e: DummyEvent) => void;
       value: string;
     })
   | (CheckboxIncomingMultiSelectType & {
-      onChange: (e: any) => void;
+      onChange: (e: DummyEvent) => void;
       value: string[];
     });

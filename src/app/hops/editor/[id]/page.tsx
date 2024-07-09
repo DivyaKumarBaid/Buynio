@@ -14,19 +14,19 @@ const Editor = ({ params }: { params: { id: string } }) => {
   const roomId = params.id;
 
   useEffect(() => {
-    sendMessage();
-  },[useMapper?.webJson])
-
-  useEffect(()=>{
-    socket.emit("updateJsonToRoom", {room: roomId, message: useMapper?.webJson})
-  },[useMapper?.webJson])
+    if (useMapper?.webJson) {
+      socket.emit("updateJsonToRoom", { room: roomId, message: useMapper.webJson });
+    }
+  }, [useMapper?.webJson, roomId]);
 
   useEffect(() => {
     socket.emit("joinRoom", roomId);
 
     socket.on("joinedRoom", (room: string) => {
-      socket.emit("updateJsonToRoom", {room: roomId, message: useMapper?.webJson});
       if (useMapper?.setRoomId) useMapper.setRoomId(room);
+      if (useMapper?.webJson) {
+        socket.emit("updateJsonToRoom", { room: roomId, message: useMapper.webJson });
+      }
     });
 
     socket.on("messageToClient", (data: string) => {
@@ -40,13 +40,9 @@ const Editor = ({ params }: { params: { id: string } }) => {
     return () => {
       socket.off("joinedRoom");
       socket.off("messageToClient");
+      socket.off("elemSelectedToClient");
     };
-  }, [roomId]);
-
-
-  const sendMessage = () => {
-    socket.emit("messageToRoom", { room: roomId, message: useMapper?.webJson });
-  };
+  }, [roomId, useMapper]);
 
   return (
     <div className="flex justify-center items-center w-[100vw] min-h-[100vh]">
@@ -69,5 +65,3 @@ const Editor = ({ params }: { params: { id: string } }) => {
 };
 
 export default Editor;
-
-// pages/mapper/editor.tsx

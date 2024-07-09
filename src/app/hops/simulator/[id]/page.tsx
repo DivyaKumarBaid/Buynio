@@ -22,29 +22,26 @@ const Simulator = ({ params }: { params: { id: string } }) => {
   const [selectedElem, setSelectedElem] = React.useState<SelectedElem | null>(
     null
   );
-  const [webJson, setJson] = React.useState<Record<string, any>>({});
+  const [webJson, setJson] = React.useState<Record<string, any> | null>(null);
 
   useEffect(() => {
     if (params.id) {
       socket.emit("joinRoom", params.id);
 
-      socket.on("joinedRoom", (room: string) => {
-        console.log(`Simulator Joined room: ${room}`);
-      });
+      // socket.on("joinedRoom", (room: string) => {
+      //   console.log(`Simulator Joined room: ${room}`);
+      // });
 
-      socket.on("messageToClient", (data: string) => {
-        console.log(`Simulator ${params.id} received message:`, data);
-      });
+      // socket.on("messageToClient", (data: string) => {
+      //   console.log(`Simulator ${params.id} received message:`, data);
+      // });
 
-      socket.on("elemSelectedToClient", (data: SelectedElem) => {
-        console.log(
-          `Simulator ${params.id} received message on element selection:`,
-          data
-        );
-      });
+      // socket.on("elemSelectedToClient", (data: SelectedElem) => {
+      //   console.log(`Simulator ${params.id} received message on element selection:`, data);
+      // });
 
       socket.on("updateJsonToClient", (data: Record<string, any>) => {
-        console.log("updatedData",data)
+        // console.log("updatedData", data);
         setJson(data);
         if (loading) setLoading(false);
       });
@@ -52,16 +49,18 @@ const Simulator = ({ params }: { params: { id: string } }) => {
       return () => {
         socket.off("joinedRoom");
         socket.off("messageToClient");
+        socket.off("elemSelectedToClient");
+        socket.off("updateJsonToClient");
       };
     }
-  }, [params.id]);
+  }, [params.id, loading]);
 
   const handleElemSelection = (name: SelectedElem | null) => {
     socket.emit("elemSelectedToRoom", { room: params.id, message: name });
     setSelectedElem(name);
   };
 
-  if (loading) return <Loader />;
+  if (loading || webJson == null) return <Loader />;
 
   return (
     <Main
@@ -73,7 +72,7 @@ const Simulator = ({ params }: { params: { id: string } }) => {
         ...webJson[SECTION_TYPE.NAV_BAR],
         isSelectMode: true,
         setSelectedElement: handleElemSelection,
-        selected: selectedElem?.type == SECTION_TYPE.NAV_BAR,
+        selected: selectedElem?.type === SECTION_TYPE.NAV_BAR,
       })}
       {webJson.sections?.map((section: any, index: number) => {
         return (
