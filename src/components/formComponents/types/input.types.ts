@@ -3,6 +3,8 @@ import { ChangeEvent } from "react";
 export enum InputTypeEnum {
   IMAGE_UPLOADER = "imageUploader",
   TEXT_INPUT = "textInput",
+  MULTI_TEXT_INPUT = "multiTextInput",
+  MULTI_TEXT_MULTI_INPUT = "multiTextMultiInput",
   NUMBER_INPUT = "numberInput",
   TEXT_AREA_INPUT = "textAreaInput",
   CHECKBOX_INPUT = "checkboxInput",
@@ -14,19 +16,26 @@ export enum InputTypeEnum {
 export type GlobalInputType =
   | ImageFileUploaderType
   | TextInputType
+  | MultiTextInputType
+  | MultiTextMultiInputType
   | NumberInputType
   | TextAreaInputType
   | CheckboxType
   | ToggleButtonInputType
+  | DropdownInputType
   | ColorPickerInputType;
+
 export type GlobalInputIncomingType =
   | ImageFileUploaderIncomingType
   | TextInputIncomingType
+  | MultiTextInputIncomingType
+  | MultiTextMultiInputIncomingType
   | NumberInputIncomingType
   | TextAreaInputIncomingType
   | CheckboxIncomingType
   | CheckboxIncomingMultiSelectType
   | ToggleButtonIncomingType
+  | DropdownInputIncomingType
   | ColorPickerIncomingType;
 
 export type TextInputIncomingType = {
@@ -44,6 +53,33 @@ export type TextInputIncomingType = {
   regexMatch: RegExp | null;
   maxLength?: number;
   required: boolean;
+};
+
+export type MultiTextInputIncomingType = {
+  tag?: string;
+  type: InputTypeEnum.MULTI_TEXT_INPUT;
+  name: string;
+  placeholder: string;
+  preText: string;
+  postText: string;
+  label: string;
+  valueTransformer: (value: string) => string;
+  showError: boolean;
+  errorTextForRegex: string;
+  regexMatch: RegExp | null;
+  maxLength?: number;
+  required: boolean;
+  maximunFields: number;
+};
+
+export type MultiTextMultiInputIncomingType = {
+  tag?: string;
+  type: InputTypeEnum.MULTI_TEXT_MULTI_INPUT;
+  name: string;
+  label: string;
+  required: boolean;
+  maximunFields: number;
+  structure: TextInputIncomingType[];
 };
 
 export type DropdownInputIncomingType = {
@@ -79,6 +115,16 @@ export type NumberInputIncomingType = {
 export type TextInputType = TextInputIncomingType & {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   value: string;
+};
+
+export type MultiTextInputType = MultiTextInputIncomingType & {
+  onChange: (e: DummyEvent) => void;
+  value: string[];
+};
+
+export type MultiTextMultiInputType = MultiTextMultiInputIncomingType & {
+  onChange: (e: DummyEvent) => void;
+  value: Record<string,any>[];
 };
 
 export type DummyEvent = {

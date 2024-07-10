@@ -39,7 +39,7 @@ const TextInput = ({
   }, [value]);
 
   return (
-    <div className="w-min flex text-sm gap-2 flex-col relative m-4 pt-2 duration-300">
+    <div className="w-min flex text-sm gap-2 flex-col relative my-1 mx-4 pt-2 duration-300">
       {label! && (
         <div className="text-sm text-[var(--text-secondary-color)] ml-2">
           {label}

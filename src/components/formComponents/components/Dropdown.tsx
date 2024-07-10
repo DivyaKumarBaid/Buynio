@@ -3,7 +3,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Dropdown as NextUIDropdown
+  Dropdown as NextUIDropdown,
 } from "@nextui-org/react";
 import React from "react";
 import { FaChevronDown } from "react-icons/fa6";
@@ -11,9 +11,6 @@ import { DropdownInputType } from "../types/input.types";
 
 const Dropdown = ({
   onChange,
-
-  // value,
-  // tag,
   name,
   preText,
   postText,
@@ -21,7 +18,7 @@ const Dropdown = ({
   label,
   required,
   multiSelect,
-  options,
+  options
 }: DropdownInputType) => {
   const [focus, setFocus] = React.useState<boolean>(false);
 

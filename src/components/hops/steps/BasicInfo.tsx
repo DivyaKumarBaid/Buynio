@@ -89,7 +89,7 @@ const BasicInfo = ({
                   {sect.subHeading}
                 </div>
               </div>
-              <div className="flex flex-col w-[40%] items-start">
+              <div className="flex flex-col w-[40%] items-start gap-4">
                 {sect.inputs.map((inp: any, idx: number) => {
                   switch (inp.type) {
                     case InputTypeEnum.COLOR_PICKET_INPUT:
