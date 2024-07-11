@@ -6,6 +6,7 @@ import { switchNav, switchSection } from "@/mapper/ComponentMap";
 import { SECTION_TYPE } from "@/types/mapper.types";
 import socket from "@/utils/socket";
 import React, { useEffect } from "react";
+import { CiSquarePlus } from "react-icons/ci";
 import styled from "styled-components";
 
 const Main = styled.div<{
@@ -84,6 +85,10 @@ const Simulator = ({ params }: { params: { id: string } }) => {
           </SectionContainer>
         );
       })}
+      <div className="group flex flex-col border-[1px] border-[var(--card-border-color)] rounded-lg justify-center duration-300 text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] items-center mx-8 mb-8 h-[70vh] cursor-pointer">
+        <CiSquarePlus className=" text-[100px]" />
+        <h1>Add a new section</h1>
+      </div>
     </Main>
   );
 };
