@@ -36,7 +36,7 @@ const createBaseValue = () => {
           initialValue[inp.name] = null;
           break;
         case InputTypeEnum.COLOR_PICKET_INPUT:
-          initialValue[inp.name] = "#eee";
+          initialValue[inp.name] = "#000";
           break;
         case InputTypeEnum.CHECKBOX_INPUT:
           initialValue[inp.name] = inp.multiSelect ? [] : "";

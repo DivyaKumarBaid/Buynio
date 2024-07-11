@@ -110,7 +110,7 @@ const Dropdown = ({
         selectionMode={multiSelect ? "multiple" : "single"}
         selectedKeys={selectedKeys}
         onSelectionChange={handleSelectionChange}
-        className="min-w-[300px] bg-[var(--card-bg-color)] shadow-xl rounded-md"
+        className="min-w-[300px] bg-[var(--card-bg-color)] rounded-md px-4 py-2 shadow-[0px_0px_12px_rgba(0,0,0,0.3)] border-[1px] border-[var(--card-border-color)]"
       >
         {options.map((opt) => {
           return <DropdownItem key={opt.value}>{opt.label}</DropdownItem>;

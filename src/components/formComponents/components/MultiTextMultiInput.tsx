@@ -68,7 +68,7 @@ const MultiTextMultiInput = ({
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-min">
       {label! && (
         <div className="text-sm text-[var(--text-secondary-color)] mx-4">
           {label}
@@ -81,31 +81,39 @@ const MultiTextMultiInput = ({
             className="flex items-center"
             key={`${input}${index}${InputTypeEnum.MULTI_TEXT_MULTI_INPUT}`}
           >
-            {structure?.map((struct, idx) => {
-              return (
-                <div className="flex items-center" key={`${struct.name}${idx}`}>
-                  <TextInput
-                    type={InputTypeEnum.TEXT_INPUT}
-                    name={`${input}${idx}`}
-                    placeholder={struct.placeholder}
-                    preText={struct.preText}
-                    postText={struct.postText}
-                    header={""}
-                    label={struct.label}
-                    valueTransformer={struct.valueTransformer}
-                    showError={struct.showError}
-                    errorTextForRegex={struct.errorTextForRegex}
-                    regexMatch={struct.regexMatch}
-                    required={struct.required}
-                    onChange={(e) =>
-                      handleChange(index, struct.name, e.target.value)
-                    }
-                    value={input[struct.name]}
-                    maxLength={struct.maxLength}
-                  />
-                </div>
-              );
-            })}
+            <div
+              className="flex items-center flex-wrap"
+              key={`${input}${index}${InputTypeEnum.MULTI_TEXT_MULTI_INPUT}`}
+            >
+              {structure?.map((struct, idx) => {
+                return (
+                  <div
+                    className="flex items-center flex-wrap"
+                    key={`${struct.name}${idx}`}
+                  >
+                    <TextInput
+                      type={InputTypeEnum.TEXT_INPUT}
+                      name={`${input}${idx}`}
+                      placeholder={struct.placeholder}
+                      preText={struct.preText}
+                      postText={struct.postText}
+                      header={""}
+                      label={struct.label}
+                      valueTransformer={struct.valueTransformer}
+                      showError={struct.showError}
+                      errorTextForRegex={struct.errorTextForRegex}
+                      regexMatch={struct.regexMatch}
+                      required={struct.required}
+                      onChange={(e) =>
+                        handleChange(index, struct.name, e.target.value)
+                      }
+                      value={input[struct.name]}
+                      maxLength={struct.maxLength}
+                    />
+                  </div>
+                );
+              })}
+            </div>
             {required && value?.length == 1 ? null : (
               <CiSquareMinus
                 onClick={() => handleRemoveField(index)}

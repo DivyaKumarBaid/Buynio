@@ -8,8 +8,14 @@ import socket from "@/utils/socket";
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-const Main = styled.div<{ $bgColor: string }>`
+const Main = styled.div<{
+  $bgColor: string;
+  $fontFamily: string;
+  $baseFontSize: string;
+}>`
   background: ${(props) => props.$bgColor};
+  font-family: ${(props) => props.$fontFamily};
+  font-size: ${(props) => props.$baseFontSize}px;
 `;
 
 const SectionContainer = styled.div<{ $paddingTop: string; $bgColor: string }>`
@@ -28,28 +34,12 @@ const Simulator = ({ params }: { params: { id: string } }) => {
     if (params.id) {
       socket.emit("joinRoom", params.id);
 
-      // socket.on("joinedRoom", (room: string) => {
-      //   console.log(`Simulator Joined room: ${room}`);
-      // });
-
-      // socket.on("messageToClient", (data: string) => {
-      //   console.log(`Simulator ${params.id} received message:`, data);
-      // });
-
-      // socket.on("elemSelectedToClient", (data: SelectedElem) => {
-      //   console.log(`Simulator ${params.id} received message on element selection:`, data);
-      // });
-
       socket.on("updateJsonToClient", (data: Record<string, any>) => {
-        // console.log("updatedData", data);
         setJson(data);
         if (loading) setLoading(false);
       });
 
       return () => {
-        socket.off("joinedRoom");
-        socket.off("messageToClient");
-        socket.off("elemSelectedToClient");
         socket.off("updateJsonToClient");
       };
     }
@@ -62,10 +52,14 @@ const Simulator = ({ params }: { params: { id: string } }) => {
 
   if (loading || webJson == null) return <Loader />;
 
+  const generalSettings = webJson[SECTION_TYPE.GENERAL];
+
   return (
     <Main
-      $bgColor={webJson[SECTION_TYPE.GENERAL].backgroud}
-      className={`w-full min-h-[100vh] relative`}
+      $bgColor={generalSettings.backgroud}
+      $fontFamily={generalSettings.headingFontFamily}
+      $baseFontSize={generalSettings.baseFontSize}
+      className="w-full min-h-[100vh] relative"
       onClick={() => handleElemSelection(null)}
     >
       {switchNav(webJson[SECTION_TYPE.NAV_BAR]?.type, {

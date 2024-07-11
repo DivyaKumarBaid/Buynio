@@ -42,6 +42,8 @@ export const MapperProvider = ({ children }: { children: ReactNode }) => {
   const [roomId, setRoomId] = React.useState<string | null>(null);
   const [webJson, setWebJson] = React.useState<Record<string, any> | null>(null);
 
+  console.log({webJson})
+
   const { data: savedHop, isLoading } = useQuery({
     queryKey: [fetchSingleSavedHop],
     queryFn: () => getSingleSavedHop(session, roomId!),

@@ -25,7 +25,7 @@ const ColorPicker = ({
           {header}
         </div>
         {subHeading! && (
-          <div className="text-[var(--text-secondary-color)] text-xs">
+          <div className="text-[var(--text-secondary-color)] text-xs break-keep">
             {subHeading}
           </div>
         )}

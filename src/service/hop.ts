@@ -4,7 +4,10 @@ import {
 } from "@/components/hops/Section";
 import api from "@/lib/axios";
 import { storage } from "@/lib/firebase";
-import { AllSavedHopQueryResp, SavedHopQueryResp } from "@/types/hopCreator.types";
+import {
+  AllSavedHopQueryResp,
+  SavedHopQueryResp,
+} from "@/types/hopCreator.types";
 import { AxiosResponse } from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Session } from "next-auth";
@@ -101,7 +104,10 @@ export const getSavedHops = async (session: Session | null) => {
   }
 };
 
-export const getSingleSavedHop = async (session: Session | null, id : string) => {
+export const getSingleSavedHop = async (
+  session: Session | null,
+  id: string
+) => {
   if (session && session.user && session.user.access_token) {
     try {
       const config = {
@@ -113,6 +119,33 @@ export const getSingleSavedHop = async (session: Session | null, id : string) =>
       // Make API call with updated value containing file URLs
       const payload: AxiosResponse<SavedHopQueryResp, any> = await api.get(
         `hop/saved-hop/${id}`,
+        config
+      );
+      return payload.data;
+    } catch (error) {
+      console.error("Error fetching hops:", error);
+      throw error; // Rethrow the error to propagate it
+    }
+  }
+};
+
+export const saveHop = async (
+  session: Session | null,
+  id: string,
+  value: string
+) => {
+  if (session && session.user && session.user.access_token) {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${session.user.access_token}`,
+        },
+      };
+
+      // Make API call with updated value containing file URLs
+      const payload: AxiosResponse<any, any> = await api.post(
+        `hop/saved-hop/save/${id}`,
+        { blueprint: value },
         config
       );
       return payload.data;

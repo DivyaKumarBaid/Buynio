@@ -19,11 +19,11 @@ const Settingbar = () => {
   const [initValue, setInitValue] = React.useState(createValue());
 
   function createValue() {
-    const base = createBaseValue(
+    const arr =
       settingsMapper[useMapper?.selectedElement?.type || SECTION_TYPE.GENERAL][
         useMapper?.selectedElement?.subType || SECTION_TYPE.GENERAL
-      ].input
-    );
+      ].inputs;
+    const base = createBaseValue(arr);
     const updatedSettings =
       settingsMapper[useMapper?.selectedElement?.type || SECTION_TYPE.GENERAL][
         useMapper?.selectedElement?.subType || SECTION_TYPE.GENERAL
@@ -36,7 +36,7 @@ const Settingbar = () => {
       );
     else
       originalValue = updatedSettings.getJsonFromKey(useMapper?.webJson || {});
-    return { ...base, ...originalValue };
+    return { ...base, ...originalValue }; //patches base value with one present in webjson
   }
 
   useEffect(() => {
@@ -45,7 +45,9 @@ const Settingbar = () => {
         useMapper?.selectedElement?.subType || SECTION_TYPE.GENERAL
       ]
     );
-    setInitValue(createValue());
+    const initVal = createValue();
+    console.log({ initVal });
+    setInitValue(initVal);
   }, [useMapper?.selectedElement]);
 
   return (

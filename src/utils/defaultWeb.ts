@@ -3,7 +3,16 @@ export const web = {
     brandName: "Hopster",
     logo: "https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png",
     currency: "INR",
-    backgroud: "#101010",
+    backgroundColor: "#101010",
+    headingFontColor: "#ffffff",
+    paragraphFontColor: "#ffffff",
+    headingFontFamily: "poppins",
+    paragraphFontFamily: "poppins",
+    baseFontSize: 16,
+    customCSSClasses: [],
+    metaTags: [],
+
+    // Add more general settings here as needed
   },
   NAVBAR: {
     isSticky: true,
@@ -23,6 +32,8 @@ export const web = {
     logoVisibility: true,
     headerVisibility: true,
     brandName: "Hopster",
+
+    // Add more navbar settings here if needed
   },
   headerConfig: {
     fontStyle: "poppins",
@@ -75,7 +86,7 @@ export const web = {
         sliderBtnColor: "#fff",
         interval: 5000,
       },
-    }
+    },
   ],
 };
 

@@ -90,7 +90,7 @@ const SettingsMapper = ({
         />
       </div>
       <HorizontalDivider />
-      <div className=" flex flex-col px-2 w-full">
+      <div className=" flex flex-col w-full">
         <Accordion
           selectionMode="multiple"
           selectedKeys={currentTab}
@@ -101,7 +101,7 @@ const SettingsMapper = ({
               <AccordionItem
                 key={tab}
                 aria-label={tab}
-                title={<div className="w-[100%]">{tab}</div>}
+                title={<div className="w-[100%] mx-2">{tab}</div>}
                 className="border-b border-[var(--card-border-hover-color)]"
               >
                 <div className="flex flex-col gap-2">

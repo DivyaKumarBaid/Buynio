@@ -45,7 +45,7 @@ const Editor = ({ params }: { params: { id: string } }) => {
   }, [roomId, useMapper]);
 
   return (
-    <div className="flex justify-center items-center w-[100vw] min-h-[100vh]">
+    <div className="flex justify-center items-center w-[100vw] min-h-[100vh] bg-[url('/editorBg.png')] bg-cover bg-no-repeat bg-center">
       <div className="flex w-full h-full justify-between">
         <div className="w-full h-[100vh] flex justify-center items-center relative">
           <Topbar />
@@ -55,6 +55,9 @@ const Editor = ({ params }: { params: { id: string } }) => {
             style={{
               width: useMapper?.view === View.WEB ? "72vw" : "400px",
               height: useMapper?.view === View.WEB ? "744px" : "744px",
+              background: "url('/editorBg.png')",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat"
             }}
           />
         </div>

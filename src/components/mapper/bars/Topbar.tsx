@@ -1,16 +1,53 @@
-import React from "react";
-import { useMapperContext, View } from "../hooks/selectedElemContext";
 import ToggleButton from "@/components/formComponents/components/ToggleButton";
 import { InputTypeEnum } from "@/components/formComponents/types/input.types";
 import VerticalDivider from "@/components/general/VerticalDivider";
-import { FaLink } from "react-icons/fa6";
-import Link from "next/link";
 import { rajdhani } from "@/lib/Fonts";
+import { saveHop } from "@/service/hop";
+import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { FaLink } from "react-icons/fa6";
+import { LuSave } from "react-icons/lu";
+import { useMapperContext, View } from "../hooks/selectedElemContext";
 
 const Topbar = () => {
+  const { data: session } = useSession();
+
+  const [saving, setSaving] = useState<boolean>(false);
+
+  const saveHopMutation = useMutation({
+    mutationFn: async (_: string) => {
+      const payload = await saveHop(
+        session,
+        useMapper?.roomId || "",
+        JSON.stringify(useMapper?.webJson) || ""
+      );
+      return payload;
+    },
+  });
+
+  const handleSave = async () => {
+    setSaving(true);
+    saveHopMutation.mutateAsync("", {
+      onSuccess: () => {
+        // userModule?.updateUser();
+        toast.success("Successfully saved hop");
+        setSaving(false);
+      },
+      onError: () => {
+        toast.error("Something went wrong!");
+        setSaving(false);
+      },
+    });
+  };
+
   const useMapper = useMapperContext();
   return (
-    <div className={`${rajdhani.className} p-2 fixed z-[101] bg-[rgba(36,36,36)] shadow-xl top-8 rounded-xl flex items-center justify-center gap-2`}>
+    <div
+      className={`${rajdhani.className} p-2 fixed z-[101] bg-[var(--card-bg-color)] shadow-xl top-8 rounded-xl flex items-center justify-center gap-2`}
+    >
       <ToggleButton
         value={useMapper?.view === View.WEB ? true : false}
         header={"Toggle View"}
@@ -42,6 +79,19 @@ const Topbar = () => {
           </Link>
         </>
       )}
+      <>
+        <VerticalDivider
+          width="1px"
+          height="20px"
+          backgroundColor="rgba(150,150,150)"
+        />
+        <div
+          className="mx-2 flex text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] items-center gap-2 cursor-pointer"
+          onClick={() => !saving && handleSave()}
+        >
+          <LuSave /> Save
+        </div>
+      </>
     </div>
   );
 };
