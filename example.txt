@@ -17,7 +17,7 @@
     brandName: String,
     logo: String,
     currency: String,
-    backgroud: String,
+    background: String,
     header: {
         fontStyle: String,
         fontColor: String

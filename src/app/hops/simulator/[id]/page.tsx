@@ -53,11 +53,13 @@ const Simulator = ({ params }: { params: { id: string } }) => {
 
   if (loading || webJson == null) return <Loader />;
 
+  console.log(webJson)
+
   const generalSettings = webJson[SECTION_TYPE.GENERAL];
 
   return (
     <Main
-      $bgColor={generalSettings.backgroud}
+      $bgColor={generalSettings.background}
       $fontFamily={generalSettings.headingFontFamily}
       $baseFontSize={generalSettings.baseFontSize}
       className="w-full min-h-[100vh] relative"
@@ -72,7 +74,7 @@ const Simulator = ({ params }: { params: { id: string } }) => {
       {webJson.sections?.map((section: any, index: number) => {
         return (
           <SectionContainer
-            $bgColor={section.backgroud}
+            $bgColor={section.background}
             $paddingTop={
               webJson[SECTION_TYPE.NAV_BAR] && index === 0
                 ? navBarTopPosition[webJson[SECTION_TYPE.NAV_BAR].type]
@@ -85,7 +87,7 @@ const Simulator = ({ params }: { params: { id: string } }) => {
           </SectionContainer>
         );
       })}
-      <div className="group flex flex-col border-[1px] border-[var(--card-border-color)] rounded-lg justify-center duration-300 text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] items-center mx-8 mb-8 h-[70vh] cursor-pointer">
+      <div className="group flex flex-col border-[1px] border-[var(--card-border-color)] rounded-lg justify-center duration-300 text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] items-center mx-8 mb-8 h-[70vh] cursor-pointer bg-[url('/editorBg.png')] bg-cover bg-no-repeat">
         <CiSquarePlus className=" text-[100px]" />
         <h1>Add a new section</h1>
       </div>

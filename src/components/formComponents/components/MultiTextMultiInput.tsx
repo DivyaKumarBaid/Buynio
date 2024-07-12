@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { CiSquareMinus } from "react-icons/ci";
+import { MdOutlineCancel } from "react-icons/md";
 import { InputTypeEnum, MultiTextMultiInputType } from "../types/input.types";
 import RippleButton from "./Ripple";
 import TextInput from "./TextInput";
@@ -15,17 +15,15 @@ const MultiTextMultiInput = ({
   structure,
 }: MultiTextMultiInputType) => {
   const isEmptyValue = () => {
-    const isEmptyValue = value?.some((inp) => {
+    return value?.some((inp) => {
       return Object.keys(inp).some((k: string) => inp[k].trim() === "");
     });
-    if (isEmptyValue) return true;
-    else return false;
   };
 
   const [isEmpty, setEmpty] = React.useState<boolean>(isEmptyValue());
 
   React.useEffect(() => {
-    setEmpty((_) => isEmptyValue());
+    setEmpty(isEmptyValue());
   }, [value]);
 
   const handleChange = (index: number, structName: string, val: string) => {
@@ -44,15 +42,20 @@ const MultiTextMultiInput = ({
   };
 
   const handleAddField = () => {
-    const newValue = [...value, ""];
-    const e = {
-      target: {
-        name,
-        type: InputTypeEnum.MULTI_TEXT_INPUT,
-        value: newValue,
-      },
-    };
-    onChange(e);
+    if (value.length < maximunFields) {
+      const newValue = [...value, {}];
+      structure.forEach((struct) => {
+        newValue[newValue.length - 1][struct.name] = "";
+      });
+      const e = {
+        target: {
+          name,
+          type: InputTypeEnum.MULTI_TEXT_INPUT,
+          value: newValue,
+        },
+      };
+      onChange(e);
+    }
   };
 
   const handleRemoveField = (index: number) => {
@@ -68,79 +71,65 @@ const MultiTextMultiInput = ({
   };
 
   return (
-    <div className="flex flex-col w-min">
-      {label! && (
-        <div className="text-sm text-[var(--text-secondary-color)] mx-4">
+    <div className="flex flex-col w-min gap-2">
+      {label && (
+        <div className="text-sm text-[var(--text-secondary-color)] mx-4 mb-2">
           {label}
-          {required ? <span className="ml-1 text-[red]">*</span> : null}
+          {required && <span className="ml-1 text-red">*</span>}
         </div>
       )}
-      {value?.map((input, index) => {
-        return (
-          <div
-            className="flex items-center"
-            key={`${input}${index}${InputTypeEnum.MULTI_TEXT_MULTI_INPUT}`}
-          >
-            <div
-              className="flex items-center flex-wrap"
-              key={`${input}${index}${InputTypeEnum.MULTI_TEXT_MULTI_INPUT}`}
-            >
-              {structure?.map((struct, idx) => {
-                return (
-                  <div
-                    className="flex items-center flex-wrap"
-                    key={`${struct.name}${idx}`}
-                  >
-                    <TextInput
-                      type={InputTypeEnum.TEXT_INPUT}
-                      name={`${input}${idx}`}
-                      placeholder={struct.placeholder}
-                      preText={struct.preText}
-                      postText={struct.postText}
-                      header={""}
-                      label={struct.label}
-                      valueTransformer={struct.valueTransformer}
-                      showError={struct.showError}
-                      errorTextForRegex={struct.errorTextForRegex}
-                      regexMatch={struct.regexMatch}
-                      required={struct.required}
-                      onChange={(e) =>
-                        handleChange(index, struct.name, e.target.value)
-                      }
-                      value={input[struct.name]}
-                      maxLength={struct.maxLength}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-            {required && value?.length == 1 ? null : (
-              <CiSquareMinus
-                onClick={() => handleRemoveField(index)}
-                className="text-2xl cursor-pointer text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)]"
-              />
-            )}
+      {value?.map((input, index) => (
+        <div
+          className="flex items-center bg-[var(--card-bg-color)] rounded-md py-2 w-min relative"
+          key={`${name}-${index}-${InputTypeEnum.MULTI_TEXT_MULTI_INPUT}`}
+        >
+          {required && value.length <= 1 ? null : (
+            <MdOutlineCancel
+              onClick={() => handleRemoveField(index)}
+              className="text-xl absolute cursor-pointer top-2 right-2 text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)]"
+            />
+          )}
+          <div className="flex items-center flex-wrap">
+            {structure?.map((struct, idx) => (
+              <div
+                className="flex items-center flex-wrap"
+                key={`${name}-${index}-${struct.name}-${idx}`}
+              >
+                <TextInput
+                  type={InputTypeEnum.TEXT_INPUT}
+                  name={`${name}[${index}][${struct.name}]`}
+                  placeholder={struct.placeholder}
+                  preText={struct.preText}
+                  postText={struct.postText}
+                  header=""
+                  label={struct.label}
+                  valueTransformer={struct.valueTransformer}
+                  showError={struct.showError}
+                  errorTextForRegex={struct.errorTextForRegex}
+                  regexMatch={struct.regexMatch}
+                  required={struct.required}
+                  onChange={(e) =>
+                    handleChange(index, struct.name, e.target.value)
+                  }
+                  value={input[struct.name]}
+                  maxLength={struct.maxLength}
+                />
+              </div>
+            ))}
           </div>
-        );
-      })}
-
-      {
+        </div>
+      ))}
+      <div className="w-max">
         <RippleButton
-          btnClass={`text-sm !text-[var(--text-primary-color)] border-[1px] border-[var(--card-border-color)] hover:!text-black cursor-pointer hover:bg-[var(--text-primary-color)] m-2 mx-4 text-black rounded-lg hover:bg-white duration-500 w-full p-2 text-center w-max ${value?.length < maximunFields && !isEmpty ? "visible" : "hidden"}`}
+          btnClass={`text-sm !text-[var(--text-primary-color)] border-[1px] border-[var(--card-border-color)] hover:!text-black cursor-pointer hover:bg-[var(--text-primary-color)] m-2 mx-4 text-black rounded-lg hover:bg-white duration-500 w-full p-2 text-center ${
+            value.length < maximunFields && !isEmpty ? "visible" : "hidden"
+          }`}
           onClick={handleAddField}
           rippleBackground="rgba(200,200,200,0.8)"
         >
           Add more
         </RippleButton>
-
-        // <div className="w-max mx-4">
-        //   <FormButton
-        //     text={"Add"}
-        //     onClickFunc={handleAddField}
-        //     disabled={false}
-        //   />
-        // </div>
-      }
+      </div>
     </div>
   );
 };

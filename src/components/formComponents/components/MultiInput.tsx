@@ -1,5 +1,5 @@
 import React from "react";
-import { CiSquareMinus } from "react-icons/ci";
+import { MdOutlineCancel } from "react-icons/md";
 import { InputTypeEnum, MultiTextInputType } from "../types/input.types";
 import RippleButton from "./Ripple";
 import TextInput from "./TextInput";
@@ -79,10 +79,19 @@ const MultiInput = ({
         </div>
       )}
       {value.map((input, index) => (
-        <div className="flex items-center" key={`${input}${index}`}>
+        <div
+          className="flex items-center relative w-max"
+          key={`${name}-${index}`}
+        >
+          {required && value.length <= 1 ? null : (
+            <MdOutlineCancel
+              onClick={() => handleRemoveField(index)}
+              className="text-xl absolute cursor-pointer top-1 right-2 text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)]"
+            />
+          )}
           <TextInput
             type={InputTypeEnum.TEXT_INPUT}
-            name={`${name}${index}`}
+            name={`${name}[${index}]`}
             placeholder={placeholder}
             preText={preText}
             postText={postText}
@@ -97,23 +106,19 @@ const MultiInput = ({
             value={input}
             maxLength={maxLength}
           />
-          {required && value.length === 1 ? null : (
-            <CiSquareMinus
-              onClick={() => handleRemoveField(index)}
-              className="text-2xl cursor-pointer text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)]"
-            />
-          )}
         </div>
       ))}
-      <RippleButton
-        btnClass={`text-sm text-[var(--text-primary-color)] border-[1px] border-[var(--card-border-color)] hover:text-black cursor-pointer hover:bg-[var(--text-primary-color)] m-2 mx-4 text-black rounded-lg hover:bg-white duration-500 w-full p-2 text-center ${
-          value.length < maximunFields && !isEmpty ? "visible" : "hidden"
-        }`}
-        onClick={handleAddField}
-        rippleBackground="rgba(200,200,200,0.8)"
-      >
-        Add more
-      </RippleButton>
+      <div className="w-max">
+        <RippleButton
+          btnClass={`text-sm !text-[var(--text-primary-color)] border-[1px] border-[var(--card-border-color)] hover:!text-black cursor-pointer hover:bg-[var(--text-primary-color)] m-2 mx-4 text-black rounded-lg hover:bg-white duration-500 w-full p-2 text-center ${
+            value.length < maximunFields && !isEmpty ? "visible" : "hidden"
+          }`}
+          onClick={handleAddField}
+          rippleBackground="rgba(200,200,200,0.8)"
+        >
+          Add more
+        </RippleButton>
+      </div>
     </div>
   );
 };

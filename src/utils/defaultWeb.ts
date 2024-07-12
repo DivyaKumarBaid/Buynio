@@ -3,7 +3,7 @@ export const web = {
     brandName: "Hopster",
     logo: "https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png",
     currency: "INR",
-    backgroundColor: "#101010",
+    background: "#101010",
     headingFontColor: "#ffffff",
     paragraphFontColor: "#ffffff",
     headingFontFamily: "poppins",
@@ -47,7 +47,7 @@ export const web = {
   sections: [
     {
       type: "CAROUSEL",
-      backgroud: "#121212",
+      background: "#121212",
       subType: "CAROUSEL_V1",
       config: {
         images: [
@@ -68,7 +68,7 @@ export const web = {
     },
     {
       type: "CAROUSEL",
-      backgroud: "#121212",
+      background: "#121212",
       subType: "CAROUSEL_V1",
       config: {
         images: [
@@ -107,7 +107,7 @@ export const web = {
 //     brandName: String,
 //     logo: String,
 //     currency: String,
-//     backgroud: String,
+//     background: String,
 //     header: {
 //         fontStyle: String,
 //         fontColor: String

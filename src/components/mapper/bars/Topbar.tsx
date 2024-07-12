@@ -10,12 +10,36 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaLink } from "react-icons/fa6";
 import { LuSave } from "react-icons/lu";
+import { TiTick } from "react-icons/ti";
 import { useMapperContext, View } from "../hooks/selectedElemContext";
+import { MdOutlineCancel } from "react-icons/md";
+
+enum SavingStates {
+  SAVING = "saving",
+  TICK = "tick",
+  SAVE = "save",
+  ERROR = "error",
+}
+
+const saveIcons: Record<SavingStates, JSX.Element> = {
+  [SavingStates.SAVE]: <LuSave />,
+  [SavingStates.TICK]: (
+    <TiTick className="text-[var(--success-primary-color)]" />
+  ),
+  [SavingStates.ERROR]: (
+    <MdOutlineCancel className="text-[var(--danger-primary-color)]" />
+  ),
+  [SavingStates.SAVING]: (
+    <span className="animate-ping w-[10px] h-[10px] rounded-full bg-[var(--text-secondary-color)] opacity-75 flex justify-center items-center">
+      <span className="animate-ping w-[5px] h-[5px] rounded-full bg-[var(--text-primary-color)]"></span>
+    </span>
+  ),
+};
 
 const Topbar = () => {
   const { data: session } = useSession();
 
-  const [saving, setSaving] = useState<boolean>(false);
+  const [savingState, setSaving] = useState<SavingStates>(SavingStates.SAVE);
 
   const saveHopMutation = useMutation({
     mutationFn: async (_: string) => {
@@ -29,16 +53,22 @@ const Topbar = () => {
   });
 
   const handleSave = async () => {
-    setSaving(true);
+    setSaving(SavingStates.SAVING);
     saveHopMutation.mutateAsync("", {
       onSuccess: () => {
         // userModule?.updateUser();
         toast.success("Successfully saved hop");
-        setSaving(false);
+        setSaving(SavingStates.TICK);
+        setTimeout(() => {
+          setSaving(SavingStates.SAVE);
+        }, 2000);
       },
       onError: () => {
         toast.error("Something went wrong!");
-        setSaving(false);
+        setSaving(SavingStates.ERROR);
+        setTimeout(() => {
+          setSaving(SavingStates.SAVE);
+        }, 2000);
       },
     });
   };
@@ -87,9 +117,9 @@ const Topbar = () => {
         />
         <div
           className="mx-2 flex text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] items-center gap-2 cursor-pointer"
-          onClick={() => !saving && handleSave()}
+          onClick={() => savingState != SavingStates.SAVING && handleSave()}
         >
-          <LuSave /> Save
+          {saveIcons[savingState]} <span>Save</span>
         </div>
       </>
     </div>

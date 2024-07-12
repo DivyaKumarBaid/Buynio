@@ -21,20 +21,19 @@ const useForm = (
   );
 
   useEffect(() => {
-    if (updateOnEffect)
+    if (updateOnEffect) {
       setValues(getDefinedInitialValues(initialValues));
-  }, [initialValues]);
+    }
+  }, [initialValues, updateOnEffect]);
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked, files } = event.target;
-    setValues((prevFormData: Record<string, any>) => {
-      return {
-        ...prevFormData,
-        [name]:
-          type === "checkbox" ? checked : type === "file" ? files?.[0] : value,
-      };
-    });
-  }
+    setValues((prevFormData) => ({
+      ...prevFormData,
+      [name]:
+        type === "checkbox" ? checked : type === "file" ? files?.[0] : value,
+    }));
+  };
 
   return [values, handleChange];
 };

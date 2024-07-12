@@ -29,7 +29,13 @@ export const generalSettings = {
       originalJson: Record<string, any>,
       json: Record<string, any>
     ) => {
-      return { ...originalJson, ...json };
+      return {
+        ...originalJson,
+        [SECTION_TYPE.GENERAL]: {
+          ...originalJson[SECTION_TYPE.GENERAL],
+          ...json,
+        },
+      };
     },
     getJsonFromKey: (originalJson: Record<string, any>) => {
       return originalJson[SECTION_TYPE.GENERAL];
@@ -38,7 +44,7 @@ export const generalSettings = {
       {
         type: InputTypeEnum.COLOR_PICKET_INPUT,
         flexEnd: true,
-        name: "backgroundColor",
+        name: "background",
         header: "Background Color",
         subHeading: "Choose the background color for the webpage",
         tag: "Appearance",
@@ -76,7 +82,7 @@ export const generalSettings = {
       },
       {
         type: InputTypeEnum.DROPDOWN_INPUT,
-        name: "paragraphFontFamily",
+        name: "baseFontSize",
         header: "Paragraph Font Family",
         preText: "",
         postText: "",
@@ -266,6 +272,22 @@ export const navCommonSettings = {
       tag: "General",
     },
     {
+      type: InputTypeEnum.TEXT_INPUT,
+      name: "brandName",
+      placeholder: "Brand Name",
+      preText: "",
+      postText: "",
+      header: "Brand Name",
+      subHeading: "Enter the name of the brand",
+      label: "",
+      tag: "General",
+      valueTransformer: (value: string) => value,
+      showError: false,
+      errorTextForRegex: "",
+      regexMatch: null,
+      required: true,
+    },
+    {
       type: InputTypeEnum.MULTI_TEXT_MULTI_INPUT,
       name: "navLinks",
       label: "Navigation Links",
@@ -330,7 +352,6 @@ export const carouselCommonSettings = {
     return originalJson.sections[index];
   },
   inputs: [
-  
     {
       type: InputTypeEnum.TOGGLE_BUTTON_INPUT,
       flexEnd: true,
@@ -371,7 +392,8 @@ export const carouselCommonSettings = {
       flexEnd: true,
       name: "infiniteLoop",
       header: "Infinite Loop",
-      subHeading: "Enable infinite loop (loop back to start after the last slide)",
+      subHeading:
+        "Enable infinite loop (loop back to start after the last slide)",
       tag: "General",
       value: true, // Default value, adjust as necessary
     },
