@@ -1,12 +1,11 @@
 "use client";
-import React from "react";
-import { BlockPicker } from "react-color";
-import { ColorPickerInputType } from "../types/input.types";
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
+  PopoverTrigger,
 } from "@nextui-org/react";
+import Sketch from "react-color/lib/components/sketch/Sketch";
+import { ColorPickerInputType } from "../types/input.types";
 
 const ColorPicker = ({
   value,
@@ -38,8 +37,7 @@ const ColorPicker = ({
           />
         </PopoverTrigger>
         <PopoverContent>
-          <BlockPicker
-            triangle="hide"
+          <Sketch
             color={value}
             className="border-[1px] border-[var(--text-secondary-low-color)]"
             onChange={(ec) => {

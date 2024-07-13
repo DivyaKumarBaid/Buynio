@@ -7,15 +7,17 @@ import { SECTION_TYPE } from "@/types/mapper.types";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import React, { useEffect } from "react";
 import { LuWrapText } from "react-icons/lu";
+import { MdOutlineDeleteSweep } from "react-icons/md";
 import { useMapperContext } from "../hooks/selectedElemContext";
 import { SettingsMapperSubType } from "./Settings.type";
 
 const SettingsMapper = ({
   initValue,
-  settings,
+  settings
 }: {
   initValue: Record<string, any>;
   settings: SettingsMapperSubType;
+  sectionIndex?: number;
 }) => {
   const useMapper = useMapperContext();
   const [value, handleChange] = useForm(initValue, true);
@@ -37,8 +39,6 @@ const SettingsMapper = ({
     new Set([""])
   );
 
-  console.log({ tabsContent, tabs, currentTab });
-
   useEffect(() => {
     const group = groupedByTag();
     setTabContent(group);
@@ -55,9 +55,20 @@ const SettingsMapper = ({
     }
   }
 
+  function removeComponent() {
+    if (useMapper?.webJson) {
+      useMapper?.setWebJson?.((prevJson) => {
+        const updatedJson = settings.onRemove?.(prevJson || {});
+        return { ...prevJson, ...updatedJson };
+      });
+      useMapper?.setSelectedElement({
+        type: SECTION_TYPE.GENERAL,
+        subType: SECTION_TYPE.GENERAL,
+      });
+    }
+  }
+
   function handleSelectionChange(keys: string | string[] | Set<any>) {
-    // Convert the keys to Set<string>
-    console.log(keys);
     if (typeof keys === "string") {
       setCurrentTab(new Set([keys]));
     } else if (Array.isArray(keys)) {
@@ -84,10 +95,19 @@ const SettingsMapper = ({
         <h3 className={`text-[var(--text-primary-color)] px-2 text-lg`}>
           {settings.heading}
         </h3>
-        <LuWrapText
-          className={`mr-4 cursor-pointer text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] text-xl duration-100 ${tabs.length > 0 ? "visible" : "hidden"}`}
-          onClick={() => collapseAllAccordion()}
-        />
+        <div className="flex gap-4 items-center">
+          {/* -- todo: add modal */}
+          {settings.onRemove && (
+            <MdOutlineDeleteSweep
+              className="cursor-pointer text-[var(--danger-secondary-color)] text-2xl"
+              onClick={() => removeComponent()}
+            />
+          )}
+          <LuWrapText
+            className={`mr-4 cursor-pointer text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] text-xl duration-100 ${tabs.length > 0 ? "visible" : "hidden"}`}
+            onClick={() => collapseAllAccordion()}
+          />
+        </div>
       </div>
       <HorizontalDivider />
       <div className=" flex flex-col w-full">

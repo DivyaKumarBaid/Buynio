@@ -35,12 +35,19 @@ const Editor = ({ params }: { params: { id: string } }) => {
 
     socket.on("elemSelectedToClient", (data: SelectedElem) => {
       useMapper?.setSelectedElement(data);
+
+      // socket.emit("updateJsonToRoom", { room: roomId, message: data });
+    });
+
+    socket.on("addSectionToClient", (data: SelectedElem) => {
+      useMapper?.setWebJson?.(data);
     });
 
     return () => {
       socket.off("joinedRoom");
       socket.off("messageToClient");
       socket.off("elemSelectedToClient");
+      socket.off("addSectionToClient");
     };
   }, [roomId, useMapper]);
 

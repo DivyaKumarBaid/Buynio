@@ -27,7 +27,7 @@
         fontPrimaryColor: String,
         fontSecondaryColor: String
     },
-    sections:[
+    SECTIONS:[
         {
             sectionType: Hero,
             subType: String,

@@ -17,11 +17,9 @@ export enum CAROUSEL_TYPE {
 }
 
 export enum JSONHeaders {
-    OUTER = "outer",
-    NAV = "nav",
-    SECTION = "sections",
-    HEADER_CONFIG = "headerConfig",
-    TEXT_CONFIG = "textConfig"
+    GENERAL = "GENERAL",
+    NAVBAR = "NAV",
+    SECTIONs = "SECTIONS"
 }
 
 export type SectionSubType = CAROUSEL_TYPE | NAV_TYPE | SECTION_TYPE.GENERAL

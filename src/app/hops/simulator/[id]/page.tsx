@@ -1,12 +1,13 @@
 "use client";
 import Loader from "@/components/general/Loader";
 import { SelectedElem } from "@/components/mapper/hooks/selectedElemContext";
+import AddSection from "@/components/mapper/modal/AddSection";
+import { getDefaultSectionConfig } from "@/components/mapper/settings/utils";
 import { navBarTopPosition } from "@/mapper/ComponentConstants";
 import { switchNav, switchSection } from "@/mapper/ComponentMap";
 import { SECTION_TYPE } from "@/types/mapper.types";
 import socket from "@/utils/socket";
 import React, { useEffect } from "react";
-import { CiSquarePlus } from "react-icons/ci";
 import styled from "styled-components";
 
 const Main = styled.div<{
@@ -37,6 +38,8 @@ const Simulator = ({ params }: { params: { id: string } }) => {
 
       socket.on("updateJsonToClient", (data: Record<string, any>) => {
         setJson(data);
+        document.body.style.backgroundColor =
+        data?.[SECTION_TYPE.GENERAL]?.background;
         if (loading) setLoading(false);
       });
 
@@ -51,10 +54,17 @@ const Simulator = ({ params }: { params: { id: string } }) => {
     setSelectedElem(name);
   };
 
+  const handleAddSection = (section: SECTION_TYPE) => {
+    if (webJson == null) return;
+    const defaultSectionConfig = getDefaultSectionConfig[section];
+    const newWebJson = {
+      ...webJson,
+      SECTIONS: [...webJson.SECTIONS || [], defaultSectionConfig],
+    };
+    socket.emit("addSectionToRoom", { room: params.id, message: newWebJson });
+  };
+
   if (loading || webJson == null) return <Loader />;
-
-  console.log(webJson)
-
   const generalSettings = webJson[SECTION_TYPE.GENERAL];
 
   return (
@@ -66,12 +76,12 @@ const Simulator = ({ params }: { params: { id: string } }) => {
       onClick={() => handleElemSelection(null)}
     >
       {switchNav(webJson[SECTION_TYPE.NAV_BAR]?.type, {
-        ...webJson[SECTION_TYPE.NAV_BAR],
+        ...webJson?.[SECTION_TYPE.NAV_BAR],
         isSelectMode: true,
         setSelectedElement: handleElemSelection,
         selected: selectedElem?.type === SECTION_TYPE.NAV_BAR,
       })}
-      {webJson.sections?.map((section: any, index: number) => {
+      {webJson.SECTIONS?.map((section: any, index: number) => {
         return (
           <SectionContainer
             $bgColor={section.background}
@@ -87,9 +97,8 @@ const Simulator = ({ params }: { params: { id: string } }) => {
           </SectionContainer>
         );
       })}
-      <div className="group flex flex-col border-[1px] border-[var(--card-border-color)] rounded-lg justify-center duration-300 text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] items-center mx-8 mb-8 h-[70vh] cursor-pointer bg-[url('/editorBg.png')] bg-cover bg-no-repeat">
-        <CiSquarePlus className=" text-[100px]" />
-        <h1>Add a new section</h1>
+      <div style={{ color: generalSettings.background }} className="invert">
+        <AddSection handleAddSection={handleAddSection} />
       </div>
     </Main>
   );

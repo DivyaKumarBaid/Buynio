@@ -13,7 +13,10 @@ export const carouselCommonSettings = {
       };
     },
     getJsonFromKey: (originalJson: Record<string, any>, index: number) => {
-      return originalJson.sections[index];
+      return originalJson.SECTIONS[index];
+    },
+    onRemove: (originalJson: Record<string, any>, index: number) => {
+      return originalJson.SECTIONS.splice(index,1);
     },
     inputs: [
       {

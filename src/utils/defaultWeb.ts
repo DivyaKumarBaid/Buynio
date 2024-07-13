@@ -44,7 +44,7 @@ export const web = {
     fontPrimaryColor: "#fff",
     fontSecondaryColor: "#eee",
   },
-  sections: [
+  SECTIONS: [
     {
       type: "CAROUSEL",
       background: "#121212",

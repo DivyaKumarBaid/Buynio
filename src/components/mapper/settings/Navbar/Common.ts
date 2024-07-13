@@ -15,6 +15,9 @@ export const navCommonSettings = {
     getJsonFromKey: (originalJson: Record<string, any>) => {
       return originalJson[SECTION_TYPE.NAV_BAR];
     },
+    onRemove: (originalJson: Record<string, any>) => {
+      return delete originalJson[SECTION_TYPE.NAV_BAR];
+    },
     inputs: [
       {
         type: InputTypeEnum.TOGGLE_BUTTON_INPUT,
@@ -167,6 +170,6 @@ export const navCommonSettings = {
         header: "Hover Link Color",
         subHeading: "Pick the color for the links when hovered over",
         tag: "Appearance",
-      },
+      }
     ],
   };

@@ -15,7 +15,7 @@ export const switchNav = (type: string, props: any) => {
     case NAV_TYPE.NAV_V3:
       return <NavbarV3 {...props} />;
     default:
-      return <NavbarV1 {...props} />;
+      return null;
   }
 };
 
@@ -26,7 +26,7 @@ export const switchCarousel = (type: string, props: any) => {
     case CAROUSEL_TYPE.CAROUSEL_V2:
       return <CarouselV2 {...props} />;
     default:
-      return <CarouselV1 {...props} />;
+      return null;
   }
 };
 

@@ -16,6 +16,10 @@ export type SettingsMapperSubType = {
     originalJson: Record<string, any>,
     index?: number
   ) => Record<string, any>;
+  onRemove?: (
+    originalJson: Record<string, any>,
+    index?: number
+  ) => Record<string, any>;
   inputs: GlobalInputIncomingType[];
 };
 
