@@ -39,7 +39,7 @@ const Simulator = ({ params }: { params: { id: string } }) => {
       socket.on("updateJsonToClient", (data: Record<string, any>) => {
         setJson(data);
         document.body.style.backgroundColor =
-        data?.[SECTION_TYPE.GENERAL]?.background;
+          data?.[SECTION_TYPE.GENERAL]?.background;
         if (loading) setLoading(false);
       });
 
@@ -59,7 +59,7 @@ const Simulator = ({ params }: { params: { id: string } }) => {
     const defaultSectionConfig = getDefaultSectionConfig[section];
     const newWebJson = {
       ...webJson,
-      SECTIONS: [...webJson.SECTIONS || [], defaultSectionConfig],
+      SECTIONS: [...(webJson.SECTIONS || []), defaultSectionConfig],
     };
     socket.emit("addSectionToRoom", { room: params.id, message: newWebJson });
   };
@@ -93,7 +93,12 @@ const Simulator = ({ params }: { params: { id: string } }) => {
             key={`${section.type}${section.subType}${index}`}
             className="w-full h-max"
           >
-            {switchSection(section.type, section)}
+            {switchSection(section.type, {
+              ...section,
+              isSelectMode: true,
+              setSelectedElement: (name: SelectedElem) => handleElemSelection({...name,index}),
+              selected: selectedElem?.type === section.type,
+            })}
           </SectionContainer>
         );
       })}

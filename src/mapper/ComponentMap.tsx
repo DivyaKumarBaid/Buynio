@@ -33,7 +33,7 @@ export const switchCarousel = (type: string, props: any) => {
 export const switchSection = (type: string, props: any) => {
   switch (type) {
     case SECTION_TYPE.CAROUSEL:
-      return switchCarousel(props.subType, props.config);
+      return switchCarousel(props.subType, props);
     default:
       return null;
   }

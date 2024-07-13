@@ -25,6 +25,7 @@ type MapperContextType = {
 export type SelectedElem = {
   type: SECTION_TYPE;
   subType: SectionSubType;
+  index?: number
 };
 
 export const MapperContext = React.createContext<MapperContextType | null>(
