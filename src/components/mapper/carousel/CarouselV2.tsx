@@ -34,8 +34,8 @@ export const CarouselV2 = (props: CarouselProps): JSX.Element => {
         setChange(false);
         setIndex((prevIndex) =>
           prevIndex + inc < 0
-            ? props.images.length - 1
-            : (prevIndex + inc) % props.images.length
+            ? props.config.images.length - 1
+            : (prevIndex + inc) % props.config.images.length
         );
         clearInterval(intervalId);
       }, 200);
@@ -45,14 +45,14 @@ export const CarouselV2 = (props: CarouselProps): JSX.Element => {
   React.useEffect(() => {
     const intervalId = setInterval(() => {
       handleChange(1);
-    }, props.interval);
+    }, props.config.interval);
 
     // Clean up the interval when the component unmounts or when count reaches a certain value
     return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <CarouselLayout className="flex w-full flex-col items-center gap-4 md:pt-12 md:pb-8 pt-4 pb-2" $textColor={props.sliderBtnColor}>
+    <CarouselLayout className="flex w-full flex-col items-center gap-4 md:pt-12 md:pb-8 pt-4 pb-2" $textColor={props.config.sliderBtnColor}>
       <div className="w-full min-h-[40vh] md:h-[70vh] h-[40vh] flex justify-between items-center md:gap-2 gap-0 relative">
         <div
           className={`w-full h-full rounded-lg !bg-no-repeat !bg-cover !bg-center ${
@@ -60,7 +60,7 @@ export const CarouselV2 = (props: CarouselProps): JSX.Element => {
           } ${
             direction ? styles.move_left : styles.move_right
           } flex items-center justify-between`}
-          style={{ background: `url('${props.images[index].src}')` }}
+          style={{ background: `url('${props.config.images[index].src}')` }}
         />
         <div className="w-full h-full absolute flex justify-between items-center">
           <div
@@ -78,12 +78,12 @@ export const CarouselV2 = (props: CarouselProps): JSX.Element => {
         </div>
       </div>
       <div className="flex gap-4 mt-2 mb-4">
-        {props.images.map((_, i) => (
+        {props.config.images.map((_, i) => (
           <Indicator
             key={`imageButton${i}`}
             className={`cursor-pointer w-[8px] h-[8px] rounded-[100%] transition-all duration-300`}
             onClick={() => handleChange(i - index)}
-            $bgColor={props.sliderBtnColor}
+            $bgColor={props.config.sliderBtnColor}
             $opacity={i == index ? "1.0" : "0.3"}
           />
         ))}
