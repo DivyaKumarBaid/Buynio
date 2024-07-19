@@ -54,5 +54,6 @@ export const addSectionOptions = [
 export const sectionNameMapper = {
   [SECTION_TYPE.CAROUSEL]: "Carousel",
   [SECTION_TYPE.NAV_BAR]: "Navbar",
-  [SECTION_TYPE.GENERAL]: "General"
+  [SECTION_TYPE.GENERAL]: "General",
+  [SECTION_TYPE.PRODUCT]: "Product"
 };

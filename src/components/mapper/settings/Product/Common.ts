@@ -1,8 +1,8 @@
 import { InputTypeEnum } from "@/components/formComponents/types/input.types";
 import { JSONHeaders } from "@/types/mapper.types";
 
-export const carouselCommonSettings = {
-  heading: "Carousel Settings",
+export const productCommonSettings = {
+  heading: "Product Settings",
   patchJson: (
     originalJson: Record<string, any>,
     json: Record<string, any>,

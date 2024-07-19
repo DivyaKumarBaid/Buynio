@@ -3,9 +3,11 @@ import { SelectedElem } from "../hooks/selectedElemContext";
 
 export type CarouselProps = {
   type: SECTION_TYPE.CAROUSEL;
-  background: string;
   subType: CAROUSEL_TYPE;
   config: {
+    background: string;
+    autoplay: boolean;
+    autoplaySpeed: number;
     interval: number;
     images: {
       title: string;

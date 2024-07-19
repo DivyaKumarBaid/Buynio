@@ -19,12 +19,6 @@ const Settingbar = () => {
   const [initValue, setInitValue] = React.useState(createValue());
 
   function createValue() {
-    console.log(
-      settingsMapper,
-      useMapper?.selectedElement?.type,
-      useMapper?.selectedElement?.subType
-    );
-
     const arr =
       settingsMapper[useMapper?.selectedElement?.type || SECTION_TYPE.GENERAL][
         useMapper?.selectedElement?.subType || SECTION_TYPE.GENERAL

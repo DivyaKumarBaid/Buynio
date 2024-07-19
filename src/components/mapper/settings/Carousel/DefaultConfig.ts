@@ -3,7 +3,7 @@ import { SECTION_TYPE } from "@/types/mapper.types";
 export const getDefaultSectionConfig: Record<string, Record<string,any>> = {
   [SECTION_TYPE.CAROUSEL]: {
     type: "CAROUSEL",
-    background: "#121212",
+    background: "rgba(0,0,0,0)",
     subType: "CAROUSEL_V1",
     config: {
       images: [
@@ -21,5 +21,5 @@ export const getDefaultSectionConfig: Record<string, Record<string,any>> = {
       sliderBtnColor: "#fff",
       interval: 5000,
     },
-  },
+  }
 };

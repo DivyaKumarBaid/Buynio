@@ -5,6 +5,7 @@ import styled from "styled-components";
 import styles from "./carousel.module.css";
 import { CarouselProps } from "./Carousel.types";
 import { SECTION_TYPE } from "@/types/mapper.types"; // Import SECTION_TYPE for element identification
+import { useSwipeable } from "react-swipeable";
 
 const Indicator = styled.div<{ $bgColor: string; $opacity: string }>`
   background: ${(props) => props.$bgColor};
@@ -19,7 +20,8 @@ export const CarouselV1 = (props: CarouselProps): JSX.Element => {
   const [index, setIndex] = React.useState<number>(0);
   const [change, setChange] = React.useState<boolean>(false); // change -> animation trigger
   const [direction, setDirection] = React.useState<boolean>(true); // false -> left arrow clicked for animation
-  console.log("CarouseProps", props);
+
+  console.log(props)
 
   const handleChange = (inc: number) => {
     setChange(true);
@@ -40,13 +42,21 @@ export const CarouselV1 = (props: CarouselProps): JSX.Element => {
   };
 
   React.useEffect(() => {
-    const intervalId = setInterval(() => {
-      handleChange(1);
-    }, props.config.interval);
+    if (props.config.autoplay) {
+      const intervalId = setInterval(() => {
+        handleChange(1);
+      }, props.config.autoplaySpeed || 3000);
 
-    // Clean up the interval when the component unmounts or when count reaches a certain value
-    return () => clearInterval(intervalId);
-  }, []);
+      // Clean up the interval when the component unmounts or when count reaches a certain value
+      return () => clearInterval(intervalId);
+    }
+  }, [props.config.autoplay, props.config.autoplaySpeed]);
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => handleChange(1),
+    onSwipedRight: () => handleChange(-1),
+    trackMouse: true,
+  });
 
   return (
     <CarouselLayout
@@ -55,13 +65,13 @@ export const CarouselV1 = (props: CarouselProps): JSX.Element => {
       onClick={(e) => {
         if (props.isSelectMode && props.setSelectedElement) {
           e.stopPropagation();
-          console.log("Carousel Clicked");
           props.setSelectedElement({
             type: SECTION_TYPE.CAROUSEL,
             subType: props.subType,
           });
         }
       }}
+      {...swipeHandlers}
     >
       <div className="w-full min-h-[40vh] md:h-[70vh] h-[40vh] flex justify-between items-center md:gap-2 gap-0">
         <div
@@ -72,7 +82,7 @@ export const CarouselV1 = (props: CarouselProps): JSX.Element => {
         </div>
 
         <a
-          className={`w-full h-full rounded-lg !bg-no-repeat !bg-cover !bg-center ${
+          className={`w-full h-full rounded-lg !bg-no-repeat !bg-cover !bg-center cursor-pointer ${
             change ? styles.change : styles.constant
           } ${direction ? styles.move_left : styles.move_right}`}
           style={{ background: `url('${props.config.images[index].src}')` }}

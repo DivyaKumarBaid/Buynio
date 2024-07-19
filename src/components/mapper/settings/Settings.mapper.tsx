@@ -13,7 +13,7 @@ import { SettingsMapperSubType } from "./Settings.type";
 
 const SettingsMapper = ({
   initValue,
-  settings
+  settings,
 }: {
   initValue: Record<string, any>;
   settings: SettingsMapperSubType;
@@ -49,7 +49,7 @@ const SettingsMapper = ({
   function updateValueInJson() {
     if (useMapper?.webJson) {
       useMapper?.setWebJson?.((prevJson) => {
-        const updatedJson = settings.patchJson(prevJson || {}, value);
+        const updatedJson = settings.patchJson(prevJson || {}, value, useMapper?.selectedElement?.index);
         return { ...prevJson, ...updatedJson };
       });
     }
@@ -58,7 +58,10 @@ const SettingsMapper = ({
   function removeComponent() {
     if (useMapper?.webJson) {
       useMapper?.setWebJson?.((prevJson) => {
-        const updatedJson = settings.onRemove?.(prevJson || {});
+        const updatedJson = settings.onRemove?.(
+          prevJson || {},
+          useMapper?.selectedElement?.index
+        );
         return { ...prevJson, ...updatedJson };
       });
       useMapper?.setSelectedElement({
