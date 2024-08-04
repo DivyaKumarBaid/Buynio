@@ -1,5 +1,5 @@
 import { OptionType } from "@/components/formComponents/types/input.types";
-import { SECTION_TYPE } from "@/types/mapper.types";
+import { AddSectionType, SECTION_TYPE } from "@/types/mapper.types";
 
 export const ACCESS_TOKEN_STALE_TIME = 1000 * 60 * 10; //this is in ms -> 10 mins
 export const ACCESS_TOKEN_EXPIRY_LIMIT = 1000 * 60 * 12; //this is in ms -> 12 mins
@@ -44,11 +44,15 @@ export const fontFamilyOptions: OptionType[] = [
   // Add more font family options as needed
 ];
 
-export const addSectionOptions = [
+export const addSectionOptions : AddSectionType = [
   {
     name: SECTION_TYPE.CAROUSEL,
     description: "Images you want your page to have",
   },
+  {
+    name: SECTION_TYPE.PRODUCT,
+    description: "Add a product layout"
+  }
 ];
 
 export const sectionNameMapper = {

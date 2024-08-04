@@ -11,4 +11,4 @@ export const formatDate = (date: Date): string => {
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
     return `${day}-${month}-${year} ${hours}:${minutes}`;
-  }
+}

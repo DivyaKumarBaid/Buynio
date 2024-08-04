@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import MultiTextMultiInput from "./formComponents/components/MultiTextMultiInput";
 import { InputTypeEnum } from "./formComponents/types/input.types";
 import FormButton from "./general/FormButton";
+import TaskManager from "./general/TaskManager";
 
 const FileUpload: React.FC = () => {
   const [value, handleChange] = useForm({
@@ -132,6 +133,7 @@ const FileUpload: React.FC = () => {
           },
         ]}
       />
+      <TaskManager />
     </div>
   );
 };

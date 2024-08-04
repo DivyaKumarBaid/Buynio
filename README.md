@@ -4,5 +4,5 @@ This template comtains google login functionality and react-query support for fa
 multiInput -> multiInput with multi options
 dropdown
 
-- settings common inputs
-- Redirection link -> room id flow
+[ ] Add react drag and drop in Add components and rearrange Components
+[ ] Add resizeable settings bar

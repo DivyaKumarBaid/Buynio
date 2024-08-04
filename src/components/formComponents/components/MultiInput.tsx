@@ -21,7 +21,10 @@ const MultiInput = ({
   maximunFields,
 }: MultiTextInputType) => {
   const isEmptyValue = () => {
-    return value?.some((inp) => inp.trim() === "");
+    return value?.some((inp) => {
+      console.log(inp, "testingMultiText")
+      inp.trim() === ""
+    });
   };
 
   const [isEmpty, setEmpty] = React.useState<boolean>(isEmptyValue());

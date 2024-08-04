@@ -3,6 +3,7 @@ import Loader from "@/components/general/Loader";
 import { SelectedElem } from "@/components/mapper/hooks/selectedElemContext";
 import AddSection from "@/components/mapper/modal/AddSection";
 import { getDefaultSectionConfig } from "@/components/mapper/settings/Carousel/DefaultConfig";
+import { getBackground } from "@/components/mapper/settings/settingUtils";
 import { navBarTopPosition } from "@/mapper/ComponentConstants";
 import { switchNav, switchSection } from "@/mapper/ComponentMap";
 import { JSONHeaders, SECTION_TYPE } from "@/types/mapper.types";
@@ -59,7 +60,10 @@ const Simulator = ({ params }: { params: { id: string } }) => {
     const defaultSectionConfig = getDefaultSectionConfig[section];
     const newWebJson = {
       ...webJson,
-      [JSONHeaders.SECTIONS]: [...(webJson[JSONHeaders.SECTIONS] || []), defaultSectionConfig],
+      [JSONHeaders.SECTIONS]: [
+        ...(webJson[JSONHeaders.SECTIONS] || []),
+        defaultSectionConfig,
+      ],
     };
     socket.emit("addSectionToRoom", { room: params.id, message: newWebJson });
   };
@@ -81,27 +85,30 @@ const Simulator = ({ params }: { params: { id: string } }) => {
         setSelectedElement: handleElemSelection,
         selected: selectedElem?.type === SECTION_TYPE.NAV_BAR,
       })}
-      {webJson[JSONHeaders.SECTIONS]?.map((section: any, index: number) => {
-        return (
-          <SectionContainer
-            $bgColor={section.background}
-            $paddingTop={
-              webJson[SECTION_TYPE.NAV_BAR] && index === 0
-                ? navBarTopPosition[webJson[SECTION_TYPE.NAV_BAR].type]
-                : "0"
-            }
-            key={`${section.type}${section.subType}${index}`}
-            className="w-full h-max"
-          >
-            {switchSection(section.type, {
-              ...section,
-              isSelectMode: true,
-              setSelectedElement: (name: SelectedElem) => handleElemSelection({...name,index}),
-              selected: selectedElem?.type === section.type,
-            })}
-          </SectionContainer>
-        );
-      })}
+      {webJson[JSONHeaders.SECTIONS]?.map(
+        (section: Record<string, any>, index: number) => {
+          return (
+            <SectionContainer
+              $bgColor={getBackground(section, generalSettings.background)}
+              $paddingTop={
+                webJson[SECTION_TYPE.NAV_BAR] && index === 0
+                  ? navBarTopPosition[webJson[SECTION_TYPE.NAV_BAR].type]
+                  : "0"
+              }
+              key={`${section.type}${section.subType}${index}`}
+              className="w-full h-max"
+            >
+              {switchSection(section.type, {
+                ...section,
+                isSelectMode: true,
+                setSelectedElement: (name: SelectedElem) =>
+                  handleElemSelection({ ...name, index }),
+                selected: selectedElem?.type === section.type,
+              })}
+            </SectionContainer>
+          );
+        }
+      )}
       <div style={{ color: generalSettings.background }} className="invert">
         <AddSection handleAddSection={handleAddSection} />
       </div>

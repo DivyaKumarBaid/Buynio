@@ -20,6 +20,8 @@ const MultiTextMultiInput = ({
     });
   };
 
+  console.log({value}, "multiTextMultiInput")
+
   const [isEmpty, setEmpty] = React.useState<boolean>(isEmptyValue());
 
   React.useEffect(() => {

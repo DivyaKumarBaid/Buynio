@@ -3,10 +3,10 @@ import { SECTION_TYPE } from "@/types/mapper.types";
 export const getDefaultSectionConfig: Record<string, Record<string,any>> = {
   [SECTION_TYPE.CAROUSEL]: {
     type: "CAROUSEL",
-    background: "rgba(0,0,0,0)",
     subType: "CAROUSEL_V1",
     config: {
-      images: [
+      background: "rgba(0,0,0,0)",
+      slideImages: [
         {
           title: "Baby",
           redirection: "https://divyakrbaid.me",
@@ -19,7 +19,11 @@ export const getDefaultSectionConfig: Record<string, Record<string,any>> = {
         },
       ],
       sliderBtnColor: "#fff",
-      interval: 5000,
+      autoplaySpeed: 5000,
+      autoplay: true,
     },
+  },
+  [SECTION_TYPE.PRODUCT]: {
+  
   }
 };

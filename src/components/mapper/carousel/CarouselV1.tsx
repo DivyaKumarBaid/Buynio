@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import styled from "styled-components";
 import styles from "./carousel.module.css";
@@ -20,8 +20,13 @@ export const CarouselV1 = (props: CarouselProps): JSX.Element => {
   const [index, setIndex] = React.useState<number>(0);
   const [change, setChange] = React.useState<boolean>(false); // change -> animation trigger
   const [direction, setDirection] = React.useState<boolean>(true); // false -> left arrow clicked for animation
+  const [images, setImages] = React.useState<Record<string, string>[]>(
+    props.config.slideImages
+  );
 
-  console.log(props)
+  useEffect(() => {
+    setImages(props.config.slideImages);
+  }, [props.config.slideImages]);
 
   const handleChange = (inc: number) => {
     setChange(true);
@@ -33,8 +38,8 @@ export const CarouselV1 = (props: CarouselProps): JSX.Element => {
         setChange(false);
         setIndex((prevIndex) =>
           prevIndex + inc < 0
-            ? props.config.images.length - 1
-            : (prevIndex + inc) % props.config.images.length
+            ? images.length - 1
+            : (prevIndex + inc) % images.length
         );
         clearInterval(intervalId);
       }, 200);
@@ -50,7 +55,7 @@ export const CarouselV1 = (props: CarouselProps): JSX.Element => {
       // Clean up the interval when the component unmounts or when count reaches a certain value
       return () => clearInterval(intervalId);
     }
-  }, [props.config.autoplay, props.config.autoplaySpeed]);
+  }, [props.config.autoplay, props.config.autoplaySpeed, props.config.slideImages]);
 
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => handleChange(1),
@@ -85,11 +90,13 @@ export const CarouselV1 = (props: CarouselProps): JSX.Element => {
           className={`w-full h-full rounded-lg !bg-no-repeat !bg-cover !bg-center cursor-pointer ${
             change ? styles.change : styles.constant
           } ${direction ? styles.move_left : styles.move_right}`}
-          style={{ background: `url('${props.config.images[index].src}')` }}
+          style={{
+            background: `url('${images[index].src}')`,
+          }}
           href={
             props.isSelectMode
               ? undefined
-              : props.config.images[index].redirection
+              : images[index].redirection
           }
           onClick={(e) => {
             if (props.isSelectMode) {
@@ -107,7 +114,7 @@ export const CarouselV1 = (props: CarouselProps): JSX.Element => {
         </div>
       </div>
       <div className="flex gap-4 md:mb-4 mb-2">
-        {props.config.images.map((_, i) => (
+        {images.map((_, i) => (
           <Indicator
             key={`imageButton${i}`}
             className={`cursor-pointer w-[8px] h-[8px] rounded-[100%] transition-all duration-300`}

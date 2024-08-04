@@ -32,7 +32,7 @@ const Settingbar = () => {
     if (useMapper?.selectedElement?.type)
       originalValue = updatedSettings.getJsonFromKey(
         useMapper?.webJson || {},
-        0
+        useMapper?.selectedElement?.index || 0
       );
     else
       originalValue = updatedSettings.getJsonFromKey(useMapper?.webJson || {});
@@ -46,7 +46,6 @@ const Settingbar = () => {
       ]
     );
     const initVal = createValue();
-    console.log({ initVal });
     setInitValue(initVal);
   }, [useMapper?.selectedElement]);
 

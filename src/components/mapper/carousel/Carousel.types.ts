@@ -9,7 +9,7 @@ export type CarouselProps = {
     autoplay: boolean;
     autoplaySpeed: number;
     interval: number;
-    images: {
+    slideImages: {
       title: string;
       redirection: string;
       src: string;

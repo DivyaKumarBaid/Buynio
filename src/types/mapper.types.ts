@@ -40,4 +40,9 @@ export type CarouselconfigsType = {
     images: string[]
 }
 
+export type AddSectionType = {
+    name: SECTION_TYPE,
+    description: string
+}[]
+
 export type SectionConfigs = CAROUSEL_TYPE

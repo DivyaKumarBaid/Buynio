@@ -12,6 +12,7 @@ import { useEffect } from "react";
 const Editor = ({ params }: { params: { id: string } }) => {
   const useMapper = useMapperContext();
   const roomId = params.id;
+  console.log(useMapper?.webJson)
 
   useEffect(() => {
     if (useMapper?.webJson) {
@@ -35,8 +36,6 @@ const Editor = ({ params }: { params: { id: string } }) => {
 
     socket.on("elemSelectedToClient", (data: SelectedElem) => {
       useMapper?.setSelectedElement(data);
-
-      // socket.emit("updateJsonToRoom", { room: roomId, message: data });
     });
 
     socket.on("addSectionToClient", (data: SelectedElem) => {
