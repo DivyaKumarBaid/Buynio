@@ -78,7 +78,7 @@ const TextInput = ({
           ref={inputRef}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          className={`border-none outline-none w-full bg-transparent placeholder-[var(--text-secondary-low-color)] placeholder-opacity-50 duration-500 ${(preText.trim() == "" || postText.trim() == "") && "py-3 px-4"}`}
+          className={`border-none outline-none w-full bg-transparent placeholder-[var(--text-secondary-low-color)] placeholder-opacity-50 duration-500 ${(preText?.trim() == "" || postText?.trim() == "") && "py-3 px-4"}`}
         />
         {postText! && (
           <div

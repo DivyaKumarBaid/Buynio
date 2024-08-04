@@ -28,7 +28,7 @@ export const navCommonSettings = {
         tag: "General",
       },
       {
-        type: InputTypeEnum.COLOR_PICKET_INPUT,
+        type: InputTypeEnum.COLOR_PICKER_INPUT,
         flexEnd: true,
         name: "background",
         header: "Background Color",
@@ -36,7 +36,7 @@ export const navCommonSettings = {
         tag: "Appearance",
       },
       {
-        type: InputTypeEnum.COLOR_PICKET_INPUT,
+        type: InputTypeEnum.COLOR_PICKER_INPUT,
         flexEnd: true,
         name: "headerFontColor",
         header: "Header Font Color",
@@ -44,7 +44,7 @@ export const navCommonSettings = {
         tag: "Appearance",
       },
       {
-        type: InputTypeEnum.COLOR_PICKET_INPUT,
+        type: InputTypeEnum.COLOR_PICKER_INPUT,
         flexEnd: true,
         name: "linkFontColor",
         header: "Link Font Color",
@@ -164,7 +164,7 @@ export const navCommonSettings = {
         tag: "Links",
       },
       {
-        type: InputTypeEnum.COLOR_PICKET_INPUT,
+        type: InputTypeEnum.COLOR_PICKER_INPUT,
         flexEnd: true,
         name: "hoverLinkColor",
         header: "Hover Link Color",

@@ -31,7 +31,7 @@ export const createBaseValue = (fields: any[]) => {
       case InputTypeEnum.MULTI_TEXT_MULTI_INPUT:
         initialValue[inp.name] = [createBaseValue(inp.structure)];
         break;
-      case InputTypeEnum.COLOR_PICKET_INPUT:
+      case InputTypeEnum.COLOR_PICKER_INPUT:
         initialValue[inp.name] = "#000";
         break;
       case InputTypeEnum.DROPDOWN_INPUT:
@@ -60,7 +60,7 @@ export const SwitchInput = ({
   inputKey: string;
 }) => {
   switch (input.type) {
-    case InputTypeEnum.COLOR_PICKET_INPUT:
+    case InputTypeEnum.COLOR_PICKER_INPUT:
       return (
         <ColorPicker
           {...{

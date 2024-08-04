@@ -4,7 +4,8 @@ import {
   NavbarV2,
   NavbarV3,
 } from "@/components/mapper/navbar/Navbar";
-import { CAROUSEL_TYPE, NAV_TYPE, SECTION_TYPE } from "@/types/mapper.types";
+import Product_V1 from "@/components/mapper/product/Product_V1";
+import { CAROUSEL_TYPE, NAV_TYPE, PRODUCT_TYPE, SECTION_TYPE } from "@/types/mapper.types";
 
 export const switchNav = (type: string, props: any) => {
   switch (type) {
@@ -30,10 +31,21 @@ export const switchCarousel = (type: string, props: any) => {
   }
 };
 
+export const switchProduct = (type: string, props: any) => {
+  switch (type) {
+    case PRODUCT_TYPE.PRODUCT_V1:
+      return <Product_V1 {...props} />;
+    default:
+      return null;
+  }
+};
+
 export const switchSection = (type: string, props: any) => {
   switch (type) {
     case SECTION_TYPE.CAROUSEL:
       return switchCarousel(props.subType, props);
+    case SECTION_TYPE.PRODUCT:
+      return switchProduct(props.subType, props);
     default:
       return null;
   }

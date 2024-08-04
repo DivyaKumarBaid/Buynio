@@ -27,22 +27,9 @@ export enum JSONHeaders {
     SECTIONS = "SECTIONS"
 }
 
-export type SectionSubType = CAROUSEL_TYPE | NAV_TYPE | SECTION_TYPE.GENERAL
-
-export type SectionType = {
-    type: SECTION_TYPE,
-    subType: SectionSubType,
-    background: string,
-    config: SectionConfigs
-}
-
-export type CarouselconfigsType = {
-    images: string[]
-}
+export type SectionSubType = SECTION_TYPE.GENERAL | PRODUCT_TYPE | CAROUSEL_TYPE | NAV_TYPE
 
 export type AddSectionType = {
     name: SECTION_TYPE,
     description: string
 }[]
-
-export type SectionConfigs = CAROUSEL_TYPE

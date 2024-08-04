@@ -44,3 +44,9 @@ export type RefreshTokenResp = {
   access_token : string;
   refresh_token : string;
 }
+
+export enum Gravity {
+  CENTER='center',
+  START='start',
+  END='end'
+}

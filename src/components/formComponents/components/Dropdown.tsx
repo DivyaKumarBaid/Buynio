@@ -86,7 +86,7 @@ const Dropdown = ({
               </div>
             )}
             <button
-              className={`border-none outline-none bg-[var(--card-bg-color)] w-full placeholder-[var(--text-secondary-low-color)] ${(preText.trim() == "" || postText.trim() == "") && "py-3 px-4 rounded-md"} flex justify-between`}
+              className={`border-none outline-none bg-[var(--card-bg-color)] w-full placeholder-[var(--text-secondary-low-color)] ${(preText?.trim() == "" || postText?.trim() == "") && "py-3 px-4 rounded-md"} flex justify-between`}
             >
               <span>{selectedValue}</span>
               <FaChevronDown

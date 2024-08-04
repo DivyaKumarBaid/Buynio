@@ -9,7 +9,7 @@ export enum InputTypeEnum {
   TEXT_AREA_INPUT = "textAreaInput",
   CHECKBOX_INPUT = "checkboxInput",
   TOGGLE_BUTTON_INPUT = "toggleButtonInput",
-  COLOR_PICKET_INPUT = "colorPickerInput",
+  COLOR_PICKER_INPUT = "colorPickerInput",
   DROPDOWN_INPUT = "dropdownInput",
 }
 
@@ -79,9 +79,12 @@ export type MultiTextMultiInputIncomingType = {
   label: string;
   required: boolean;
   maximunFields: number;
-  structure: TextInputIncomingType[];
+  structure: (
+    | TextInputIncomingType
+    | ColorPickerIncomingType
+    | DropdownInputIncomingType
+  )[];
 };
-
 export type DropdownInputIncomingType = {
   tag?: string;
   type: InputTypeEnum.DROPDOWN_INPUT;
@@ -161,7 +164,7 @@ export type ToggleButtonIncomingType = {
 
 export type ColorPickerIncomingType = {
   tag?: string;
-  type: InputTypeEnum.COLOR_PICKET_INPUT;
+  type: InputTypeEnum.COLOR_PICKER_INPUT;
   name: string;
   header: string;
   subHeading?: string;
