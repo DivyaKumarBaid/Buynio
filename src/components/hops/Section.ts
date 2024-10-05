@@ -61,7 +61,7 @@ export const basicInfoSection: singleSectionType[] = [
         valueTransformer: (value: string) => value.substring(0, 10),
         errorTextForRegex: "phone numbe",
         required: true,
-        maxLength: 10,
+        max: 10,
       },
       {
         type: InputTypeEnum.TEXT_INPUT,
@@ -96,7 +96,7 @@ export const basicInfoSection: singleSectionType[] = [
         valueTransformer: (value: string) => value.substring(0, 10),
         errorTextForRegex: "",
         required: false,
-        maxLength: 10,
+        max: 10,
       },
       {
         type: InputTypeEnum.TEXT_INPUT,

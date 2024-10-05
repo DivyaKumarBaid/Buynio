@@ -8,6 +8,7 @@ import TextAreaInput from "../../formComponents/components/TextAreaInput";
 import TextInput from "../../formComponents/components/TextInput";
 import { InputTypeEnum } from "../../formComponents/types/input.types";
 import ColorPicker from "@/components/formComponents/components/ColorPicker";
+import Range from "@/components/formComponents/components/Slider";
 
 type BasicInfoType = {
   value: Record<string, any>;
@@ -92,14 +93,25 @@ const BasicInfo = ({
               <div className="flex flex-col w-[40%] items-start gap-4">
                 {sect.inputs.map((inp: any, idx: number) => {
                   switch (inp.type) {
-                    case InputTypeEnum.COLOR_PICKET_INPUT:
+                    case InputTypeEnum.COLOR_PICKER_INPUT:
                       return (
                         <ColorPicker
                           {...{
                             ...inp,
                             value: value[inp.name],
-                            onChange: handleChange}
-                          }
+                            onChange: handleChange,
+                          }}
+                          key={inp.name + idx}
+                        />
+                      );
+                    case InputTypeEnum.RANGE_INPUT:
+                      return (
+                        <Range
+                          {...{
+                            ...inp,
+                            value: value[inp.name],
+                            onChange: handleChange,
+                          }}
                           key={inp.name + idx}
                         />
                       );

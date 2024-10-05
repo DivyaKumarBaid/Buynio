@@ -5,6 +5,7 @@ import ImapeUploader from "./components/ImapeUploader";
 import MultiInput from "./components/MultiInput";
 import MultiTextMultiInput from "./components/MultiTextMultiInput";
 import NumberInput from "./components/NumberInput";
+import Range from "./components/Slider";
 import TextAreaInput from "./components/TextAreaInput";
 import TextInput from "./components/TextInput";
 import ToggleButton from "./components/ToggleButton";
@@ -20,7 +21,7 @@ export const createBaseValue = (fields: any[]) => {
         initialValue[inp.name] = "";
         break;
       case InputTypeEnum.NUMBER_INPUT:
-        initialValue[inp.name] = "";
+        initialValue[inp.name] = "0";
         break;
       case InputTypeEnum.TEXT_INPUT:
         initialValue[inp.name] = "";
@@ -31,8 +32,11 @@ export const createBaseValue = (fields: any[]) => {
       case InputTypeEnum.MULTI_TEXT_MULTI_INPUT:
         initialValue[inp.name] = [createBaseValue(inp.structure)];
         break;
-      case InputTypeEnum.COLOR_PICKET_INPUT:
+      case InputTypeEnum.COLOR_PICKER_INPUT:
         initialValue[inp.name] = "#000";
+        break;
+      case InputTypeEnum.RANGE_INPUT:
+        initialValue[inp.name] = "0";
         break;
       case InputTypeEnum.DROPDOWN_INPUT:
         initialValue[inp.name] = inp.options[0] || "";
@@ -60,9 +64,20 @@ export const SwitchInput = ({
   inputKey: string;
 }) => {
   switch (input.type) {
-    case InputTypeEnum.COLOR_PICKET_INPUT:
+    case InputTypeEnum.COLOR_PICKER_INPUT:
       return (
         <ColorPicker
+          {...{
+            ...input,
+            value: value[input.name],
+            onChange: handleChange,
+          }}
+          key={inputKey}
+        />
+      );
+    case InputTypeEnum.RANGE_INPUT:
+      return (
+        <Range
           {...{
             ...input,
             value: value[input.name],

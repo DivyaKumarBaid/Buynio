@@ -122,7 +122,7 @@ export const carouselCommonSettings = {
       ],
     },
     {
-      type: InputTypeEnum.COLOR_PICKET_INPUT,
+      type: InputTypeEnum.COLOR_PICKER_INPUT,
       name: "sliderBtnColor",
       header: "Slider Button Color",
       subHeading: "Set the color of the slider buttons",
@@ -131,7 +131,7 @@ export const carouselCommonSettings = {
       flexEnd: true,
     },
     {
-      type: InputTypeEnum.COLOR_PICKET_INPUT,
+      type: InputTypeEnum.COLOR_PICKER_INPUT,
       name: "background",
       header: "Background",
       subHeading: "Section background",

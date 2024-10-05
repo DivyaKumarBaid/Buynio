@@ -48,7 +48,7 @@ const AddSection = ({
                   {addSectionOptions.map((section, index) => {
                     return (
                       <div
-                        className="border-[1px] border-[var(--card-border-color)] rounded-md hover:border-[var(--card-focus-color)] duration-200 flex flex-col text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] break-keep p-4 gap-2 cursor-pointer"
+                        className="border-[1px] border-[var(--card-border-color)] rounded-md hover:border-[var(--card-focus-color)] duration-200 flex flex-col text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] break-keep p-2 gap-1 cursor-pointer text-center"
                         key={`${section.name}-${index}`}
                         onClick={() => {
                           handleAddSection(section.name);
@@ -56,7 +56,7 @@ const AddSection = ({
                         }}
                       >
                         <h6>{sectionNameMapper[section.name]}</h6>
-                        <p className="text-sm">{section.description}</p>
+                        <p className="text-xs opacity-50">{section.description}</p>
                       </div>
                     );
                   })}

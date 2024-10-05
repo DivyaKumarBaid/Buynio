@@ -36,6 +36,7 @@ const Settingbar = () => {
       );
     else
       originalValue = updatedSettings.getJsonFromKey(useMapper?.webJson || {});
+    console.log({originalValue})
     return { ...base, ...originalValue }; //patches base value with one present in webjson
   }
 

@@ -22,7 +22,7 @@ export const generalSettings = {
     },
     inputs: [
       {
-        type: InputTypeEnum.COLOR_PICKET_INPUT,
+        type: InputTypeEnum.COLOR_PICKER_INPUT,
         flexEnd: true,
         name: "background",
         header: "Background Color",
@@ -39,7 +39,7 @@ export const generalSettings = {
         tag: "General",
       },
       {
-        type: InputTypeEnum.COLOR_PICKET_INPUT,
+        type: InputTypeEnum.COLOR_PICKER_INPUT,
         flexEnd: true,
         name: "headingFontColor",
         header: "Heading Font Color",
@@ -49,7 +49,7 @@ export const generalSettings = {
       },
       {
         flexEnd: true,
-        type: InputTypeEnum.COLOR_PICKET_INPUT,
+        type: InputTypeEnum.COLOR_PICKER_INPUT,
         name: "scrollbarColor",
         header: "Scrollbar Color",
         subHeading: "Choose the color for the scrollbar",
@@ -57,7 +57,7 @@ export const generalSettings = {
         required: false,
       },
       {
-        type: InputTypeEnum.COLOR_PICKET_INPUT,
+        type: InputTypeEnum.COLOR_PICKER_INPUT,
         flexEnd: true,
         name: "paragraphFontColor",
         header: "Paragraph Font Color",

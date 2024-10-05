@@ -2,7 +2,7 @@
 import Loader from "@/components/general/Loader";
 import { SelectedElem } from "@/components/mapper/hooks/selectedElemContext";
 import AddSection from "@/components/mapper/modal/AddSection";
-import { getDefaultSectionConfig } from "@/components/mapper/settings/Carousel/DefaultConfig";
+import { getDefaultSectionConfig } from "@/components/mapper/settings/settingUtils";
 import { getBackground } from "@/components/mapper/settings/settingUtils";
 import { navBarTopPosition } from "@/mapper/ComponentConstants";
 import { switchNav, switchSection } from "@/mapper/ComponentMap";

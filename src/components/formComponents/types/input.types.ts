@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, ReactNode } from "react";
 
 export enum InputTypeEnum {
   IMAGE_UPLOADER = "imageUploader",
@@ -6,10 +6,11 @@ export enum InputTypeEnum {
   MULTI_TEXT_INPUT = "multiTextInput",
   MULTI_TEXT_MULTI_INPUT = "multiTextMultiInput",
   NUMBER_INPUT = "numberInput",
+  RANGE_INPUT = "rangeInput",
   TEXT_AREA_INPUT = "textAreaInput",
   CHECKBOX_INPUT = "checkboxInput",
   TOGGLE_BUTTON_INPUT = "toggleButtonInput",
-  COLOR_PICKET_INPUT = "colorPickerInput",
+  COLOR_PICKER_INPUT = "colorPickerInput",
   DROPDOWN_INPUT = "dropdownInput",
 }
 
@@ -19,6 +20,7 @@ export type GlobalInputType =
   | MultiTextInputType
   | MultiTextMultiInputType
   | NumberInputType
+  | RangeInputType
   | TextAreaInputType
   | CheckboxType
   | ToggleButtonInputType
@@ -31,6 +33,7 @@ export type GlobalInputIncomingType =
   | MultiTextInputIncomingType
   | MultiTextMultiInputIncomingType
   | NumberInputIncomingType
+  | RangeInputIncomingType
   | TextAreaInputIncomingType
   | CheckboxIncomingType
   | CheckboxIncomingMultiSelectType
@@ -42,6 +45,7 @@ export type TextInputIncomingType = {
   tag?: string;
   type: InputTypeEnum.TEXT_INPUT;
   name: string;
+  hidden?: boolean;
   placeholder: string;
   preText: string;
   postText: string;
@@ -53,12 +57,14 @@ export type TextInputIncomingType = {
   regexMatch: RegExp | null;
   maxLength?: number;
   required: boolean;
+  customIcon?: ReactNode;
 };
 
 export type MultiTextInputIncomingType = {
   tag?: string;
   type: InputTypeEnum.MULTI_TEXT_INPUT;
   name: string;
+  hidden?: boolean;
   placeholder: string;
   preText: string;
   postText: string;
@@ -76,16 +82,21 @@ export type MultiTextMultiInputIncomingType = {
   tag?: string;
   type: InputTypeEnum.MULTI_TEXT_MULTI_INPUT;
   name: string;
+  hidden?: boolean;
   label: string;
   required: boolean;
   maximunFields: number;
-  structure: TextInputIncomingType[];
+  structure: (
+    | TextInputIncomingType
+    | ColorPickerIncomingType
+    | DropdownInputIncomingType
+  )[];
 };
-
 export type DropdownInputIncomingType = {
   tag?: string;
   type: InputTypeEnum.DROPDOWN_INPUT;
   name: string;
+  hidden?: boolean;
   preText: string;
   postText: string;
   header: string;
@@ -99,6 +110,7 @@ export type NumberInputIncomingType = {
   tag?: string;
   type: InputTypeEnum.NUMBER_INPUT;
   name: string;
+  hidden?: boolean;
   placeholder: string;
   preText: string;
   postText: string;
@@ -108,8 +120,21 @@ export type NumberInputIncomingType = {
   showError: boolean;
   errorTextForRegex: string;
   regexMatch: RegExp | null;
-  maxLength?: number;
+  min?: number;
+  max?: number;
   required: boolean;
+  customIcon?: ReactNode
+};
+
+export type RangeInputIncomingType = {
+  tag?: string;
+  type: InputTypeEnum.RANGE_INPUT;
+  name: string;
+  hidden?: boolean;
+  header: string;
+  valueTransformer: (value: string) => string;
+  min: number;
+  max: number;
 };
 
 export type TextInputType = TextInputIncomingType & {
@@ -130,6 +155,7 @@ export type MultiTextMultiInputType = MultiTextMultiInputIncomingType & {
 export type DummyEvent = {
   target: {
     name: string;
+    hidden?: boolean;
     type: string;
     value: any;
   };
@@ -145,8 +171,13 @@ export type DropdownInputType = DropdownInputIncomingType & {
   value: DropdownOptionType;
 };
 
-export type NumberInputType = TextInputIncomingType & {
+export type NumberInputType = NumberInputIncomingType & {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+};
+
+export type RangeInputType = RangeInputIncomingType & {
+  onChange: (e: DummyEvent) => void;
   value: string;
 };
 
@@ -154,6 +185,7 @@ export type ToggleButtonIncomingType = {
   tag?: string;
   type: InputTypeEnum.TOGGLE_BUTTON_INPUT;
   name: string;
+  hidden?: boolean;
   header: string;
   subHeading?: string;
   flexEnd?: boolean;
@@ -161,8 +193,9 @@ export type ToggleButtonIncomingType = {
 
 export type ColorPickerIncomingType = {
   tag?: string;
-  type: InputTypeEnum.COLOR_PICKET_INPUT;
+  type: InputTypeEnum.COLOR_PICKER_INPUT;
   name: string;
+  hidden?: boolean;
   header: string;
   subHeading?: string;
   flexEnd?: boolean;
@@ -172,6 +205,7 @@ export type TextAreaInputIncomingType = {
   tag?: string;
   type: InputTypeEnum.TEXT_AREA_INPUT;
   name: string;
+  hidden?: boolean;
   placeholder: string;
   header: string;
   label: string;
@@ -200,6 +234,7 @@ export type TextAreaInputType = TextAreaInputIncomingType & {
 };
 export type ImageFileUploaderIncomingType = {
   name: string;
+  hidden?: boolean;
   error: string;
   tag?: string;
   type: InputTypeEnum.IMAGE_UPLOADER;
@@ -222,6 +257,7 @@ export type CheckboxBaseIncomingType = {
   type: InputTypeEnum.CHECKBOX_INPUT;
   options: OptionType[];
   name: string;
+  hidden?: boolean;
   header: string;
   required: boolean;
 };

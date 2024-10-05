@@ -22,8 +22,9 @@ const SettingsMapper = ({
   const useMapper = useMapperContext();
   const [value, handleChange] = useForm(initValue, true);
 
-  const groupedByTag = () =>
-    settings.inputs.reduce((acc: Record<string, any>, input) => {
+  const groupedByTag = () => {
+    const visibleSettings = settings.inputs.filter(inp => !inp.hidden)
+    return visibleSettings.reduce((acc: Record<string, any>, input) => {
       const { tag } = input;
       if (!tag) return acc;
       if (!acc[tag]) {
@@ -32,6 +33,7 @@ const SettingsMapper = ({
       acc[tag].push(input);
       return acc;
     }, {});
+  };
 
   const [tabsContent, setTabContent] = React.useState<Record<string, any>>({});
   const [tabs, setTabs] = React.useState<string[]>([]);
@@ -49,7 +51,11 @@ const SettingsMapper = ({
   function updateValueInJson() {
     if (useMapper?.webJson) {
       useMapper?.setWebJson?.((prevJson) => {
-        const updatedJson = settings.patchJson(prevJson || {}, value, useMapper?.selectedElement?.index);
+        const updatedJson = settings.patchJson(
+          prevJson || {},
+          value,
+          useMapper?.selectedElement?.index
+        );
         return { ...prevJson, ...updatedJson };
       });
     }
