@@ -100,7 +100,9 @@ const VerifyForm = ({ id }: { id: string }) => {
                 name="first"
                 autoFocus={i === 0}
                 value={value.otp.length - 1 < i ? "" : value.otp[i]}
-                ref={(el) => (inputRef.current[i] = el)}
+                ref={(el) => {
+                  inputRef.current[i] = el;
+                }}
                 onChange={(e) =>{
                   console.log(e)
                   handleDigitChange(e, i)
