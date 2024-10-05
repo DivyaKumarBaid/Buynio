@@ -6,6 +6,7 @@ const useForm = (
 ): [
   values: Record<string, any>,
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void,
+  updateValue : (newVal: Record<string, any>) => void
 ] => {
   // Ensure all initial values are defined
   const getDefinedInitialValues = (values: Record<string, any>) => {
@@ -26,6 +27,8 @@ const useForm = (
     }
   }, [initialValues, updateOnEffect]);
 
+  const updateValue = (newVal : Record<string, any>) => setValues(getDefinedInitialValues(newVal));
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked, files } = event.target;
     setValues((prevFormData) => ({
@@ -35,7 +38,7 @@ const useForm = (
     }));
   };
 
-  return [values, handleChange];
+  return [values, handleChange, updateValue];
 };
 
 export default useForm;

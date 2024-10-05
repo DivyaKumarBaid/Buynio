@@ -18,7 +18,8 @@ const TextInput = ({
   showError,
   errorTextForRegex,
   maxLength,
-  required
+  required,
+  customIcon
 }: TextInputType) => {
   const [error, setError] = React.useState<boolean>(false);
   const [focus, setFocus] = React.useState<boolean>(false);
@@ -57,6 +58,7 @@ const TextInput = ({
       <div
         className={`flex justify-start items-center border-[1px] ${error ? "border-[var(--danger-secondary-low-color)]" : focus ? "border-[var(--input-focus-border)]" : "border-[var(--card-border-color)]"} rounded-md duration-300 min-w-[300px]`}
       >
+        {customIcon}
         {preText! && (
           <div
             className={`text-[var(--text-secondary-color)] text-md bg-[var(--pretext-bg-color)] rounded-l-md py-3 px-4 border-r-[1px] ${error ? "border-[var(--danger-secondary-low-color)]" : "border-[var(--card-border-color)]"} duration-300 w-max text-nowrap`}

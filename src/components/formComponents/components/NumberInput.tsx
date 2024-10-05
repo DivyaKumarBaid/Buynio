@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { TextInputType } from "../types/input.types";
+import { NumberInputType } from "../types/input.types";
 
 
 
@@ -17,8 +17,10 @@ const NumberInput = ({
   valueTransformer,
   showError,
   errorTextForRegex,
-  required
-}: TextInputType) => {
+  required,
+  min,
+  max
+}: NumberInputType) => {
   const [error, setError] = React.useState<boolean>(false);
   const [focus, setFocus] = React.useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -76,6 +78,8 @@ const NumberInput = ({
           ref={inputRef}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
+          min={min}
+          max={max}
           className={`border-none outline-none bg-transparent w-[100%] placeholder-[var(--text-secondary-low-color)] placeholder-opacity-50 duration-500 ${(preText.trim() == "" || postText.trim() == "") && "py-3 px-4"}`}
         />
         {postText! && (

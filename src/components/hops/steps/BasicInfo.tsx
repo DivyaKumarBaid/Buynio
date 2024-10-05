@@ -8,6 +8,7 @@ import TextAreaInput from "../../formComponents/components/TextAreaInput";
 import TextInput from "../../formComponents/components/TextInput";
 import { InputTypeEnum } from "../../formComponents/types/input.types";
 import ColorPicker from "@/components/formComponents/components/ColorPicker";
+import Range from "@/components/formComponents/components/Slider";
 
 type BasicInfoType = {
   value: Record<string, any>;
@@ -98,8 +99,19 @@ const BasicInfo = ({
                           {...{
                             ...inp,
                             value: value[inp.name],
-                            onChange: handleChange}
-                          }
+                            onChange: handleChange,
+                          }}
+                          key={inp.name + idx}
+                        />
+                      );
+                    case InputTypeEnum.RANGE_INPUT:
+                      return (
+                        <Range
+                          {...{
+                            ...inp,
+                            value: value[inp.name],
+                            onChange: handleChange,
+                          }}
                           key={inp.name + idx}
                         />
                       );

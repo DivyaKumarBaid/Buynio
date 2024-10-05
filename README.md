@@ -10,3 +10,7 @@ dropdown
 [ ] [Sidelines for Social links](https://dribbble.com/shots/21344057-Shoes-Shop-Landing-Page-Design)
 [ ] [Product Section Style](https://dribbble.com/shots/15331746-Product-Detail-Page-Exploration)
 [ ] Margee
+
+ideas :
+- https://dribbble.com/shots/19965249-Ecommerce-Website-Design
+- https://dribbble.com/shots/24214064-Furniture-E-commerce-Website
