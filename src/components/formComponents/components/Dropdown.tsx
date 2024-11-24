@@ -39,8 +39,6 @@ const Dropdown = ({
       val = Array.from(keys);
     }
 
-    console.log("DEBUG_LOG anchor", val, typeof keys)
-
     // dummy call to forms hooks
     const e = {
       target: {

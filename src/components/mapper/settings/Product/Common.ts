@@ -8,7 +8,6 @@ export const productCommonSettings = {
     json: Record<string, any>,
     index: number
   ) => {
-    console.log({ json, name: "Product" });
     return {
       ...originalJson,
       [JSONHeaders.SECTIONS]: originalJson[JSONHeaders.SECTIONS].map(

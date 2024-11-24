@@ -12,10 +12,8 @@ import ToggleButton from "./components/ToggleButton";
 import { InputTypeEnum } from "./types/input.types";
 
 export const createBaseValue = (fields: any[]) => {
-  console.log({fields})
   const initialValue: Record<string, any> = {};
   fields?.forEach((inp: any) => {
-    console.log({inp})
     switch (inp.type) {
       case InputTypeEnum.TEXT_AREA_INPUT:
         initialValue[inp.name] = "";

@@ -4,7 +4,6 @@ import {
 } from "@/components/mapper/product/Product.types";
 import { handleUploadProductImage } from "@/service/hop";
 import { JSONHeaders, SECTION_TYPE } from "@/types/mapper.types";
-import { resolve } from "path";
 
 export const spy = (statement: string, value: any) => {
   console.log({ [statement]: value });
@@ -54,7 +53,7 @@ export const patchAllProductImage = async (
     }
   );
   const y = await Promise.all(config);
-  json[JSONHeaders.SECTIONS] = y
+  json[JSONHeaders.SECTIONS] = y;
   return json;
 };
 
@@ -74,7 +73,7 @@ export const patchProductImage = async (
     prod.src = urls;
     return prod;
   });
-  let patchedProducts = await Promise.all(patchedProdPromise);
+  const patchedProducts = await Promise.all(patchedProdPromise);
   config.config.products = patchedProducts;
   return config;
 };

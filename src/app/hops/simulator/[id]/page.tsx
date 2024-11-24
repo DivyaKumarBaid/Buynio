@@ -76,7 +76,6 @@ const Simulator = ({ params }: { params: { id: string } }) => {
       config.config,
       selectedElem?.index || 0
     );
-    console.log("DEBUG_LOG newConfig", {config, updatedJson});
     socket.emit("addSectionToRoom", { room: params.id, message: updatedJson });
   };
 

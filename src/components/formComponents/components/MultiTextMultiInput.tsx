@@ -22,7 +22,6 @@ const MultiTextMultiInput = ({
 }: MultiTextMultiInputType) => {
   const isEmptyValue = () => {
     return value?.some((inp) => {
-      console.log(inp, "multitextmultiInp");
       return Object.keys(inp).some((k: string) => {
         if (typeof inp[k] == "string") {
           return inp[k].trim() === "";
@@ -34,9 +33,6 @@ const MultiTextMultiInput = ({
       });
     });
   };
-
-  console.log({ value }, "multiTextMultiInput");
-
   const [isEmpty, setEmpty] = React.useState<boolean>(isEmptyValue());
 
   React.useEffect(() => {

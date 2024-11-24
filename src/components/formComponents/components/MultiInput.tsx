@@ -22,7 +22,6 @@ const MultiInput = ({
 }: MultiTextInputType) => {
   const isEmptyValue = () => {
     return value?.some((inp) => {
-      console.log(inp, "testingMultiText")
       inp.trim() === ""
     });
   };

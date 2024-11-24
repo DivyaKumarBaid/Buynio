@@ -67,7 +67,6 @@ export const handleUploadProductImage = async (
 
     // Iterate over each image file name
     if (typeof value !== "string") {
-      console.log("DEBUG_LOG name", value);
       const fName = value.name as string;
       const storageRef = ref(
         storage,
@@ -83,16 +82,14 @@ export const handleUploadProductImage = async (
     await Promise.all(uploadPromises);
 
     // Once all uploads are complete, update file URLs in value object
-    for (const fileName of imageFileNames) {
-      if (typeof value !== "string") {
-        const storageRef = ref(
-          storage,
-          `${brandName.split(" ").join("_")}/products/${value.name.split(".").pop()}`
-        );
-        const downloadUrl = await getDownloadURL(storageRef);
-        value = downloadUrl;
-        return value;
-      }
+    if (typeof value !== "string") {
+      const storageRef = ref(
+        storage,
+        `${brandName.split(" ").join("_")}/products/${value.name.split(".").pop()}`
+      );
+      const downloadUrl = await getDownloadURL(storageRef);
+      value = downloadUrl;
+      return value;
     }
     return "";
   } catch (error) {

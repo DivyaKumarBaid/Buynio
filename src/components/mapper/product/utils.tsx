@@ -2,27 +2,33 @@ import {
   createBaseValue,
   SwitchInput,
 } from "@/components/formComponents/InputMapper";
-import { GlobalInputIncomingType, ImageFileUploaderIncomingType, InputTypeEnum } from "@/components/formComponents/types/input.types";
+import {
+  GlobalInputIncomingType,
+  InputTypeEnum,
+} from "@/components/formComponents/types/input.types";
 import useForm from "@/hooks/useForm";
 import { barlow } from "@/lib/Fonts";
 import { ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
-import React from "react";
 
 type AddProductCardProps = {
   onClose: () => void;
-  onSave: (value:Record<string,any>) => void;
+  onSave: (value: Record<string, any>) => void;
 };
 
-export const addProductProxy = (onSave: (value:Record<string,any>) => void) => {
-  return (onClose: () => void) => <AddProductCard onSave={onSave} onClose={onClose}/>
-}
+export const addProductProxy = (
+  onSave: (value: Record<string, any>) => void
+) => {
+  return (onClose: () => void) => (
+    <AddProductCard onSave={onSave} onClose={onClose} />
+  );
+};
 
 const imageInput: GlobalInputIncomingType = {
   name: "src",
   error: "",
   type: InputTypeEnum.IMAGE_UPLOADER,
   required: true,
-}
+};
 
 const addProductInputs: GlobalInputIncomingType[] = [
   {
@@ -51,7 +57,7 @@ const addProductInputs: GlobalInputIncomingType[] = [
     errorTextForRegex: "",
     regexMatch: null,
     required: true,
-    label: ""
+    label: "",
   },
   {
     type: InputTypeEnum.NUMBER_INPUT,
@@ -67,7 +73,7 @@ const addProductInputs: GlobalInputIncomingType[] = [
     regexMatch: null,
     required: true,
     min: 0,
-    label: ""
+    label: "",
   },
   {
     type: InputTypeEnum.TEXT_INPUT,
@@ -95,7 +101,9 @@ const addProductInputs: GlobalInputIncomingType[] = [
 ];
 
 export const AddProductCard = ({ onClose, onSave }: AddProductCardProps) => {
-  const [value, handleChange] = useForm(createBaseValue([...addProductInputs, imageInput]));
+  const [value, handleChange] = useForm(
+    createBaseValue([...addProductInputs, imageInput])
+  );
 
   return (
     <>
@@ -143,10 +151,10 @@ export const AddProductCard = ({ onClose, onSave }: AddProductCardProps) => {
         </div>
         <div
           className="border-[1px] bg-[var(--success-bg-light-color)] text-sm border-[var(--card-border-color)] text-[var(--text-primary-color)] hover:bg-[var(--success-bg-color)] hover:border-[var(--card-border-hover-color)] duration-200 rounded-md p-2 cursor-pointer"
-          onClick={(ev) => {
-              onSave(value);
-              onClose();
-            }}
+          onClick={() => {
+            onSave(value);
+            onClose();
+          }}
         >
           Save
         </div>

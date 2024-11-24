@@ -43,8 +43,6 @@ export const MapperProvider = ({ children }: { children: ReactNode }) => {
   const [roomId, setRoomId] = React.useState<string | null>(null);
   const [webJson, setWebJson] = React.useState<Record<string, any> | null>(null);
 
-  console.log({webJson, selectedElement})
-
   const { data: savedHop, isLoading } = useQuery({
     queryKey: [fetchSingleSavedHop],
     queryFn: () => getSingleSavedHop(session, roomId!),
@@ -66,8 +64,6 @@ export const MapperProvider = ({ children }: { children: ReactNode }) => {
   //     toast.error(error.message);
   //   }
   // }, [error]);
-
-  // console.log("Mapper", { selectedElement, setSelectedElement, view, setView, roomId, setRoomId, webJson, setWebJson});
 
   return (
     <MapperContext.Provider

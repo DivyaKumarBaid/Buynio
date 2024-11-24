@@ -12,7 +12,6 @@ import { useEffect } from "react";
 const Editor = ({ params }: { params: { id: string } }) => {
   const useMapper = useMapperContext();
   const roomId = params.id;
-  console.log(useMapper?.webJson)
 
   useEffect(() => {
     if (useMapper?.webJson) {

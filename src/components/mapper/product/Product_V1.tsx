@@ -13,7 +13,6 @@ import {
 import { addProductProxy } from "./utils";
 
 const Product_V1 = (props: ProductProps): JSX.Element => {
-  console.log("DEBUG_LOG productV1",props)
   return (
     <ProductLayout
       $textColor={props.config.textColor}
@@ -45,7 +44,6 @@ const Product_V1 = (props: ProductProps): JSX.Element => {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 md:p-0 p-2">
         {props.config.products?.map((product, index) => {
-          console.log("DEBUG_LOG product",product)
           return (
             <RippleButton
               onDoubleClick={true}
