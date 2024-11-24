@@ -1,5 +1,6 @@
 import { PRODUCT_TYPE, SECTION_TYPE } from "@/types/mapper.types";
 import { SelectedElem } from "../hooks/selectedElemContext";
+import { UpdateConfigFuncs } from "../types";
 
 export type ProductConfig = {
   headingText: string;
@@ -29,7 +30,9 @@ export type ProductProps = {
   setSelectedElement?: React.Dispatch<
     React.SetStateAction<SelectedElem | null>
   >;
+  changeConfig?: (config:ProductConfig) => void
   selected?: boolean;
+  updateFunc?: UpdateConfigFuncs;
 };
 
 export type ProductsObject = {
@@ -37,6 +40,6 @@ export type ProductsObject = {
   description: string;
   price: string;
   redirection: string; //link
-  src: string[]; //image
+  src: string | File; //image
   background: string;
 };

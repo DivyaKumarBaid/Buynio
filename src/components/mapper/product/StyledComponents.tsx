@@ -15,6 +15,7 @@ export const HeadingLayout = styled.div<{
   width: 100%;
   font-size: ${(props) => `${props.$fontSize}px`};
   justify-content: ${(props) => {
+    console.log("DEBUG_LOG gravity", props);
     switch (props.$gravity) {
       case "Left":
         return Gravity.START;

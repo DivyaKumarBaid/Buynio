@@ -21,6 +21,10 @@ const SettingsMapper = ({
 }) => {
   const useMapper = useMapperContext();
   const [value, handleChange] = useForm(initValue, true);
+  const itemClasses = {
+    trigger: "py-4 px-1",
+    content: "py-0 pb-2",
+  };
 
   const groupedByTag = () => {
     const visibleSettings = settings.inputs.filter(inp => !inp.hidden)
@@ -45,7 +49,7 @@ const SettingsMapper = ({
     const group = groupedByTag();
     setTabContent(group);
     setTabs(Object.keys(group));
-    setCurrentTab(new Set([Object.keys(group)[0]]));
+    setCurrentTab(new Set(Object.keys(group)));
   }, [settings]);
 
   function updateValueInJson() {
@@ -118,12 +122,12 @@ const SettingsMapper = ({
           />
         </div>
       </div>
-      <HorizontalDivider />
-      <div className=" flex flex-col w-full">
+      <div className="flex flex-col w-full">
         <Accordion
           selectionMode="multiple"
           selectedKeys={currentTab}
           onSelectionChange={handleSelectionChange}
+          itemClasses={itemClasses}
         >
           {tabs.map((tab) => {
             return (
@@ -131,8 +135,9 @@ const SettingsMapper = ({
                 key={tab}
                 aria-label={tab}
                 title={<div className="w-[100%] mx-2">{tab}</div>}
-                className="border-b border-[var(--card-border-hover-color)]"
+                className="border-[1px] px-2 border-[var(--card-border-hover-color)] bg-[rgba(255,255,255,0.1)] backdrop-blur-xl my-2 rounded-2xl"
               >
+                <HorizontalDivider/>
                 <div className="flex flex-col gap-2">
                   {tabsContent[tab].map(
                     (input: Record<string, any>, index: number) => {

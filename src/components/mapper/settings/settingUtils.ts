@@ -64,9 +64,7 @@ export const getDefaultSectionConfig: Record<string, Record<string, any>> = {
           description: "This is a great product.",
           price: "$19.99",
           redirection: "https://github.com/",
-          src: [
-            "https://plus.unsplash.com/premium_photo-1705479742826-cb265b9d6999?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          ],
+          src: "https://plus.unsplash.com/premium_photo-1705479742826-cb265b9d6999?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           background: "#ffffff",
         },
         {
@@ -74,9 +72,7 @@ export const getDefaultSectionConfig: Record<string, Record<string, any>> = {
           description: "This is another great product.",
           price: "$29.99",
           redirection: "https://github.com/",
-          src: [
-            "https://plus.unsplash.com/premium_photo-1705479742826-cb265b9d6999?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          ],
+          src: "https://plus.unsplash.com/premium_photo-1705479742826-cb265b9d6999?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           background: "#ffffff",
         },
         {
@@ -84,9 +80,7 @@ export const getDefaultSectionConfig: Record<string, Record<string, any>> = {
           description: "This is another great product.",
           price: "$29.99",
           redirection: "https://github.com/",
-          src: [
-            "https://plus.unsplash.com/premium_photo-1705479742826-cb265b9d6999?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          ],
+          src: "https://plus.unsplash.com/premium_photo-1705479742826-cb265b9d6999?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           background: "#ffffff",
         },
         {
@@ -94,9 +88,7 @@ export const getDefaultSectionConfig: Record<string, Record<string, any>> = {
           description: "This is another great product.",
           price: "$29.99",
           redirection: "https://github.com/",
-          src: [
-            "https://plus.unsplash.com/premium_photo-1705479742826-cb265b9d6999?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          ],
+          src: "https://plus.unsplash.com/premium_photo-1705479742826-cb265b9d6999?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           background: "#ffffff",
         },
       ],

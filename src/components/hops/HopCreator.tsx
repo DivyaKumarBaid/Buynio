@@ -35,6 +35,9 @@ const createBaseValue = () => {
         case InputTypeEnum.IMAGE_UPLOADER:
           initialValue[inp.name] = null;
           break;
+        case InputTypeEnum.MULTI_IMAGE_UPLOADER:
+          initialValue[inp.name] = null;
+          break;
         case InputTypeEnum.COLOR_PICKER_INPUT:
           initialValue[inp.name] = "#000";
           break;
@@ -139,7 +142,7 @@ const HopCreator = () => {
             return (
               <div
                 key={"stepLine" + idx}
-                className={`w-full h-[1px] ${idx < step + 1 ? "bg-[white]" : "bg-[var(--border-focus-color)]"}`}
+                className={`w-full h-[1px] ${idx < step + 1 ? "bg-[--border-color]" : "bg-[var(--border-focus-color)]"}`}
               />
             );
           })}

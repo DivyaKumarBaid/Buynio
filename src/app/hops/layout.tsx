@@ -15,8 +15,8 @@ export default function RootLayout({
 }>) {
   return (
     <MapperProvider>
-      <div className="relative w-full min-h-[100vh]">
-        <Sidebar canHide={true} />
+      <div className="flex relative w-full overflow-auto">
+        <Sidebar canHide={true} isAbsolute={true}/>
         {children}
       </div>
     </MapperProvider>

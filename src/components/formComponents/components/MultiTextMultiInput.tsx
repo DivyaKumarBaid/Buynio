@@ -163,7 +163,7 @@ const MultiTextMultiInput = ({
       )}
       {value?.map((input, index) => (
         <div
-          className="flex items-center bg-[var(--card-bg-color)] rounded-md py-2 w-min relative"
+          className="flex items-center rounded-md py-2 w-min relative"
           key={`${name}-${index}-${InputTypeEnum.MULTI_TEXT_MULTI_INPUT}`}
         >
           {required && value.length <= 1 ? null : (

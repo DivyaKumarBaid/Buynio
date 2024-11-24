@@ -155,9 +155,9 @@ export const productCommonSettings = {
       subHeading: "Placement of the subheading",
       tag: "Subheading",
       options: [
-        { value: "start", label: "Left" },
-        { value: "center", label: "Center" },
-        { value: "end", label: "Right" },
+        { value: "Left", label: "Left" },
+        { value: "Center", label: "Center" },
+        { value: "Right", label: "Right" },
       ],
       multiSelect: false,
       preText: "",

@@ -2,7 +2,7 @@
 import { PiImage } from "react-icons/pi";
 import { ImageFileUploaderType } from "../types/input.types";
 
-const ImapeUploader = ({
+const ImageUploader = ({
   value,
   name,
   loading,
@@ -32,6 +32,4 @@ const ImapeUploader = ({
   );
 };
 
-export default ImapeUploader;
-
-{/* <Image alt="check" src={URL.createObjectURL(value)} width={35} height={35} /> : <div className="m-2"></div> */}
+export default ImageUploader;

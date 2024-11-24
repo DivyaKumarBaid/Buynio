@@ -1,7 +1,7 @@
 import Checkbox from "./components/Checkbox";
 import ColorPicker from "./components/ColorPicker";
 import Dropdown from "./components/Dropdown";
-import ImapeUploader from "./components/ImapeUploader";
+import ImageUploader from "./components/ImageUploader";
 import MultiInput from "./components/MultiInput";
 import MultiTextMultiInput from "./components/MultiTextMultiInput";
 import NumberInput from "./components/NumberInput";
@@ -42,6 +42,9 @@ export const createBaseValue = (fields: any[]) => {
         initialValue[inp.name] = inp.options[0] || "";
         break;
       case InputTypeEnum.IMAGE_UPLOADER:
+        initialValue[inp.name] = null;
+        break;
+      case InputTypeEnum.MULTI_IMAGE_UPLOADER:
         initialValue[inp.name] = null;
         break;
       case InputTypeEnum.CHECKBOX_INPUT:
@@ -155,7 +158,20 @@ export const SwitchInput = ({
 
     case InputTypeEnum.IMAGE_UPLOADER:
       return (
-        <ImapeUploader
+        <ImageUploader
+          {...{
+            ...input,
+            loading: false,
+            onChange: handleChange,
+            value: value[input.name],
+          }}
+          key={inputKey}
+        />
+      );
+
+    case InputTypeEnum.MULTI_IMAGE_UPLOADER:
+      return (
+        <ImageUploader
           {...{
             ...input,
             loading: false,
