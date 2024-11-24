@@ -27,18 +27,16 @@ const Dropdown = ({
   );
 
   function handleSelectionChange(keys: string | string[] | Set<any>) {
-    console.log(keys);
     let val;
     if (typeof keys === "string") {
-      val = options.find((opt) => opt.label === keys);
+      val = options.find((opt) => opt.label === keys)?.value;
       setSelectedKeys(new Set([keys]));
     } else if (Array.isArray(keys)) {
-      val = options.filter((opt) => keys.includes(opt.label));
+      val = options.filter((opt) => keys.includes(opt.label)).map((opt) => opt.value);
       setSelectedKeys(new Set(keys));
     } else {
-      console.log("Keys", keys);
       setSelectedKeys(keys);
-      val = keys;
+      val = Array.from(keys);
     }
 
     // dummy call to forms hooks
@@ -46,7 +44,7 @@ const Dropdown = ({
       target: {
         name,
         type: "dropdown",
-        value: val,
+        value: multiSelect ? val : val?.[0] || "",
       },
     };
     onChange(e);
@@ -86,7 +84,7 @@ const Dropdown = ({
               </div>
             )}
             <button
-              className={`border-none outline-none bg-[var(--card-bg-color)] w-full placeholder-[var(--text-secondary-low-color)] ${(preText?.trim() == "" || postText?.trim() == "") && "py-3 px-4 rounded-md"} flex justify-between`}
+              className={`border-none outline-none w-full placeholder-[var(--text-secondary-low-color)] ${(preText?.trim() == "" || postText?.trim() == "") && "py-3 px-4 rounded-md"} flex justify-between`}
             >
               <span>{selectedValue}</span>
               <FaChevronDown
@@ -110,7 +108,7 @@ const Dropdown = ({
         selectionMode={multiSelect ? "multiple" : "single"}
         selectedKeys={selectedKeys}
         onSelectionChange={handleSelectionChange}
-        className="min-w-[300px] bg-[var(--card-bg-color)] rounded-md px-4 py-2 shadow-[0px_0px_12px_rgba(0,0,0,0.3)] border-[1px] border-[var(--card-border-color)]"
+        className="min-w-[300px] bg-[#FDF4EE] rounded-md px-4 py-2 shadow-[0px_0px_8px_rgba(155,155,155,0.1)] border-[1px] border-[var(--card-border-color)]"
       >
         {options.map((opt) => {
           return <DropdownItem key={opt.value}>{opt.label}</DropdownItem>;

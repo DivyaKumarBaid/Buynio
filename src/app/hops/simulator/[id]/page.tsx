@@ -2,11 +2,12 @@
 import Loader from "@/components/general/Loader";
 import { SelectedElem } from "@/components/mapper/hooks/selectedElemContext";
 import AddSection from "@/components/mapper/modal/AddSection";
+import { productTypeSettings } from "@/components/mapper/settings/Product";
 import { getDefaultSectionConfig } from "@/components/mapper/settings/settingUtils";
 import { getBackground } from "@/components/mapper/settings/settingUtils";
 import { navBarTopPosition } from "@/mapper/ComponentConstants";
 import { switchNav, switchSection } from "@/mapper/ComponentMap";
-import { JSONHeaders, SECTION_TYPE } from "@/types/mapper.types";
+import { JSONHeaders, PRODUCT_TYPE, SECTION_TYPE } from "@/types/mapper.types";
 import socket from "@/utils/socket";
 import React, { useEffect } from "react";
 import styled from "styled-components";
@@ -68,6 +69,21 @@ const Simulator = ({ params }: { params: { id: string } }) => {
     socket.emit("addSectionToRoom", { room: params.id, message: newWebJson });
   };
 
+  const handleAddProduct = (config : Record<string,any>, productType: PRODUCT_TYPE) => {
+    if (webJson == null) return;
+    const updatedJson = productTypeSettings[productType].patchJson(
+      webJson || {},
+      config.config,
+      selectedElem?.index || 0
+    );
+    socket.emit("addSectionToRoom", { room: params.id, message: updatedJson });
+  };
+
+  const updateFuncs = {
+    handleAddProduct,
+    handleAddSection
+  }
+
   if (loading || webJson == null) return <Loader />;
   const generalSettings = webJson[SECTION_TYPE.GENERAL];
 
@@ -98,13 +114,17 @@ const Simulator = ({ params }: { params: { id: string } }) => {
               key={`${section.type}${section.subType}${index}`}
               className="w-full h-max"
             >
-              {switchSection(section.type, {
-                ...section,
-                isSelectMode: true,
-                setSelectedElement: (name: SelectedElem) =>
-                  handleElemSelection({ ...name, index }),
-                selected: selectedElem?.type === section.type,
-              })}
+              {switchSection(
+                section.type,
+                {
+                  ...section,
+                  isSelectMode: true,
+                  setSelectedElement: (name: SelectedElem) =>
+                    handleElemSelection({ ...name, index }),
+                  selected: selectedElem?.type === section.type,
+                },
+                updateFuncs
+              )}
             </SectionContainer>
           );
         }

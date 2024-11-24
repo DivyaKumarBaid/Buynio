@@ -3,28 +3,50 @@
 @tailwind utilities;
 
 :root {
-  --card-bg-color: #1b1f23;;
-  --card-bg-secondary-color: #1D2125;
-  --card-bg-hover-color: rgba(18,18,18);
-  --card-border-color: rgba(155,155,155,0.3);
-  --card-border-hover-color: rgba(155,155,155,0.4);
-  --card-shadow: 3px 3px 12px rgba(0,0,0,0.3);
-  --border-focus-color: rgba(155,155,155,0.6);
-  --text-secondary-color: rgba(155,155,155);
-  --text-secondary-low-color: rgba(120,120,120);
-  --text-primary-color: rgba(255,255,255);
-  --danger-primary-color: rgba(255,0,0);
-  --danger-secondary-color: rgba(200,0,0);
-  --danger-secondary-low-color: rgba(255,0,0,0.4);
-  --success-primary-color: rgba(0,255,0);
-  --success-secondary-color: rgba(0,200,0);
-  --success-bg-color: rgba(0,155,0);
-  --success-bg-light-color: rgba(0,255,0,0.5);
-  --toast-background-color: rgba(36,36,36,0);
-  --background-color: #16191c;
-  --pretext-bg-color: rgba(50,50,50);
-  --dropdown-bg-color: rgba(80,80,80);
-  --input-focus-border:rgba(255,255,255,0.4);
+  --card-bg-color: #e9e0d9;
+  --card-bg-secondary-color: rgb(248, 241, 230);
+  --card-bg-hover-color: rgb(246, 232, 232);
+  --card-border-color: rgba(155, 155, 155, 0.3);
+  --card-border-hover-color: rgba(155, 155, 155, 0.4);
+  --card-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+  --border-color: rgba(0,0,0);
+  --border-focus-color: rgba(155, 155, 155, 0.6);
+  --text-secondary-color: rgba(155, 155, 155);
+  --text-secondary-low-color: rgba(120, 120, 120);
+  --text-primary-color: rgb(0, 0, 0);
+  --danger-primary-color: rgba(255, 0, 0);
+  --danger-secondary-color: rgba(200, 0, 0);
+  --danger-secondary-low-color: rgba(255, 0, 0, 0.4);
+  --success-primary-color: rgba(0, 255, 0);
+  --success-secondary-color: rgba(0, 200, 0);
+  --success-bg-color: rgba(0, 155, 0);
+  --success-bg-light-color: rgba(0, 255, 0, 0.5);
+  --toast-background-color: rgba(210, 210, 210);
+  --background-color: #ededed80;
+  --pretext-bg-color: rgb(243, 232, 214);
+  --dropdown-bg-color: rgba(80, 80, 80);
+  --input-focus-border: rgba(255, 255, 255, 0.4);
+}
+
+.gradientBackground {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    16deg,
+    rgba(238, 238, 238, 1) 1%,
+    rgba(238, 238, 238, 1) 14%,
+    rgba(254, 238, 227, 1) 39%,
+    rgba(254, 237, 225, 1) 50%,
+    rgba(254, 238, 226, 1) 62%,
+    rgba(254, 251, 250, 1) 86%,
+    rgba(238, 238, 238, 1) 100%
+  );
+}
+
+.customShadowInset {
+  box-shadow:
+    inset 0px 30px 60px -12px rgba(50, 50, 93, 0.25),
+    inset 0px 18px 36px -18px rgba(0, 0, 0, 0.3),
+    inset 0px -18px 36px -18px rgba(0, 0, 0, 0.3);
 }
 
 html {
@@ -39,15 +61,21 @@ html {
   }
 }
 input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-         -webkit-appearance: none;
-      }
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 
 body {
   min-height: 100vh;
   min-width: 100vw;
-  color: white;
-  background: var(--background-color);
+  color: black;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(254, 254, 254, 1) 51%,
+    rgba(251, 228, 212, 1) 100%
+  );
   scroll-behavior: smooth;
   /* background: rgb(37, 4, 52);
   background: linear-gradient(
@@ -65,18 +93,18 @@ body {
   background-position: center;
   position: relative;
   background-size: 200% 200%;
-	/* animation: gradient 8s ease infinite; */
+  /* animation: gradient 8s ease infinite; */
 }
 @keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @layer utilities {
@@ -85,7 +113,7 @@ body {
   }
 }
 
-.pageLoader{
+.pageLoader {
   position: absolute;
   top: 0;
   left: 0;
@@ -97,17 +125,16 @@ body {
   transition: all 0.5s;
 }
 @keyframes pageLoaderAnime {
-  0%{
+  0% {
     width: 0px;
     transform: translateX(-100px);
   }
-  10%{
+  10% {
     width: 100px;
     transform: translateX(0px);
   }
-  100%{
+  100% {
     width: 100px;
     transform: translateX(700px);
   }
 }
-

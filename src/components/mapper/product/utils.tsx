@@ -1,28 +1,45 @@
-import { createBaseValue, SwitchInput } from "@/components/formComponents/InputMapper";
-import { InputTypeEnum } from "@/components/formComponents/types/input.types";
+import {
+  createBaseValue,
+  SwitchInput,
+} from "@/components/formComponents/InputMapper";
+import {
+  GlobalInputIncomingType,
+  InputTypeEnum,
+} from "@/components/formComponents/types/input.types";
 import useForm from "@/hooks/useForm";
 import { barlow } from "@/lib/Fonts";
 import { ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
-import React from "react";
-
-export const addProduct = (onClose: () => void) => {
-  return <AddProductCard onClose={onClose} />;
-};
 
 type AddProductCardProps = {
   onClose: () => void;
+  onSave: (value: Record<string, any>) => void;
 };
 
-const addProductInputs = [
+export const addProductProxy = (
+  onSave: (value: Record<string, any>) => void
+) => {
+  return (onClose: () => void) => (
+    <AddProductCard onSave={onSave} onClose={onClose} />
+  );
+};
+
+const imageInput: GlobalInputIncomingType = {
+  name: "src",
+  error: "",
+  type: InputTypeEnum.IMAGE_UPLOADER,
+  required: true,
+};
+
+const addProductInputs: GlobalInputIncomingType[] = [
   {
     type: InputTypeEnum.TEXT_INPUT,
     name: "title",
     placeholder: "Product Title",
     header: "Product Title",
-    subHeading: "Enter the title for the product",
     tag: "Product Details",
     preText: "",
     postText: "",
+    label: "",
     valueTransformer: (value: string) => value,
     showError: false,
     errorTextForRegex: "",
@@ -34,22 +51,19 @@ const addProductInputs = [
     name: "description",
     placeholder: "Product Description",
     header: "Product Description",
-    subHeading: "Enter the description for the product",
     tag: "Product Details",
-    preText: "",
-    postText: "",
     valueTransformer: (value: string) => value,
     showError: false,
     errorTextForRegex: "",
     regexMatch: null,
     required: true,
+    label: "",
   },
   {
     type: InputTypeEnum.NUMBER_INPUT,
     name: "price",
     placeholder: "Product Price",
     header: "Product Price",
-    subHeading: "Enter the price for the product",
     tag: "Product Details",
     postText: "",
     preText: "₹",
@@ -58,15 +72,15 @@ const addProductInputs = [
     errorTextForRegex: "",
     regexMatch: null,
     required: true,
-    maxLength: 10,
     min: 0,
+    label: "",
   },
   {
     type: InputTypeEnum.TEXT_INPUT,
     name: "redirection",
     placeholder: "Redirection URL",
     header: "Redirection URL",
-    subHeading: "Enter the URL to redirect when the product is clicked",
+    label: "",
     tag: "Product Details",
     preText: "",
     postText: "",
@@ -77,34 +91,19 @@ const addProductInputs = [
     required: true,
   },
   {
-    type: InputTypeEnum.MULTI_TEXT_INPUT,
-    name: "src",
-    placeholder: "Image Source URLs",
-    label: "Image Source URLs",
-    subHeading: "Add the URLs for product images",
-    valueTransformer: (value: string) => value,
-    showError: false,
-    errorTextForRegex: "",
-    regexMatch: null,
-    required: true,
-    maximunFields: 5,
-    tag: "Product Images",
-    preText: "",
-    postText: "",
-  },
-  {
     type: InputTypeEnum.COLOR_PICKER_INPUT,
     name: "background",
     header: "Background Color",
     subHeading: "Select the background color for the product",
     tag: "Product Design",
     flexEnd: true,
-    required: true,
   },
 ];
 
-const AddProductCard = ({ onClose }: AddProductCardProps) => {
-  const [value, handleChange] = useForm(createBaseValue(addProductInputs));
+export const AddProductCard = ({ onClose, onSave }: AddProductCardProps) => {
+  const [value, handleChange] = useForm(
+    createBaseValue([...addProductInputs, imageInput])
+  );
 
   return (
     <>
@@ -114,25 +113,33 @@ const AddProductCard = ({ onClose }: AddProductCardProps) => {
         <h1
           className={`${barlow.className} !text-[var(--text-secondary-color)] tracking-widest`}
         >
-          Select a new section you want to add.
+          Add a new product
         </h1>
       </ModalHeader>
-      <ModalBody className="max-h-[50vh] overflow-auto">
-        <div className="flex flex-col gap-2">
-          {addProductInputs.map((input: Record<string, any>, index: number) => {
-            return (
-              <SwitchInput
-                input={input}
-                inputKey={
-                  input.name +
-                  index
-                }
-                handleChange={handleChange}
-                value={value}
-                key={`setting${index}`}
-              />
-            );
-          })}
+      <ModalBody className="max-h-[60vh] w-max overflow-y-auto">
+        <div className="flex justify-between w-full h-full">
+          <SwitchInput
+            input={imageInput}
+            inputKey={imageInput.name}
+            handleChange={handleChange}
+            value={value}
+            key={`setting${imageInput.name}`}
+          />
+          <div className="flex flex-col gap-2">
+            {addProductInputs.map(
+              (input: Record<string, any>, index: number) => {
+                return (
+                  <SwitchInput
+                    input={input}
+                    inputKey={input.name + index}
+                    handleChange={handleChange}
+                    value={value}
+                    key={`setting${index}`}
+                  />
+                );
+              }
+            )}
+          </div>
         </div>
       </ModalBody>
       <ModalFooter className="w-full flex justify-end border-t-[1px] border-[var(--card-border-color)] gap-4">
@@ -144,7 +151,10 @@ const AddProductCard = ({ onClose }: AddProductCardProps) => {
         </div>
         <div
           className="border-[1px] bg-[var(--success-bg-light-color)] text-sm border-[var(--card-border-color)] text-[var(--text-primary-color)] hover:bg-[var(--success-bg-color)] hover:border-[var(--card-border-hover-color)] duration-200 rounded-md p-2 cursor-pointer"
-          onClick={onClose}
+          onClick={() => {
+            onSave(value);
+            onClose();
+          }}
         >
           Save
         </div>

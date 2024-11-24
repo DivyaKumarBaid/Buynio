@@ -22,7 +22,7 @@ const AddSection = ({
   return (
     <>
       <div
-        className={`${barlow.className} opacity-75 hover:opacity-100 flex flex-col border-2 border-[var(--card-border-color)] rounded-lg justify-center duration-300 items-center m-8 h-[70vh] cursor-pointer bg-[url('/editorBg.png')] bg-cover bg-no-repeat`}
+        className={`${barlow.className} opacity-75 hover:opacity-100 flex flex-col border-2 border-[var(--card-border-color)] rounded-lg justify-center duration-300 items-center m-8 h-[70vh] cursor-pointer`}
         onClick={onOpen}
       >
         <CiSquarePlus className=" text-[100px] opacity-50 group-hover:opacity-100" />

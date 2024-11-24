@@ -1,7 +1,7 @@
 import Checkbox from "./components/Checkbox";
 import ColorPicker from "./components/ColorPicker";
 import Dropdown from "./components/Dropdown";
-import ImapeUploader from "./components/ImapeUploader";
+import ImageUploader from "./components/ImageUploader";
 import MultiInput from "./components/MultiInput";
 import MultiTextMultiInput from "./components/MultiTextMultiInput";
 import NumberInput from "./components/NumberInput";
@@ -12,10 +12,8 @@ import ToggleButton from "./components/ToggleButton";
 import { InputTypeEnum } from "./types/input.types";
 
 export const createBaseValue = (fields: any[]) => {
-  console.log({fields})
   const initialValue: Record<string, any> = {};
   fields?.forEach((inp: any) => {
-    console.log({inp})
     switch (inp.type) {
       case InputTypeEnum.TEXT_AREA_INPUT:
         initialValue[inp.name] = "";
@@ -42,6 +40,9 @@ export const createBaseValue = (fields: any[]) => {
         initialValue[inp.name] = inp.options[0] || "";
         break;
       case InputTypeEnum.IMAGE_UPLOADER:
+        initialValue[inp.name] = null;
+        break;
+      case InputTypeEnum.MULTI_IMAGE_UPLOADER:
         initialValue[inp.name] = null;
         break;
       case InputTypeEnum.CHECKBOX_INPUT:
@@ -155,7 +156,20 @@ export const SwitchInput = ({
 
     case InputTypeEnum.IMAGE_UPLOADER:
       return (
-        <ImapeUploader
+        <ImageUploader
+          {...{
+            ...input,
+            loading: false,
+            onChange: handleChange,
+            value: value[input.name],
+          }}
+          key={inputKey}
+        />
+      );
+
+    case InputTypeEnum.MULTI_IMAGE_UPLOADER:
+      return (
+        <ImageUploader
           {...{
             ...input,
             loading: false,

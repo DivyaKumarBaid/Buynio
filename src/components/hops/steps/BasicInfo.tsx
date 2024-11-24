@@ -2,7 +2,7 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import { singleSectionType } from "../Section";
 import Checkbox from "../../formComponents/components/Checkbox";
-import ImapeUploader from "../../formComponents/components/ImapeUploader";
+import ImageUploader from "../../formComponents/components/ImageUploader";
 import NumberInput from "../../formComponents/components/NumberInput";
 import TextAreaInput from "../../formComponents/components/TextAreaInput";
 import TextInput from "../../formComponents/components/TextInput";
@@ -52,6 +52,9 @@ const BasicInfo = ({
                 !inp.regexMatch.test(value[inp.name]));
             break;
           case InputTypeEnum.IMAGE_UPLOADER:
+            error = error || (value[inp.name] == null && inp.required);
+            break;
+          case InputTypeEnum.MULTI_IMAGE_UPLOADER:
             error = error || (value[inp.name] == null && inp.required);
             break;
           case InputTypeEnum.CHECKBOX_INPUT:
@@ -151,7 +154,20 @@ const BasicInfo = ({
 
                     case InputTypeEnum.IMAGE_UPLOADER:
                       return (
-                        <ImapeUploader
+                        <ImageUploader
+                          {...{
+                            ...inp,
+                            loading,
+                            onChange: handleChange,
+                            value: value[inp.name],
+                          }}
+                          key={inp.name + idx}
+                        />
+                      );
+
+                    case InputTypeEnum.MULTI_IMAGE_UPLOADER:
+                      return (
+                        <ImageUploader
                           {...{
                             ...inp,
                             loading,

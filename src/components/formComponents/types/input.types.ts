@@ -2,6 +2,7 @@ import { ChangeEvent, ReactNode } from "react";
 
 export enum InputTypeEnum {
   IMAGE_UPLOADER = "imageUploader",
+  MULTI_IMAGE_UPLOADER = "multiImageUploader",
   TEXT_INPUT = "textInput",
   MULTI_TEXT_INPUT = "multiTextInput",
   MULTI_TEXT_MULTI_INPUT = "multiTextMultiInput",
@@ -16,6 +17,7 @@ export enum InputTypeEnum {
 
 export type GlobalInputType =
   | ImageFileUploaderType
+  | MultiImageFileUploaderType
   | TextInputType
   | MultiTextInputType
   | MultiTextMultiInputType
@@ -241,10 +243,26 @@ export type ImageFileUploaderIncomingType = {
   required: boolean;
 };
 
+export type MultiImageFileUploaderIncomingType = {
+  name: string;
+  hidden?: boolean;
+  error: string;
+  tag?: string;
+  type: InputTypeEnum.MULTI_IMAGE_UPLOADER;
+  required: boolean;
+  maxFiles: number;
+};
+
 export type ImageFileUploaderType = ImageFileUploaderIncomingType & {
   loading: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   value: File | null | undefined;
+};
+
+export type MultiImageFileUploaderType = MultiImageFileUploaderIncomingType & {
+  loading: boolean;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value: File[] | null | undefined;
 };
 
 export type OptionType = {

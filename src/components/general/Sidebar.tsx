@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CgWebsite } from "react-icons/cg";
 import { HiHome } from "react-icons/hi";
 import { IoIosContact, IoIosFlash, IoLogoDesignernews } from "react-icons/io";
 import { LuChevronsRight } from "react-icons/lu";
@@ -16,7 +17,6 @@ import { PiShoppingCartSimpleFill } from "react-icons/pi";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { SiAzuredataexplorer } from "react-icons/si";
 import { TbLayoutGridAdd } from "react-icons/tb";
-import { CgWebsite } from "react-icons/cg";
 import styled from "styled-components";
 
 const subCategories = ["general", "hop", "editor", "user", "unauthorized"];
@@ -147,7 +147,13 @@ const groupedTabs = subCategories.map((category) =>
   navigations.filter((sidebarTab) => sidebarTab.subcategory === category)
 );
 
-const Sidebar = ({ canHide }: { canHide: boolean }) => {
+const Sidebar = ({
+  canHide,
+  isAbsolute,
+}: {
+  canHide: boolean;
+  isAbsolute?: boolean;
+}) => {
   const path = usePathname();
   const { data: session, status } = useSession();
   if (
@@ -161,16 +167,16 @@ const Sidebar = ({ canHide }: { canHide: boolean }) => {
   return (
     <MovableSidebar
       $ismovable={canHide.toString()}
-      className="fixed top-0 left-0 w-max flex group justify-center items-center z-[101]"
+      className={` ${isAbsolute ? "z-[101] fixed" : ""} top-0 left-0 w-max flex group justify-center items-center`}
     >
       <div
-        className={`${shadow.className} top-0 left-0 w-max md:min-w-[100px] min-w-full md:h-[100vh] h-max bg-[var(--background-color)] flex md:flex-col flex-row md:py-6 p-2 items-center justify-start shadow-[0px_4px_18px_rgba(0,0,0,0.4)] group/sidebar z-[10] duration-500 md:w-[5vw] ${canHide && "group-hover:translate-x-[100px]"}`}
+        className={`${shadow.className} top-0 left-0 w-max md:min-w-[100px] min-w-full md:h-[100vh] h-max flex md:flex-col flex-row md:py-6 p-2 items-center justify-start group/sidebar z-[10] duration-500 ${isAbsolute ? "bg-[rgba(255,255,255,0.6)] backdrop-blur-xl" : ""} ${canHide && "group-hover:translate-x-[100px]"}`}
       >
         <div
           className={`${dela.className} md:visible md:flex hidden flex-col items-center justify-center gap-4 md:mb-12 w-full`}
         >
           <Image
-            src="/logoLight.png"
+            src="/logoDark.png"
             alt={""}
             width={40}
             height={35}

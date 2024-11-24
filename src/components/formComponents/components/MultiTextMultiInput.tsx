@@ -22,7 +22,6 @@ const MultiTextMultiInput = ({
 }: MultiTextMultiInputType) => {
   const isEmptyValue = () => {
     return value?.some((inp) => {
-      console.log(inp, "multitextmultiInp");
       return Object.keys(inp).some((k: string) => {
         if (typeof inp[k] == "string") {
           return inp[k].trim() === "";
@@ -34,9 +33,6 @@ const MultiTextMultiInput = ({
       });
     });
   };
-
-  console.log({ value }, "multiTextMultiInput");
-
   const [isEmpty, setEmpty] = React.useState<boolean>(isEmptyValue());
 
   React.useEffect(() => {
@@ -163,7 +159,7 @@ const MultiTextMultiInput = ({
       )}
       {value?.map((input, index) => (
         <div
-          className="flex items-center bg-[var(--card-bg-color)] rounded-md py-2 w-min relative"
+          className="flex items-center rounded-md py-2 w-min relative"
           key={`${name}-${index}-${InputTypeEnum.MULTI_TEXT_MULTI_INPUT}`}
         >
           {required && value.length <= 1 ? null : (

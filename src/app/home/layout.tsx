@@ -13,9 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="relative md:pl-[calc(max(6vw,100px))] w-full min-h-[100vh] bg-[var(--background-color)]">
+    <div className="flex w-full min-h-screen bg-[var(--background-color)] justify-between items-start gradientBackground">
       <Sidebar canHide={false} />
-      {children}
+      <div className="w-full m-4 ml-0 min-h-[calc(100vh-4vh)] overflow-auto rounded-3xl p-4 customShadowInset border-2 border-[rgba(255,255,255,0.6)] bg-[rgba(255,255,255,0.3)] backdrop-blur-xl">{children}</div>
     </div>
   );
 }

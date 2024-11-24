@@ -21,7 +21,7 @@ export const imageFirebaseFileNameMapper = (value:string): string => {
     case "logo":
       return "brandName";
     default:
-      return "";
+      return value;
   }
 }
 

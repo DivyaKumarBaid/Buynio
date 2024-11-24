@@ -46,7 +46,7 @@ const Topbar = () => {
       const payload = await saveHop(
         session,
         useMapper?.roomId || "",
-        JSON.stringify(useMapper?.webJson) || ""
+        useMapper?.webJson || {}
       );
       return payload;
     },
@@ -76,7 +76,7 @@ const Topbar = () => {
   const useMapper = useMapperContext();
   return (
     <div
-      className={`${rajdhani.className} p-2 fixed z-[101] bg-[var(--card-bg-color)] shadow-xl top-8 rounded-xl flex items-center justify-center gap-2`}
+      className={`${rajdhani.className} p-2 fixed z-[101] bg-[rgba(255,255,255,0.3)] backdrop-blur-md shadow-[0px_0px_16px_rgba(80,80,80,0.1)] border-[1px] top-8 rounded-xl flex items-center justify-center gap-2`}
     >
       <ToggleButton
         value={useMapper?.view === View.WEB ? true : false}

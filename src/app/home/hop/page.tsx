@@ -28,7 +28,7 @@ const Page = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="w-full min-h-[100vh] flex flex-col gap-4 p-4">
+        <div className="w-full min-h-[calc(96vh-2rem)] flex flex-col gap-4 p-4">
             <h2>Your Saved Hops</h2>
             {savedHops?.map((hops,index) => {
                 const blueprint = JSON.parse(hops.blueprint);
