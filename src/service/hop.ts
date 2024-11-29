@@ -8,7 +8,10 @@ import {
   AllSavedHopQueryResp,
   SavedHopQueryResp,
 } from "@/types/hopCreator.types";
-import { patchAllProductImage } from "@/utils/utilityFunctions";
+import {
+  patchAllLanderImage,
+  patchAllProductImage,
+} from "@/utils/utilityFunctions";
 import { AxiosResponse } from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Session } from "next-auth";
@@ -185,7 +188,8 @@ export const saveHop = async (
         },
       };
 
-      const updatedValue = await patchAllProductImage(value);
+      const updatedProductValue = await patchAllProductImage(value);
+      const updatedValue = await patchAllLanderImage(updatedProductValue);
 
       // Make API call with updated value containing file URLs
       const payload: AxiosResponse<any, any> = await api.post(

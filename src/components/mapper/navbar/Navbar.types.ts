@@ -1,5 +1,5 @@
 import { NAV_TYPE } from "@/types/mapper.types";
-import { SelectedElem } from "../hooks/selectedElemContext";
+import { SelectedElem } from "../hooks/useEditor";
 
 export type NavbarProps = {
     type: NAV_TYPE

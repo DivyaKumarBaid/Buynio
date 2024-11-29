@@ -52,6 +52,10 @@ export const addSectionOptions : AddSectionType = [
   {
     name: SECTION_TYPE.PRODUCT,
     description: "Add a product layout"
+  },
+  {
+    name: SECTION_TYPE.LANDER,
+    description: "Add a hero layout"
   }
 ];
 
@@ -59,5 +63,6 @@ export const sectionNameMapper = {
   [SECTION_TYPE.CAROUSEL]: "Carousel",
   [SECTION_TYPE.NAV_BAR]: "Navbar",
   [SECTION_TYPE.GENERAL]: "General",
-  [SECTION_TYPE.PRODUCT]: "Product"
+  [SECTION_TYPE.PRODUCT]: "Product",
+  [SECTION_TYPE.LANDER]: "Lander",
 };

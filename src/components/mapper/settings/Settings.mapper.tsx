@@ -8,7 +8,7 @@ import { Accordion, AccordionItem } from "@nextui-org/react";
 import React, { useEffect } from "react";
 import { LuWrapText } from "react-icons/lu";
 import { MdOutlineDeleteSweep } from "react-icons/md";
-import { useMapperContext } from "../hooks/selectedElemContext";
+import { useMapperContext } from "../hooks/useEditor";
 import { SettingsMapperSubType } from "./Settings.type";
 
 const SettingsMapper = ({
@@ -104,7 +104,7 @@ const SettingsMapper = ({
     <div
       className={`${barlow.className} flex flex-col items-start gap-2 tracking-wider`}
     >
-      <div className="w-full flex justify-between items-center">
+      {tabs.length > 0 ? <div className="w-full flex justify-between items-center">
         <h3 className={`text-[var(--text-primary-color)] px-2 text-lg`}>
           {settings.heading}
         </h3>
@@ -121,7 +121,7 @@ const SettingsMapper = ({
             onClick={() => collapseAllAccordion()}
           />
         </div>
-      </div>
+      </div> : null}
       <div className="flex flex-col w-full">
         <Accordion
           selectionMode="multiple"

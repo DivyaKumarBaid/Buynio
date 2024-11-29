@@ -1,4 +1,6 @@
 import { CarouselV1, CarouselV2 } from "@/components/mapper/carousel/Carousel";
+import { LanderProps } from "@/components/mapper/lander/Lander.types";
+import Lander_V1 from "@/components/mapper/lander/Lander_V1";
 import {
   NavbarV1,
   NavbarV2,
@@ -9,6 +11,7 @@ import Product_V1 from "@/components/mapper/product/Product_V1";
 import { UpdateConfigFuncs } from "@/components/mapper/types";
 import {
   CAROUSEL_TYPE,
+  LANDER_TYPE,
   NAV_TYPE,
   PRODUCT_TYPE,
   SECTION_TYPE,
@@ -51,6 +54,19 @@ export const switchProduct = (
   }
 };
 
+export const switchLander = (
+  type: string,
+  props: LanderProps,
+  updateFuncs: UpdateConfigFuncs
+) => {
+  switch (type) {
+    case LANDER_TYPE.LANDER_V1:
+      return <Lander_V1 {...props} updateFuncs={updateFuncs}/>;
+    default:
+      return null;
+  }
+};
+
 export const switchSection = (
   type: string,
   props: Record<string, any>,
@@ -61,6 +77,8 @@ export const switchSection = (
       return switchCarousel(props.subType, props);
     case SECTION_TYPE.PRODUCT:
       return switchProduct(props.subType, props as ProductProps, updateFuncs);
+    case SECTION_TYPE.LANDER:
+      return switchLander(props.subType, props as LanderProps, updateFuncs);
     default:
       return null;
   }

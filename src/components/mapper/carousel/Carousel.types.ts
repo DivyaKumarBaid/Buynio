@@ -1,5 +1,5 @@
 import { CAROUSEL_TYPE, SECTION_TYPE } from "@/types/mapper.types";
-import { SelectedElem } from "../hooks/selectedElemContext";
+import { SelectedElem } from "../hooks/useEditor";
 
 export type CarouselProps = {
   type: SECTION_TYPE.CAROUSEL;

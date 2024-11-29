@@ -1,5 +1,5 @@
 import { PRODUCT_TYPE, SECTION_TYPE } from "@/types/mapper.types";
-import { SelectedElem } from "../hooks/selectedElemContext";
+import { SelectedElem } from "../hooks/useEditor";
 import { UpdateConfigFuncs } from "../types";
 
 export type ProductConfig = {

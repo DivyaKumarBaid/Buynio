@@ -65,6 +65,13 @@ export const MapperProvider = ({ children }: { children: ReactNode }) => {
   //   }
   // }, [error]);
 
+  console.log("DEBUG_LOG ",{
+    selectedElement,
+    view,
+    roomId,
+    webJson
+  })
+
   return (
     <MapperContext.Provider
       value={{

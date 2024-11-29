@@ -7,7 +7,9 @@ const nextConfig = {
     source: "/",
     destination: "/home",
     permanent: true,
-  }],
+  }], images: {
+    domains: ["firebasestorage.googleapis.com"],
+  },
   webpack: (config) => {
     config.snapshot = {
       ...(config.snapshot ?? {}),

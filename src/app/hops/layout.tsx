@@ -1,5 +1,5 @@
 import Sidebar from "@/components/general/Sidebar";
-import { MapperProvider } from "@/components/mapper/hooks/selectedElemContext";
+import { MapperProvider } from "@/components/mapper/hooks/useEditor";
 import type { Metadata } from "next";
 import "../globals.css";
 

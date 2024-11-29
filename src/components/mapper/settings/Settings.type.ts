@@ -6,6 +6,7 @@ import { carouselTypeSettings } from "./Carousel";
 import { generalSettings } from "./General/GeneralSettings";
 import { navBarTypeSettings } from "./Navbar";
 import { productTypeSettings } from "./Product";
+import { landerTypeSettings } from "./Lander";
 
 export type SettingsMapperSubType = {
   heading: string;
@@ -30,6 +31,7 @@ export interface SettingsMapperType {
   [SECTION_TYPE.NAV_BAR]: Record<string, any>;
   [SECTION_TYPE.CAROUSEL]: Record<string, any>;
   [SECTION_TYPE.PRODUCT]: Record<string, any>;
+  [SECTION_TYPE.LANDER]: Record<string, any>;
 }
 
 export const settingsMapper: SettingsMapperType = {
@@ -37,4 +39,5 @@ export const settingsMapper: SettingsMapperType = {
   [SECTION_TYPE.NAV_BAR]: navBarTypeSettings,
   [SECTION_TYPE.CAROUSEL]: carouselTypeSettings,
   [SECTION_TYPE.PRODUCT]: productTypeSettings,
+  [SECTION_TYPE.LANDER]: landerTypeSettings,
 };

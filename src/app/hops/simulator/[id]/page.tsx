@@ -1,13 +1,14 @@
 "use client";
 import Loader from "@/components/general/Loader";
-import { SelectedElem } from "@/components/mapper/hooks/selectedElemContext";
+import { SelectedElem } from "@/components/mapper/hooks/useEditor";
+import { LanderProps } from "@/components/mapper/lander/Lander.types";
 import AddSection from "@/components/mapper/modal/AddSection";
+import { landerTypeSettings } from "@/components/mapper/settings/Lander";
 import { productTypeSettings } from "@/components/mapper/settings/Product";
-import { getDefaultSectionConfig } from "@/components/mapper/settings/settingUtils";
-import { getBackground } from "@/components/mapper/settings/settingUtils";
+import { getBackground, getDefaultSectionConfig } from "@/components/mapper/settings/settingUtils";
 import { navBarTopPosition } from "@/mapper/ComponentConstants";
 import { switchNav, switchSection } from "@/mapper/ComponentMap";
-import { JSONHeaders, PRODUCT_TYPE, SECTION_TYPE } from "@/types/mapper.types";
+import { JSONHeaders, LANDER_TYPE, PRODUCT_TYPE, SECTION_TYPE } from "@/types/mapper.types";
 import socket from "@/utils/socket";
 import React, { useEffect } from "react";
 import styled from "styled-components";
@@ -56,6 +57,7 @@ const Simulator = ({ params }: { params: { id: string } }) => {
     setSelectedElem(name);
   };
 
+  // update functions passed on
   const handleAddSection = (section: SECTION_TYPE) => {
     if (webJson == null) return;
     const defaultSectionConfig = getDefaultSectionConfig[section];
@@ -79,10 +81,23 @@ const Simulator = ({ params }: { params: { id: string } }) => {
     socket.emit("addSectionToRoom", { room: params.id, message: updatedJson });
   };
 
+  const handleUpdateLander = (config : LanderProps, landerType : LANDER_TYPE) => {
+    if(webJson == null) return;
+    const updatedJson = landerTypeSettings[landerType].patchJson(
+      webJson || {},
+      config.config,
+      selectedElem?.index || 0
+    );
+    socket.emit("addSectionToRoom", { room: params.id, message: updatedJson });
+  }
+
   const updateFuncs = {
     handleAddProduct,
-    handleAddSection
+    handleAddSection,
+    handleUpdateLander
   }
+
+    // update functions passed on
 
   if (loading || webJson == null) return <Loader />;
   const generalSettings = webJson[SECTION_TYPE.GENERAL];

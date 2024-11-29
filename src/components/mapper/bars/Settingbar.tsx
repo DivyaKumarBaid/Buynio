@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import SettingsMapper from "../settings/Settings.mapper";
-import { useMapperContext } from "../hooks/selectedElemContext";
+import { useMapperContext } from "../hooks/useEditor";
 import {
   settingsMapper,
   SettingsMapperSubType,

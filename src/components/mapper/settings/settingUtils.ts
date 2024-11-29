@@ -1,5 +1,6 @@
 import {
   CAROUSEL_TYPE,
+  LANDER_TYPE,
   PRODUCT_TYPE,
   SECTION_TYPE,
 } from "@/types/mapper.types";
@@ -95,6 +96,13 @@ export const getDefaultSectionConfig: Record<string, Record<string, any>> = {
       cardColor: "#fff",
       textColor: "#000",
       showPrice: true,
+    },
+  },
+  [SECTION_TYPE.LANDER]: {
+    type: SECTION_TYPE.LANDER,
+    subType: LANDER_TYPE.LANDER_V1,
+    config: {
+      src: "",
     },
   },
 };

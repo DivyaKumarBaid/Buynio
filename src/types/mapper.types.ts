@@ -8,7 +8,8 @@ export enum SECTION_TYPE {
     NAV_BAR = "NAVBAR",
     CAROUSEL = "CAROUSEL",
     GENERAL = "GENERAL",
-    PRODUCT = "PRODUCT"
+    PRODUCT = "PRODUCT",
+    LANDER = "LANDER"
 }
 
 export enum CAROUSEL_TYPE {
@@ -21,13 +22,17 @@ export enum PRODUCT_TYPE {
     PRODUCT_V1 = "PRODUCT_V1",
 }
 
+export enum LANDER_TYPE {
+    LANDER_V1 = "LANDER_V1",
+}
+
 export enum JSONHeaders {
     GENERAL = "GENERAL",
     NAVBAR = "NAV",
     SECTIONS = "SECTIONS"
 }
 
-export type SectionSubType = SECTION_TYPE.GENERAL | PRODUCT_TYPE | CAROUSEL_TYPE | NAV_TYPE
+export type SectionSubType = SECTION_TYPE.GENERAL | PRODUCT_TYPE | CAROUSEL_TYPE | NAV_TYPE | LANDER_TYPE
 
 export type AddSectionType = {
     name: SECTION_TYPE,

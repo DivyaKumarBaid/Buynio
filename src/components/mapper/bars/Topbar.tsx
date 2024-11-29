@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { FaLink } from "react-icons/fa6";
 import { LuSave } from "react-icons/lu";
 import { TiTick } from "react-icons/ti";
-import { useMapperContext, View } from "../hooks/selectedElemContext";
+import { useMapperContext, View } from "../hooks/useEditor";
 import { MdOutlineCancel } from "react-icons/md";
 
 enum SavingStates {

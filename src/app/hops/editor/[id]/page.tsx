@@ -5,7 +5,7 @@ import {
   SelectedElem,
   useMapperContext,
   View,
-} from "@/components/mapper/hooks/selectedElemContext";
+} from "@/components/mapper/hooks/useEditor";
 import socket from "@/utils/socket";
 import { useEffect } from "react";
 

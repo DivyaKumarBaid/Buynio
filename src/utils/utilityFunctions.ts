@@ -1,3 +1,4 @@
+import { LanderProps } from "@/components/mapper/lander/Lander.types";
 import {
   ProductProps,
   ProductsObject,
@@ -6,7 +7,7 @@ import { handleUploadProductImage } from "@/service/hop";
 import { JSONHeaders, SECTION_TYPE } from "@/types/mapper.types";
 
 export const spy = (statement: string, value: any) => {
-  console.log({ [statement]: value });
+  console.log({ [`DEBUG_LOG ${statement}`]: value });
   return value;
 };
 
@@ -75,5 +76,39 @@ export const patchProductImage = async (
   });
   const patchedProducts = await Promise.all(patchedProdPromise);
   config.config.products = patchedProducts;
+  return config;
+};
+
+export const patchAllLanderImage = async (
+  json: Record<string, any>
+): Promise<Record<string, any>> => {
+  const config: Promise<Record<string, any>>[] = json[JSONHeaders.SECTIONS].map(
+    async (section: Record<string, any>) => {
+      if (section.type == SECTION_TYPE.LANDER) {
+        return patchLanderImage(
+          section as LanderProps,
+          json[JSONHeaders.GENERAL].brandName
+        );
+      }
+      return Promise.resolve(section);
+    }
+  );
+  const y = await Promise.all(config);
+  json[JSONHeaders.SECTIONS] = y;
+  return json;
+};
+
+export const patchLanderImage = async (
+  config: LanderProps,
+  brandName: string
+): Promise<LanderProps> => {
+  const products = config.config;
+  const urls = typeof products.src == "string"
+      ? products.src
+      : await handleUploadProductImage(
+          new File([products.src], `${brandName}${Math.random()}`),
+          brandName
+        );
+  config.config.src = urls;
   return config;
 };
