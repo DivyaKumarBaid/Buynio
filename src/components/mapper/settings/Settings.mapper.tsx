@@ -9,15 +9,18 @@ import React, { useEffect } from "react";
 import { LuWrapText } from "react-icons/lu";
 import { MdOutlineDeleteSweep } from "react-icons/md";
 import { useMapperContext } from "../hooks/useEditor";
+import { UpdateConfigFuncs } from "../types";
 import { SettingsMapperSubType } from "./Settings.type";
 
 const SettingsMapper = ({
   initValue,
   settings,
+  updateFunctions
 }: {
   initValue: Record<string, any>;
   settings: SettingsMapperSubType;
   sectionIndex?: number;
+  updateFunctions: UpdateConfigFuncs;
 }) => {
   const useMapper = useMapperContext();
   const [value, handleChange] = useForm(initValue, true);
@@ -151,6 +154,8 @@ const SettingsMapper = ({
                           handleChange={handleChange}
                           value={value}
                           key={`setting${index}`}
+                          updateFunctions={updateFunctions}
+                          webJson={useMapper?.webJson}
                         />
                       );
                     }

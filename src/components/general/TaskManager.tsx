@@ -1,17 +1,17 @@
 "use client";
 import React, { useState } from "react";
+import { ManagerList } from "../mapper/types";
+import { GrDrag } from "react-icons/gr";
 
-interface Task {
-  id: number;
-  description: string;
-}
-
-const DragDropComponent = () => {
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, description: "Task 1" },
-    { id: 2, description: "Task 2" },
-    { id: 3, description: "Task 3" },
-  ]);
+const DragDropComponent = ({
+  taskList,
+  updateFunction,
+}: {
+  taskList: ManagerList[];
+  updateFunction: (list: ManagerList[]) => void;
+}) => {
+  console.log(taskList, updateFunction);
+  const [tasks, setTasks] = useState<ManagerList[]>(taskList || []);
 
   const [activeIndex, setActiveIndex] = useState<{
     index: number;
@@ -33,7 +33,7 @@ const DragDropComponent = () => {
     e.preventDefault();
     setActiveIndex(null);
     const droppedId = e.dataTransfer.getData("text/plain");
-    console.log(droppedId)
+    console.log(droppedId);
 
     if (droppedId) {
       const draggedTaskIndex = tasks.findIndex(
@@ -48,6 +48,7 @@ const DragDropComponent = () => {
       remainingTasks.splice(dropIndex, 0, draggedTask);
 
       setTasks(remainingTasks);
+      updateFunction(remainingTasks);
     }
   };
 
@@ -60,10 +61,10 @@ const DragDropComponent = () => {
     e.preventDefault();
   };
 
-  const onDropLeave = () => setActiveIndex(null)
+  const onDropLeave = () => setActiveIndex(null);
 
   return (
-    <div className="w-[10vw] h-max bg-slate-200 flex flex-col">
+    <div className="w-full h-max rounded-xl flex flex-col">
       {tasks.map((task, index) => (
         <div
           className={`${activeIndex?.index === index && (activeIndex.position === "top" ? "pt-2" : "pb-2")} relative duration-200 cursor-pointer`}
@@ -77,7 +78,8 @@ const DragDropComponent = () => {
             onDragOver={(e, position) => handleDragOver(e, index, position)}
             parentIndex={index}
           />
-          <div className="p-2 bg-slate-500 border rounded-md m-2 cursor-pointer">
+          <div className="p-2 border rounded-md m-2 cursor-pointer flex items-center gap-8">
+            <GrDrag />
             {task.description}
           </div>
         </div>
@@ -94,10 +96,7 @@ interface DropperProps {
   parentIndex: number;
 }
 
-const Dropper: React.FC<DropperProps> = ({
-  onDrop,
-  onDragOver,
-}) => {
+const Dropper: React.FC<DropperProps> = ({ onDrop, onDragOver }) => {
   const [_, setActive] = useState(false);
 
   const handleDragOver = (

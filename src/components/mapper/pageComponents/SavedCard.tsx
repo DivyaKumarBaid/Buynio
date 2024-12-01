@@ -1,4 +1,4 @@
-import { formatDate } from "@/utils/utilityFunctions";
+import { formatDate } from "@/utils/utility";
 import Link from "next/link";
 import { BsHeart } from "react-icons/bs";
 

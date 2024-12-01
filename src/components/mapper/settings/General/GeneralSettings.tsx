@@ -1,4 +1,7 @@
-import { InputTypeEnum } from "@/components/formComponents/types/input.types";
+import {
+  InputTypeEnum,
+  ListKey,
+} from "@/components/formComponents/types/input.types";
 import { fontFamilyOptions } from "@/lib/constants";
 import { SECTION_TYPE } from "@/types/mapper.types";
 
@@ -155,10 +158,16 @@ export const generalSettings = {
             errorTextForRegex: "",
             regexMatch: null,
             required: false,
-          }
+          },
         ],
         subHeading: "Add custom meta tags for SEO purposes",
         tag: "Advance SEO",
+      },
+      {
+        type: InputTypeEnum.LIST_MANAGER,
+        name: "Sections list",
+        tag: "Adjustments",
+        key: ListKey.SECTION,
       },
     ],
   },

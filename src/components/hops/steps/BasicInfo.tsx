@@ -165,6 +165,9 @@ const BasicInfo = ({
                         />
                       );
 
+                    case InputTypeEnum.CUSTOM_INPUT:
+                      return inp.children();
+
                     case InputTypeEnum.MULTI_IMAGE_UPLOADER:
                       return (
                         <ImageUploader

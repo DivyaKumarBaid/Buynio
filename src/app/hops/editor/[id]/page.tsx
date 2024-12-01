@@ -7,15 +7,31 @@ import {
   View,
 } from "@/components/mapper/hooks/useEditor";
 import socket from "@/utils/socket";
+import { updateFuncProxy } from "@/utils/utility";
 import { useEffect } from "react";
 
 const Editor = ({ params }: { params: { id: string } }) => {
   const useMapper = useMapperContext();
   const roomId = params.id;
 
+  // editor update functions
+  const updateJson = (json: Record<string, any>) => {
+    useMapper?.setWebJson?.(json);
+    socket.emit("updateJsonToRoom", {
+      room: roomId,
+      message: json,
+    });
+  };
+
+  const updateFunc = updateFuncProxy(useMapper?.webJson, updateJson, useMapper?.selectedElement)
+
+  // editor update functions
   useEffect(() => {
     if (useMapper?.webJson) {
-      socket.emit("updateJsonToRoom", { room: roomId, message: useMapper.webJson });
+      socket.emit("updateJsonToRoom", {
+        room: roomId,
+        message: useMapper.webJson,
+      });
     }
   }, [useMapper?.webJson, roomId]);
 
@@ -25,7 +41,10 @@ const Editor = ({ params }: { params: { id: string } }) => {
     socket.on("joinedRoom", (room: string) => {
       if (useMapper?.setRoomId) useMapper.setRoomId(room);
       if (useMapper?.webJson) {
-        socket.emit("updateJsonToRoom", { room: roomId, message: useMapper.webJson });
+        socket.emit("updateJsonToRoom", {
+          room: roomId,
+          message: useMapper.webJson,
+        });
       }
     });
 
@@ -59,11 +78,11 @@ const Editor = ({ params }: { params: { id: string } }) => {
             className="rounded-2xl duration-300 shadow-[0px_0px_16px_rgba(0,0,0,0.4)]"
             style={{
               width: useMapper?.view === View.WEB ? "72vw" : "400px",
-              height: useMapper?.view === View.WEB ? "744px" : "744px"
+              height: useMapper?.view === View.WEB ? "744px" : "744px",
             }}
           />
         </div>
-        <Settingbar />
+        <Settingbar updateFunctions={updateFunc}/>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ import {
 import {
   patchAllLanderImage,
   patchAllProductImage,
-} from "@/utils/utilityFunctions";
+} from "@/utils/utility";
 import { AxiosResponse } from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Session } from "next-auth";

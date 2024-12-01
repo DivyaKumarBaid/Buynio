@@ -150,16 +150,16 @@ const MultiTextMultiInput = ({
   };
 
   return (
-    <div className="flex flex-col w-min gap-2">
+    <div className="flex flex-col w-min mb-2">
       {label && (
-        <div className="text-sm text-[var(--text-secondary-color)] mx-4 mb-2">
+        <div className="text-sm text-[var(--text-secondary-color)] mx-4 mt-2">
           {label}
           {required && <span className="ml-1 text-red">*</span>}
         </div>
       )}
       {value?.map((input, index) => (
         <div
-          className="flex items-center rounded-md py-2 w-min relative"
+          className="flex items-center rounded-md w-min relative"
           key={`${name}-${index}-${InputTypeEnum.MULTI_TEXT_MULTI_INPUT}`}
         >
           {required && value.length <= 1 ? null : (

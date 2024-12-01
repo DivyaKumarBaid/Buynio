@@ -8,8 +8,13 @@ import {
 } from "../settings/Settings.type";
 import { SECTION_TYPE } from "@/types/mapper.types";
 import { createBaseValue } from "@/components/formComponents/InputMapper";
+import { UpdateConfigFuncs } from "../types";
 
-const Settingbar = () => {
+const Settingbar = ({
+  updateFunctions,
+}: {
+  updateFunctions: UpdateConfigFuncs;
+}) => {
   const useMapper = useMapperContext();
   const [settings, setSettings] = React.useState<SettingsMapperSubType>(
     settingsMapper[useMapper?.selectedElement?.type || SECTION_TYPE.GENERAL][
@@ -51,7 +56,7 @@ const Settingbar = () => {
 
   return (
     <div className="w-max min-w-[380px] h-[100vh] overflow-y-auto overflow-x-clip p-4 px-2 ">
-      <SettingsMapper initValue={initValue} settings={settings} />
+      <SettingsMapper initValue={initValue} settings={settings} updateFunctions={updateFunctions}/>
     </div>
   );
 };

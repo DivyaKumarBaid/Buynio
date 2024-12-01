@@ -6,7 +6,6 @@ export default async function Home() {
     <div>
       {/* {JSON.stringify(user)} */}
       <FileUpload />
-      <span className="material-symbols-outlined">home</span>
     </div>
   );
 }

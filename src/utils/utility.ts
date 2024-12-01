@@ -1,10 +1,22 @@
+import { ListKey } from "@/components/formComponents/types/input.types";
+import { SelectedElem } from "@/components/mapper/hooks/useEditor";
 import { LanderProps } from "@/components/mapper/lander/Lander.types";
 import {
   ProductProps,
   ProductsObject,
 } from "@/components/mapper/product/Product.types";
+import { landerTypeSettings } from "@/components/mapper/settings/Lander";
+import { productTypeSettings } from "@/components/mapper/settings/Product";
+import { getDefaultSectionConfig } from "@/components/mapper/settings/settingUtils";
+import { ManagerList, UpdateConfigFuncs } from "@/components/mapper/types";
 import { handleUploadProductImage } from "@/service/hop";
-import { JSONHeaders, SECTION_TYPE } from "@/types/mapper.types";
+import {
+  JSONHeaders,
+  LANDER_TYPE,
+  PRODUCT_TYPE,
+  SECTION_TYPE,
+} from "@/types/mapper.types";
+import { Socket } from "socket.io-client";
 
 export const spy = (statement: string, value: any) => {
   console.log({ [`DEBUG_LOG ${statement}`]: value });
@@ -103,7 +115,8 @@ export const patchLanderImage = async (
   brandName: string
 ): Promise<LanderProps> => {
   const products = config.config;
-  const urls = typeof products.src == "string"
+  const urls =
+    typeof products.src == "string"
       ? products.src
       : await handleUploadProductImage(
           new File([products.src], `${brandName}${Math.random()}`),
@@ -111,4 +124,94 @@ export const patchLanderImage = async (
         );
   config.config.src = urls;
   return config;
+};
+
+export const updateFuncProxy = (
+  webJson: Record<string, any> | null | undefined,
+  updateJson: (newJson: Record<string, any>) => void,
+  selectedElem: SelectedElem | null | undefined
+): UpdateConfigFuncs => {
+  // update functions passed on
+  const handleAddSection = (section: SECTION_TYPE) => {
+    if (webJson == null) return;
+    const defaultSectionConfig = getDefaultSectionConfig[section];
+    const updatedJson = {
+      ...webJson,
+      [JSONHeaders.SECTIONS]: [
+        ...(webJson[JSONHeaders.SECTIONS] || []),
+        defaultSectionConfig,
+      ],
+    };
+    updateJson(updatedJson);
+  };
+
+  const handleAddProduct = (
+    config: Record<string, any>,
+    productType: PRODUCT_TYPE
+  ) => {
+    if (webJson == null) return;
+    const updatedJson = productTypeSettings[productType].patchJson(
+      webJson || {},
+      config.config,
+      selectedElem?.index || 0
+    );
+    updateJson(updatedJson);
+  };
+
+  const handleUpdateLander = (config: LanderProps, landerType: LANDER_TYPE) => {
+    if (webJson == null) return;
+    const updatedJson = landerTypeSettings[landerType].patchJson(
+      webJson || {},
+      config.config,
+      selectedElem?.index || 0
+    );
+    updateJson(updatedJson);
+  };
+
+  const handleUpdateSectionList = (value: ManagerList[]) => {
+    console.log("testing this", {value, webJson} );
+    if (webJson == null) return;
+    webJson[JSONHeaders.SECTIONS] = flattenSectionList(value);
+    updateJson(webJson);
+  };
+
+  return {
+    handleAddProduct,
+    handleAddSection,
+    handleUpdateLander,
+    handleUpdateSectionList,
+  };
+};
+
+const createSectionList = (webJson: Record<string, any>): ManagerList[] => {
+  if (webJson == null) return [];
+  return webJson[JSONHeaders.SECTIONS]?.map(
+    (section: Record<string, any>, index: number) => {
+      return {
+        id: index,
+        description: section.type,
+        content: section,
+      };
+    }
+  );
+};
+
+const flattenSectionList = (value: ManagerList[]): Record<string, any>[] => {
+  if (value == null) return [];
+  return value.map((section: Record<string, any>) => {
+    return section.content;
+  });
+};
+
+export const getList = (
+  key: ListKey,
+  webJson: Record<string, any> | null | undefined
+): ManagerList[] => {
+  if (webJson == null) return [];
+  switch (key) {
+    case ListKey.SECTION:
+      return createSectionList(webJson);
+    default:
+      return [];
+  }
 };

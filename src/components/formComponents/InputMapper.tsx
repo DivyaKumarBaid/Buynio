@@ -1,3 +1,6 @@
+import { getList } from "@/utils/utility";
+import TaskManager from "../general/TaskManager";
+import { ManagerList, UpdateConfigFuncs } from "../mapper/types";
 import Checkbox from "./components/Checkbox";
 import ColorPicker from "./components/ColorPicker";
 import Dropdown from "./components/Dropdown";
@@ -58,12 +61,18 @@ export const SwitchInput = ({
   value,
   handleChange,
   inputKey,
+  updateFunctions,
+  webJson,
 }: {
   input: any;
   value: Record<string, any>;
   handleChange: (e: any) => void;
   inputKey: string;
+  updateFunctions?: UpdateConfigFuncs;
+  webJson?: Record<string, any> | null | undefined;
 }) => {
+  console.log(input);
+  if(webJson == null) return null;
   switch (input.type) {
     case InputTypeEnum.COLOR_PICKER_INPUT:
       return (
@@ -164,6 +173,18 @@ export const SwitchInput = ({
             value: value[input.name],
           }}
           key={inputKey}
+        />
+      );
+
+    case InputTypeEnum.LIST_MANAGER:
+      return (
+        <TaskManager
+          taskList={getList(input.key, webJson)}
+          updateFunction={
+            updateFunctions
+              ? updateFunctions.handleUpdateSectionList
+              : () => null
+          }
         />
       );
 

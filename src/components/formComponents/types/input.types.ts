@@ -1,3 +1,4 @@
+import { ManagerList, UpdateConfigFuncs } from "@/components/mapper/types";
 import { ChangeEvent, ReactNode } from "react";
 
 export enum InputTypeEnum {
@@ -13,6 +14,11 @@ export enum InputTypeEnum {
   TOGGLE_BUTTON_INPUT = "toggleButtonInput",
   COLOR_PICKER_INPUT = "colorPickerInput",
   DROPDOWN_INPUT = "dropdownInput",
+  LIST_MANAGER = "listManager",
+}
+
+export enum ListKey {
+  SECTION = "section",
 }
 
 export type GlobalInputType =
@@ -27,7 +33,8 @@ export type GlobalInputType =
   | CheckboxType
   | ToggleButtonInputType
   | DropdownInputType
-  | ColorPickerInputType;
+  | ColorPickerInputType
+  | ListInputType;
 
 export type GlobalInputIncomingType =
   | ImageFileUploaderIncomingType
@@ -41,7 +48,8 @@ export type GlobalInputIncomingType =
   | CheckboxIncomingMultiSelectType
   | ToggleButtonIncomingType
   | DropdownInputIncomingType
-  | ColorPickerIncomingType;
+  | ColorPickerIncomingType
+  | ListInputIncomingType;
 
 export type TextInputIncomingType = {
   tag?: string;
@@ -125,7 +133,7 @@ export type NumberInputIncomingType = {
   min?: number;
   max?: number;
   required: boolean;
-  customIcon?: ReactNode
+  customIcon?: ReactNode;
 };
 
 export type RangeInputIncomingType = {
@@ -151,7 +159,7 @@ export type MultiTextInputType = MultiTextInputIncomingType & {
 
 export type MultiTextMultiInputType = MultiTextMultiInputIncomingType & {
   onChange: (e: DummyEvent) => void;
-  value: Record<string,any>[];
+  value: Record<string, any>[];
 };
 
 export type DummyEvent = {
@@ -234,6 +242,7 @@ export type TextAreaInputType = TextAreaInputIncomingType & {
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   value: string;
 };
+
 export type ImageFileUploaderIncomingType = {
   name: string;
   hidden?: boolean;
@@ -241,6 +250,14 @@ export type ImageFileUploaderIncomingType = {
   tag?: string;
   type: InputTypeEnum.IMAGE_UPLOADER;
   required: boolean;
+};
+
+export type ListInputIncomingType = {
+  name: string;
+  tag?: string;
+  type: InputTypeEnum.LIST_MANAGER;
+  key: ListKey;
+  hidden?: Boolean;
 };
 
 export type MultiImageFileUploaderIncomingType = {
@@ -257,6 +274,11 @@ export type ImageFileUploaderType = ImageFileUploaderIncomingType & {
   loading: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   value: File | null | undefined;
+};
+
+export type ListInputType = ListInputIncomingType & {
+  taskList: ManagerList[];
+  updateFunction: (list: ManagerList[]) => void;
 };
 
 export type MultiImageFileUploaderType = MultiImageFileUploaderIncomingType & {

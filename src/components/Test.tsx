@@ -133,7 +133,7 @@ const FileUpload: React.FC = () => {
           },
         ]}
       />
-      <TaskManager />
+      <TaskManager taskList={[]} updateFunction={() => null}/>
     </div>
   );
 };

@@ -28,7 +28,7 @@
   --background-color: #ededed80;
   --pretext-bg-color: rgb(243, 232, 214);
   --dropdown-bg-color: rgba(80, 80, 80);
-  --input-focus-border: rgba(255, 255, 255, 0.4);
+  --input-focus-border: rgba(0,0,0);
 }
 
 .gradientBackground {
