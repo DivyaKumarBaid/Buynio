@@ -16,7 +16,6 @@ import {
   PRODUCT_TYPE,
   SECTION_TYPE,
 } from "@/types/mapper.types";
-import { Socket } from "socket.io-client";
 
 export const spy = (statement: string, value: any) => {
   console.log({ [`DEBUG_LOG ${statement}`]: value });
@@ -43,11 +42,24 @@ export const extractSectionConfig = (
   return configs;
 };
 
-export const getAllProducts = (configs: ProductProps[]): ProductsObject[] => {
-  const allProds = configs.reduce<ProductsObject[]>(
-    (acc, product) => [...acc, ...product.config.products],
-    []
+export const getAllProducts = (json: Record<string, any>) => {
+  console.log("DEBUG_LOG getAllProds", json[JSONHeaders.SECTIONS]);
+  const accProductProps = json[JSONHeaders.SECTIONS].filter(
+    (section: Record<string, any>) => {
+      return section.type == SECTION_TYPE.PRODUCT;
+    }
   );
+
+  // console.log()
+  return getProducts(accProductProps);
+};
+
+export const getProducts = (configs: ProductProps[]): ProductsObject[] => {
+  console.log("DEBUG_LOG configs", configs);
+  const allProds = configs.reduce<ProductsObject[]>((acc, product) => {
+    console.log("DEBUG_LOG getProducts", { acc });
+    return [...acc, ...product.config.products];
+  }, []);
   return allProds;
 };
 
@@ -126,6 +138,15 @@ export const patchLanderImage = async (
   return config;
 };
 
+export const dummyUpdateConfigFuncs = (): UpdateConfigFuncs => {
+  return {
+    handleAddProduct: (_: ProductProps, __: PRODUCT_TYPE) => null,
+    handleAddSection: (_: SECTION_TYPE) => null,
+    handleUpdateLander: (_: LanderProps, __: LANDER_TYPE) => null,
+    updateList: (_: ListKey, __: number) => (_: ManagerList[]) => null,
+  };
+};
+
 export const updateFuncProxy = (
   webJson: Record<string, any> | null | undefined,
   updateJson: (newJson: Record<string, any>) => void,
@@ -168,18 +189,46 @@ export const updateFuncProxy = (
     updateJson(updatedJson);
   };
 
+  // list updater
+
   const handleUpdateSectionList = (value: ManagerList[]) => {
-    console.log("testing this", {value, webJson} );
     if (webJson == null) return;
-    webJson[JSONHeaders.SECTIONS] = flattenSectionList(value);
+    webJson[JSONHeaders.SECTIONS] = flattenList(value);
     updateJson(webJson);
   };
+
+  const handleUpdateProductList = (value: ManagerList[], index: number) => {
+    if (webJson == null) return;
+    const productConfig = productTypeSettings[
+      PRODUCT_TYPE.PRODUCT_V1
+    ].getJsonFromKey(webJson, index);
+    productConfig.products = flattenList(value);
+    const updatedJson = productTypeSettings[PRODUCT_TYPE.PRODUCT_V1].patchJson(
+      webJson || {},
+      productConfig,
+      selectedElem?.index || 0
+    );
+    updateJson(updatedJson);
+  };
+
+  const updateList = (key: ListKey, index: number) => {
+    switch (key) {
+      case ListKey.PRODUCT:
+        return (value: ManagerList[]) => handleUpdateProductList(value, index);
+      case ListKey.SECTION:
+        return (value: ManagerList[]) => handleUpdateSectionList(value);
+      default:
+        return () => null;
+    }
+  };
+
+  // list updater
 
   return {
     handleAddProduct,
     handleAddSection,
     handleUpdateLander,
-    handleUpdateSectionList,
+    updateList,
   };
 };
 
@@ -196,7 +245,25 @@ const createSectionList = (webJson: Record<string, any>): ManagerList[] => {
   );
 };
 
-const flattenSectionList = (value: ManagerList[]): Record<string, any>[] => {
+const createProductList = (
+  webJson: Record<string, any>,
+  index: number
+): ManagerList[] => {
+  const productConfig = productTypeSettings[
+    PRODUCT_TYPE.PRODUCT_V1
+  ].getJsonFromKey(webJson, index);
+  return productConfig.products?.map(
+    (section: Record<string, any>, index: number) => {
+      return {
+        id: index,
+        description: section.title,
+        content: section,
+      };
+    }
+  );
+};
+
+const flattenList = (value: ManagerList[]): Record<string, any>[] => {
   if (value == null) return [];
   return value.map((section: Record<string, any>) => {
     return section.content;
@@ -205,12 +272,14 @@ const flattenSectionList = (value: ManagerList[]): Record<string, any>[] => {
 
 export const getList = (
   key: ListKey,
-  webJson: Record<string, any> | null | undefined
+  webJson: Record<string, any>,
+  index: number
 ): ManagerList[] => {
-  if (webJson == null) return [];
   switch (key) {
     case ListKey.SECTION:
       return createSectionList(webJson);
+    case ListKey.PRODUCT:
+      return createProductList(webJson, index);
     default:
       return [];
   }

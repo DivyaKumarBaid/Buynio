@@ -1,4 +1,7 @@
-import { InputTypeEnum } from "@/components/formComponents/types/input.types";
+import {
+  InputTypeEnum,
+  ListKey,
+} from "@/components/formComponents/types/input.types";
 import { JSONHeaders } from "@/types/mapper.types";
 
 export const productCommonSettings = {
@@ -16,9 +19,8 @@ export const productCommonSettings = {
       ),
     };
   },
-  getJsonFromKey: (originalJson: Record<string, any>, index: number) => {
-    return originalJson[JSONHeaders.SECTIONS][index].config;
-  },
+  getJsonFromKey: (originalJson: Record<string, any>, index: number) =>
+    originalJson[JSONHeaders.SECTIONS][index].config,
   onRemove: (originalJson: Record<string, any>, index: number) => {
     return {
       ...originalJson,
@@ -354,6 +356,12 @@ export const productCommonSettings = {
           required: true,
         },
       ],
+    },
+    {
+      type: InputTypeEnum.LIST_MANAGER,
+      name: "product list",
+      tag: "Adjustments",
+      key: ListKey.PRODUCT,
     },
   ],
 };

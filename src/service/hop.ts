@@ -9,6 +9,7 @@ import {
   SavedHopQueryResp,
 } from "@/types/hopCreator.types";
 import {
+  getAllProducts,
   patchAllLanderImage,
   patchAllProductImage,
 } from "@/utils/utility";
@@ -142,7 +143,29 @@ export const getSavedHops = async (session: Session | null) => {
         "hop/saved-hop/all",
         config
       );
-      return payload.data;
+      return payload.data?.hops;
+    } catch (error) {
+      console.error("Error fetching hops:", error);
+      throw error; // Rethrow the error to propagate it
+    }
+  }
+};
+
+export const getReleasedHops = async (session: Session | null) => {
+  if (session && session.user && session.user.access_token) {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${session.user.access_token}`,
+        },
+      };
+
+      // Make API call with updated value containing file URLs
+      const payload: AxiosResponse<AllSavedHopQueryResp, any> = await api.get(
+        "hop/all/published",
+        config
+      );
+      return payload.data?.hops;
     } catch (error) {
       console.error("Error fetching hops:", error);
       throw error; // Rethrow the error to propagate it
@@ -175,8 +198,22 @@ export const getSingleSavedHop = async (
   }
 };
 
+export const getHopFromLink = async (link: string) => {
+  try {
+    // Make API call with updated value containing file URLs
+    const payload: AxiosResponse<SavedHopQueryResp, any> = await api.get(
+      `hop/published/${link}`
+    );
+    return payload.data;
+  } catch (error) {
+    console.error("Error fetching hops:", error);
+    throw error; // Rethrow the error to propagate it
+  }
+};
+
 export const saveHop = async (
   session: Session | null,
+  publish: boolean,
   id: string,
   value: Record<string, any>
 ) => {
@@ -190,11 +227,17 @@ export const saveHop = async (
 
       const updatedProductValue = await patchAllProductImage(value);
       const updatedValue = await patchAllLanderImage(updatedProductValue);
+      const allProducts = getAllProducts(updatedValue);
+      console.log("DEBUG_LOG service", { allProducts });
 
       // Make API call with updated value containing file URLs
       const payload: AxiosResponse<any, any> = await api.post(
         `hop/saved-hop/save/${id}`,
-        { blueprint: JSON.stringify(updatedValue) || "" },
+        {
+          blueprint: JSON.stringify(updatedValue) || "",
+          products: allProducts,
+          publish,
+        },
         config
       );
       return payload.data;

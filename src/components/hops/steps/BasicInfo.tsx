@@ -1,14 +1,14 @@
 "use client";
+import ColorPicker from "@/components/formComponents/components/ColorPicker";
+import Range from "@/components/formComponents/components/Slider";
 import React, { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
-import { singleSectionType } from "../Section";
 import Checkbox from "../../formComponents/components/Checkbox";
 import ImageUploader from "../../formComponents/components/ImageUploader";
 import NumberInput from "../../formComponents/components/NumberInput";
 import TextAreaInput from "../../formComponents/components/TextAreaInput";
 import TextInput from "../../formComponents/components/TextInput";
 import { InputTypeEnum } from "../../formComponents/types/input.types";
-import ColorPicker from "@/components/formComponents/components/ColorPicker";
-import Range from "@/components/formComponents/components/Slider";
+import { singleSectionType } from "../Section";
 
 type BasicInfoType = {
   value: Record<string, any>;
@@ -164,9 +164,6 @@ const BasicInfo = ({
                           key={inp.name + idx}
                         />
                       );
-
-                    case InputTypeEnum.CUSTOM_INPUT:
-                      return inp.children();
 
                     case InputTypeEnum.MULTI_IMAGE_UPLOADER:
                       return (

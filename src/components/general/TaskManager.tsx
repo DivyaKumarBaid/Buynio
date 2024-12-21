@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { ManagerList } from "../mapper/types";
 import { GrDrag } from "react-icons/gr";
+import { AiTwotoneDelete } from "react-icons/ai";
 
 const DragDropComponent = ({
   taskList,
@@ -10,7 +11,6 @@ const DragDropComponent = ({
   taskList: ManagerList[];
   updateFunction: (list: ManagerList[]) => void;
 }) => {
-  console.log(taskList, updateFunction);
   const [tasks, setTasks] = useState<ManagerList[]>(taskList || []);
 
   const [activeIndex, setActiveIndex] = useState<{
@@ -22,7 +22,6 @@ const DragDropComponent = ({
     e: React.DragEvent<HTMLDivElement>,
     id: number
   ) => {
-    console.log(id, id.toString());
     e.dataTransfer.setData("text/plain", id.toString());
   };
 
@@ -33,7 +32,6 @@ const DragDropComponent = ({
     e.preventDefault();
     setActiveIndex(null);
     const droppedId = e.dataTransfer.getData("text/plain");
-    console.log(droppedId);
 
     if (droppedId) {
       const draggedTaskIndex = tasks.findIndex(
@@ -64,24 +62,34 @@ const DragDropComponent = ({
   const onDropLeave = () => setActiveIndex(null);
 
   return (
-    <div className="w-full h-max rounded-xl flex flex-col">
+    <div className="w-full h-max rounded-xl flex flex-col my-2">
       {tasks.map((task, index) => (
-        <div
-          className={`${activeIndex?.index === index && (activeIndex.position === "top" ? "pt-2" : "pb-2")} relative duration-200 cursor-pointer`}
-          key={task.id}
-          draggable={true}
-          onDragStart={(e) => handleOnDragStart(e, task.id)}
-          onDragLeave={onDropLeave}
-        >
-          <Dropper
-            onDrop={(e) => handleOnDrop(e, index)}
-            onDragOver={(e, position) => handleDragOver(e, index, position)}
-            parentIndex={index}
-          />
-          <div className="p-2 border rounded-md m-2 cursor-pointer flex items-center gap-8">
-            <GrDrag />
-            {task.description}
+        <div className="px-2 flex justify-between items-center border rounded-lg m-2" key={task.id}>
+          <div
+            className={`${activeIndex?.index === index && (activeIndex.position === "top" ? "pt-2" : "pb-2")} relative duration-200 cursor-pointer`}
+            key={task.id}
+            draggable={true}
+            onDragStart={(e) => handleOnDragStart(e, task.id)}
+            onDragLeave={onDropLeave}
+          >
+            <Dropper
+              onDrop={(e) => handleOnDrop(e, index)}
+              onDragOver={(e, position) => handleDragOver(e, index, position)}
+              parentIndex={index}
+            />
+            <div className="flex p-2 items-center gap-8">
+              <GrDrag />
+              {task.description}
+            </div>
           </div>
+          <AiTwotoneDelete
+            className="text-xl cursor-pointer"
+            onClick={() => {
+              const newTask = tasks.filter((_, i) => i != index);
+              setTasks(newTask);
+              updateFunction(newTask);
+            }}
+          />
         </div>
       ))}
     </div>

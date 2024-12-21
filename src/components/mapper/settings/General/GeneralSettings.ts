@@ -166,7 +166,7 @@ export const generalSettings = {
       {
         type: InputTypeEnum.LIST_MANAGER,
         name: "Sections list",
-        tag: "Adjustments",
+        tag: "Adjustments12",
         key: ListKey.SECTION,
       },
     ],

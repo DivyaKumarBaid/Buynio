@@ -15,7 +15,7 @@ import { SettingsMapperSubType } from "./Settings.type";
 const SettingsMapper = ({
   initValue,
   settings,
-  updateFunctions
+  updateFunctions,
 }: {
   initValue: Record<string, any>;
   settings: SettingsMapperSubType;
@@ -30,7 +30,7 @@ const SettingsMapper = ({
   };
 
   const groupedByTag = () => {
-    const visibleSettings = settings.inputs.filter(inp => !inp.hidden)
+    const visibleSettings = settings.inputs.filter((inp) => !inp.hidden);
     return visibleSettings.reduce((acc: Record<string, any>, input) => {
       const { tag } = input;
       if (!tag) return acc;
@@ -102,29 +102,30 @@ const SettingsMapper = ({
   useEffect(() => {
     updateValueInJson();
   }, [value]);
-
   return (
     <div
       className={`${barlow.className} flex flex-col items-start gap-2 tracking-wider`}
     >
-      {tabs.length > 0 ? <div className="w-full flex justify-between items-center">
-        <h3 className={`text-[var(--text-primary-color)] px-2 text-lg`}>
-          {settings.heading}
-        </h3>
-        <div className="flex gap-4 items-center">
-          {/* -- todo: add modal */}
-          {settings.onRemove && (
-            <MdOutlineDeleteSweep
-              className="cursor-pointer text-[var(--danger-secondary-color)] text-2xl"
-              onClick={() => removeComponent()}
+      {tabs.length > 0 ? (
+        <div className="w-full flex justify-between items-center">
+          <h3 className={`text-[var(--text-primary-color)] px-2 text-lg`}>
+            {settings.heading}
+          </h3>
+          <div className="flex gap-4 items-center">
+            {/* -- todo: add modal */}
+            {settings.onRemove && (
+              <MdOutlineDeleteSweep
+                className="cursor-pointer text-[var(--danger-secondary-color)] text-2xl"
+                onClick={() => removeComponent()}
+              />
+            )}
+            <LuWrapText
+              className={`mr-4 cursor-pointer text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] text-xl duration-100 ${tabs.length > 0 ? "visible" : "hidden"}`}
+              onClick={() => collapseAllAccordion()}
             />
-          )}
-          <LuWrapText
-            className={`mr-4 cursor-pointer text-[var(--text-secondary-color)] hover:text-[var(--text-primary-color)] text-xl duration-100 ${tabs.length > 0 ? "visible" : "hidden"}`}
-            onClick={() => collapseAllAccordion()}
-          />
+          </div>
         </div>
-      </div> : null}
+      ) : null}
       <div className="flex flex-col w-full">
         <Accordion
           selectionMode="multiple"
@@ -140,27 +141,30 @@ const SettingsMapper = ({
                 title={<div className="w-[100%] mx-2">{tab}</div>}
                 className="border-[1px] px-2 border-[var(--card-border-hover-color)] bg-[rgba(255,255,255,0.1)] backdrop-blur-xl my-2 rounded-2xl"
               >
-                <HorizontalDivider/>
-                <div className="flex flex-col gap-2">
-                  {tabsContent[tab].map(
-                    (input: Record<string, any>, index: number) => {
-                      return (
-                        <SwitchInput
-                          input={input}
-                          inputKey={
-                            (useMapper?.selectedElement?.type ||
-                              SECTION_TYPE.GENERAL) + index
-                          }
-                          handleChange={handleChange}
-                          value={value}
-                          key={`setting${index}`}
-                          updateFunctions={updateFunctions}
-                          webJson={useMapper?.webJson}
-                        />
-                      );
-                    }
-                  )}
-                </div>
+                <HorizontalDivider />
+                {useMapper?.webJson && (
+                  <div className="flex flex-col gap-2">
+                    {tabsContent[tab].map(
+                      (input: Record<string, any>, index: number) => {
+                        return (
+                          <SwitchInput
+                            input={input}
+                            inputKey={
+                              (useMapper?.selectedElement?.type ||
+                                SECTION_TYPE.GENERAL) + index
+                            }
+                            handleChange={handleChange}
+                            value={value}
+                            key={`setting${index}`}
+                            updateFunctions={updateFunctions}
+                            webJson={useMapper?.webJson || {}}
+                            index={useMapper?.selectedElement?.index || 0}
+                          />
+                        );
+                      }
+                    )}
+                  </div>
+                )}
               </AccordionItem>
             );
           })}

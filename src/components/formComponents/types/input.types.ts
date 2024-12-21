@@ -1,4 +1,4 @@
-import { ManagerList, UpdateConfigFuncs } from "@/components/mapper/types";
+import { ManagerList } from "@/components/mapper/types";
 import { ChangeEvent, ReactNode } from "react";
 
 export enum InputTypeEnum {
@@ -19,6 +19,7 @@ export enum InputTypeEnum {
 
 export enum ListKey {
   SECTION = "section",
+  PRODUCT = "product"
 }
 
 export type GlobalInputType =
@@ -257,7 +258,7 @@ export type ListInputIncomingType = {
   tag?: string;
   type: InputTypeEnum.LIST_MANAGER;
   key: ListKey;
-  hidden?: Boolean;
+  hidden?: boolean;
 };
 
 export type MultiImageFileUploaderIncomingType = {

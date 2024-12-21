@@ -124,7 +124,7 @@ const Product_V1 = (props: ProductProps): JSX.Element => {
                 updatedConfig,
                 PRODUCT_TYPE.PRODUCT_V1
               );
-            })}
+            }, (props.updateFunc || null))}
           />
         )}
       </div>

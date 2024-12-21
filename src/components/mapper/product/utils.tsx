@@ -9,17 +9,20 @@ import {
 import useForm from "@/hooks/useForm";
 import { barlow } from "@/lib/Fonts";
 import { ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
+import { UpdateConfigFuncs } from "../types";
 
 type AddProductCardProps = {
   onClose: () => void;
   onSave: (value: Record<string, any>) => void;
+  updateFunctions: UpdateConfigFuncs | null;
 };
 
 export const addProductProxy = (
-  onSave: (value: Record<string, any>) => void
+  onSave: (value: Record<string, any>) => void,
+  updateFunctions: UpdateConfigFuncs | null
 ) => {
   return (onClose: () => void) => (
-    <AddProductCard onSave={onSave} onClose={onClose} />
+    <AddProductCard onSave={onSave} onClose={onClose} updateFunctions={updateFunctions} />
   );
 };
 
@@ -100,7 +103,7 @@ const addProductInputs: GlobalInputIncomingType[] = [
   },
 ];
 
-export const AddProductCard = ({ onClose, onSave }: AddProductCardProps) => {
+export const AddProductCard = ({ onClose, onSave, updateFunctions }: AddProductCardProps) => {
   const [value, handleChange] = useForm(
     createBaseValue([...addProductInputs, imageInput])
   );
@@ -124,6 +127,8 @@ export const AddProductCard = ({ onClose, onSave }: AddProductCardProps) => {
             handleChange={handleChange}
             value={value}
             key={`setting${imageInput.name}`}
+            index={0}
+            updateFunctions={updateFunctions}
           />
           <div className="flex flex-col gap-2">
             {addProductInputs.map(
@@ -135,6 +140,8 @@ export const AddProductCard = ({ onClose, onSave }: AddProductCardProps) => {
                     handleChange={handleChange}
                     value={value}
                     key={`setting${index}`}
+                    index={0}
+                    updateFunctions={updateFunctions}
                   />
                 );
               }

@@ -10,11 +10,17 @@ type SavedCardType = {
   tag: string;
   logo: string;
   id: string;
+  link?: string;
 };
 
 const SavedCard = (props: SavedCardType) => {
   return (
-    <Link href={`/hops/editor/${props.id}`} className="w-max h-max">
+    <Link
+      href={
+        props.link ? `/${props.link}` : `/hops/editor/${props.id}`
+      }
+      className="w-max h-max"
+    >
       <div
         className="w-[16vw] min-w-[200px] h-[16vw] border-[1px] border-[var(--card-border-color)] min-h-[200px] rounded-xl bg-[var(--card-bg-color)] shadow-[0px_0px_14px_rgba(0,0,0,0.2)] flex flex-col gap-4 p-4 cursor-pointer hover:shadow-[0px_0px_18px_rgba(0,0,0,0.4)] hover:bg-[var(--card-bg-secondary-color)] duration-300"
         style={{ background: props.background }}
