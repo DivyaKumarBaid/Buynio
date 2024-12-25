@@ -7,9 +7,7 @@ import { ReactNode, useEffect } from "react";
 import {
   ACCESS_TOKEN_EXPIRY_LIMIT,
   ACCESS_TOKEN_STALE_TIME,
-  loggedInRestrictedPaths,
-  unrestrictedPaths,
-  unrestrictedPathsWithParam,
+  loggedInRestrictedPaths
 } from "../lib/constants";
 import { refreshTokenKey } from "../lib/keys";
 
@@ -23,8 +21,7 @@ export default function Auth({ children }: { children: ReactNode }) {
     queryFn: () => fetchRefreshToken(session),
     enabled:
       status != "loading" &&
-      !unrestrictedPaths.includes(pathName) &&
-      !unrestrictedPathsWithParam.find(path => pathName.startsWith(path)) &&
+      loggedInRestrictedPaths.includes(pathName) &&
       !!session?.user?.refresh_token,
     gcTime: ACCESS_TOKEN_STALE_TIME,
     staleTime: ACCESS_TOKEN_STALE_TIME,
@@ -53,12 +50,7 @@ export default function Auth({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (status != "loading") {
-      if (
-        session == null &&
-        (!unrestrictedPaths.includes(pathName) &&
-        !unrestrictedPathsWithParam.find(path => {
-          return pathName.startsWith(path)}))
-      ) {
+      if (session == null && loggedInRestrictedPaths.includes(pathName)) {
         signOut({ callbackUrl: "/home/login" });
       } else if (
         session != null &&
@@ -66,12 +58,11 @@ export default function Auth({ children }: { children: ReactNode }) {
         pathName != "/home/onboard"
       ) {
         router.push("/home/onboard");
-      }
-      else if(
+      } else if (
         session != null &&
         loggedInRestrictedPaths.includes(pathName)
-      ){
-        router.push('/');
+      ) {
+        router.push("/");
       }
     }
   }, [session, status, pathName]);
