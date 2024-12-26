@@ -1,9 +1,6 @@
 import axios from "axios";
 
-export const baseURL = 'https://hopster-app-server.onrender.com/';
-// export const baseURL = 'https://hopster-app-server-production.up.railway.app/';
-// export const baseURL = 'http://localhost:3001/';
-
+export const baseURL = process.env.NEXT_PUBLIC_APP_BASE_URL || ""
 const api = axios.create({
   baseURL,
   headers: {
