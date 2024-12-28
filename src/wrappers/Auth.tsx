@@ -7,7 +7,8 @@ import { ReactNode, useEffect } from "react";
 import {
   ACCESS_TOKEN_EXPIRY_LIMIT,
   ACCESS_TOKEN_STALE_TIME,
-  loggedInRestrictedPaths
+  loggedInRestrictedPaths,
+  restrictedPaths
 } from "../lib/constants";
 import { refreshTokenKey } from "../lib/keys";
 
@@ -21,7 +22,7 @@ export default function Auth({ children }: { children: ReactNode }) {
     queryFn: () => fetchRefreshToken(session),
     enabled:
       status != "loading" &&
-      loggedInRestrictedPaths.includes(pathName) &&
+      restrictedPaths.includes(pathName) &&
       !!session?.user?.refresh_token,
     gcTime: ACCESS_TOKEN_STALE_TIME,
     staleTime: ACCESS_TOKEN_STALE_TIME,
@@ -50,14 +51,8 @@ export default function Auth({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (status != "loading") {
-      if (session == null && loggedInRestrictedPaths.includes(pathName)) {
+      if (session == null && restrictedPaths.includes(pathName)) {
         signOut({ callbackUrl: "/home/login" });
-      } else if (
-        session != null &&
-        !session?.user?.onBoarded &&
-        pathName != "/home/onboard"
-      ) {
-        router.push("/home/onboard");
       } else if (
         session != null &&
         loggedInRestrictedPaths.includes(pathName)
