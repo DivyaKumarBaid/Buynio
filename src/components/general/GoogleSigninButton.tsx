@@ -1,8 +1,8 @@
 "use client";
-import { GOOGLE_PROVIDER_ID, INSTAGRAM_PROVIDER_ID } from "@/lib/constants";
+import { INSTAGRAM_PROVIDER_ID } from "@/lib/constants";
 import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import RippleButton from "../formComponents/components/Ripple";
 

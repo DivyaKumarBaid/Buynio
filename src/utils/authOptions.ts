@@ -20,6 +20,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  debug: true,
   providers: [
     GoogleProvider({
       clientId: GOOGLE_CLIENT_ID,
@@ -72,6 +73,7 @@ export const authOptions: NextAuthOptions = {
       if (!profile?.email) {
         throw new Error("No profile");
       }
+      console.log("DEBUG_LOG account", { account, profile, user: incUser })
 
       // check for user and if it doesnt exit then create - call backend
       const user: AxiosResponse<User> = await api.post("auth/google/login", {
