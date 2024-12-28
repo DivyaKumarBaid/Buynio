@@ -72,7 +72,8 @@ export const authOptions: NextAuthOptions = {
         return true;
       }
       if (!profile?.email) {
-        throw new Error("No profile");
+        console.log("DEBUG_LOG account", { account, profile, user: incUser })
+        return true;
       }
       
       // check for user and if it doesnt exit then create - call backend
