@@ -66,6 +66,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ account, profile, user: incUser }) {
+      console.log("DEBUG_LOG account", { account, profile, user: incUser })
       if (account?.provider == CREDENTIAL_PROVIDER_ID) {
         account.user = incUser;
         return true;
@@ -73,8 +74,7 @@ export const authOptions: NextAuthOptions = {
       if (!profile?.email) {
         throw new Error("No profile");
       }
-      console.log("DEBUG_LOG account", { account, profile, user: incUser })
-
+      
       // check for user and if it doesnt exit then create - call backend
       const user: AxiosResponse<User> = await api.post("auth/google/login", {
         token: account?.id_token,
