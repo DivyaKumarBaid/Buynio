@@ -1,7 +1,8 @@
 import api from "@/lib/axios";
 import {
   CREDENTIAL_PROVIDER_ID,
-  GOOGLE_PROVIDER_ID
+  GOOGLE_PROVIDER_ID,
+  INSTAGRAM_PROVIDER_ID,
 } from "@/lib/constants";
 import { User } from "@/types/global.types";
 import { AxiosResponse } from "axios";
@@ -9,6 +10,7 @@ import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import InstagramProvider from "next-auth/providers/instagram";
+import jwt from "jsonwebtoken";
 
 // importing all the env
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!;
@@ -33,7 +35,7 @@ export const authOptions: NextAuthOptions = {
       id: "instagram",
       authorization: {
         params: {
-          scope: "instagram_business_basic"
+          scope: "instagram_business_basic",
         },
       },
     }),
@@ -66,26 +68,53 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ account, profile, user: incUser }) {
-      console.log("DEBUG_LOG account", { account, profile, user: incUser })
+      console.log("DEBUG_LOG account", { account, profile, user: incUser });
       if (account?.provider == CREDENTIAL_PROVIDER_ID) {
         account.user = incUser;
         return true;
       }
-      if (!profile?.email) {
-        console.log("DEBUG_LOG account", { account, profile, user: incUser })
+      if (account?.provder == GOOGLE_PROVIDER_ID) {
+        if (!profile?.email) {
+          console.log("DEBUG_LOG account", { account, profile, user: incUser });
+          throw Error("No Profile Found");
+        }
+
+        // check for user and if it doesnt exit then create - call backend
+        const user: AxiosResponse<User> = await api.post("auth/google/login", {
+          token: account?.id_token,
+        });
+
+        // check if the response from server is ok
+        if (account && user.status === 201) {
+          account.user = user.data;
+        }
         return true;
       }
-      
-      // check for user and if it doesnt exit then create - call backend
-      const user: AxiosResponse<User> = await api.post("auth/google/login", {
-        token: account?.id_token,
-      });
-
-      // check if the response from server is ok
-      if (account && user.status === 201) {
-        account.user = user.data;
+      if (account?.provider == INSTAGRAM_PROVIDER_ID) {
+        const userInfo = {
+          access_token: account?.access_token,
+          username: incUser.name,
+          user_id: account?.user_id,
+          name: profile?.name,
+        };
+        const token = jwt.sign(
+          { data: userInfo },
+          process.env.INSTAGRAM_ACCESS_TOKEN_SECRET!,
+          { expiresIn: "1h" }
+        );
+        const user: AxiosResponse<User> = await api.post(
+          "auth/instagram/login",
+          {
+            token,
+          }
+        );
+        if (account && user.status === 201) {
+          account.user = user.data;
+        }
+        if (profile) profile.email = user.data.email;
+        return true;
       }
-      return true;
+      return false;
     },
     async jwt({ token, account, trigger, session }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
