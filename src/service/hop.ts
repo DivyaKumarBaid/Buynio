@@ -4,10 +4,7 @@ import {
 } from "@/components/hops/Section";
 import api from "@/lib/axios";
 import { storage } from "@/lib/firebase";
-import {
-  AllSavedHopQueryResp,
-  SavedHopQueryResp,
-} from "@/types/hopCreator.types";
+import { APIResponse } from "@/types/global.types";
 import {
   getAllProducts,
   patchAllLanderImage,
@@ -18,30 +15,29 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Session } from "next-auth";
 import toast from "react-hot-toast";
 
+const handleAPIError = (errorResponse: any) => {
+  if (errorResponse.error) {
+    console.error("Developer Message:", errorResponse.developerMessage);
+    toast.error(errorResponse.displayMessage || "An error occurred");
+    throw new Error(errorResponse.developerMessage);
+  }
+};
+
 const handleUploadLogo = async (value: Record<string, any>) => {
   try {
-    // Array to hold all upload promises
     const uploadPromises: Promise<any>[] = [];
-
-    // Iterate over each image file name
     imageFileNames.forEach((fileName) => {
       if (typeof value[fileName] !== "string") {
         const fName = value[fileName].name as string;
         const storageRef = ref(
           storage,
           `images/${value[imageFirebaseFileNameMapper(fileName)]}.${fName.split(".").pop()}`
-        ); // Create a reference with a unique path
-
-        // Push each upload promise to the array
+        );
         const uploadPromise = uploadBytes(storageRef, value[fileName]);
         uploadPromises.push(uploadPromise);
       }
     });
-
-    // Wait for all file uploads to complete
     await Promise.all(uploadPromises);
-
-    // Once all uploads are complete, update file URLs in value object
     for (const fileName of imageFileNames) {
       if (typeof value[fileName] !== "string") {
         const storageRef = ref(
@@ -52,12 +48,11 @@ const handleUploadLogo = async (value: Record<string, any>) => {
         value[fileName] = downloadUrl;
       }
     }
-
     return value;
   } catch (error) {
     console.error("Error uploading file:", error);
     toast.error("Something went wrong");
-    throw error; // Rethrow the error to propagate it
+    throw error;
   }
 };
 
@@ -66,31 +61,13 @@ export const handleUploadProductImage = async (
   brandName: string
 ) => {
   try {
-    // Array to hold all upload promises
-    const uploadPromises: Promise<any>[] = [];
-
-    // Iterate over each image file name
     if (typeof value !== "string") {
       const fName = value.name as string;
       const storageRef = ref(
         storage,
         `${brandName.split(" ").join("_")}/products/${fName.split(".").pop()}`
-      ); // Create a reference with a unique path
-
-      // Push each upload promise to the array
-      const uploadPromise = uploadBytes(storageRef, value);
-      uploadPromises.push(uploadPromise);
-    }
-
-    // Wait for all file uploads to complete
-    await Promise.all(uploadPromises);
-
-    // Once all uploads are complete, update file URLs in value object
-    if (typeof value !== "string") {
-      const storageRef = ref(
-        storage,
-        `${brandName.split(" ").join("_")}/products/${value.name.split(".").pop()}`
       );
+      await uploadBytes(storageRef, value);
       const downloadUrl = await getDownloadURL(storageRef);
       value = downloadUrl;
       return value;
@@ -99,7 +76,7 @@ export const handleUploadProductImage = async (
   } catch (error) {
     console.error("Error uploading file:", error);
     toast.error("Something went wrong");
-    throw error; // Rethrow the error to propagate it
+    throw error;
   }
 };
 
@@ -111,20 +88,17 @@ export const createHop = async (session: Session | null, value: any) => {
           Authorization: `Bearer ${session.user.access_token}`,
         },
       };
-
-      // Upload files and update value object with download URLs
       const updatedValue = await handleUploadLogo(value);
-
-      // Make API call with updated value containing file URLs
-      const payload: AxiosResponse<any, any> = await api.post(
+      const payload: AxiosResponse<APIResponse> = await api.post(
         "hop/create",
         updatedValue,
         config
       );
-      return payload.data;
+      handleAPIError(payload.data);
+      return payload.data.response;
     } catch (error) {
       console.error("Error creating hop:", error);
-      throw error; // Rethrow the error to propagate it
+      throw error;
     }
   }
 };
@@ -137,16 +111,15 @@ export const getSavedHops = async (session: Session | null) => {
           Authorization: `Bearer ${session.user.access_token}`,
         },
       };
-
-      // Make API call with updated value containing file URLs
-      const payload: AxiosResponse<AllSavedHopQueryResp, any> = await api.get(
+      const payload: AxiosResponse<APIResponse> = await api.get(
         "hop/saved-hop/all",
         config
       );
-      return payload.data?.hops;
+      handleAPIError(payload.data);
+      return payload.data.response?.hops;
     } catch (error) {
       console.error("Error fetching hops:", error);
-      throw error; // Rethrow the error to propagate it
+      throw error;
     }
   }
 };
@@ -159,16 +132,15 @@ export const getReleasedHops = async (session: Session | null) => {
           Authorization: `Bearer ${session.user.access_token}`,
         },
       };
-
-      // Make API call with updated value containing file URLs
-      const payload: AxiosResponse<AllSavedHopQueryResp, any> = await api.get(
+      const payload: AxiosResponse<APIResponse> = await api.get(
         "hop/all/published",
         config
       );
-      return payload.data?.hops;
+      handleAPIError(payload.data);
+      return payload.data.response?.hops;
     } catch (error) {
       console.error("Error fetching hops:", error);
-      throw error; // Rethrow the error to propagate it
+      throw error;
     }
   }
 };
@@ -184,30 +156,29 @@ export const getSingleSavedHop = async (
           Authorization: `Bearer ${session.user.access_token}`,
         },
       };
-
-      // Make API call with updated value containing file URLs
-      const payload: AxiosResponse<SavedHopQueryResp, any> = await api.get(
+      const payload: AxiosResponse<APIResponse> = await api.get(
         `hop/saved-hop/${id}`,
         config
       );
-      return payload.data;
+      handleAPIError(payload.data);
+      return payload.data.response;
     } catch (error) {
-      console.error("Error fetching hops:", error);
-      throw error; // Rethrow the error to propagate it
+      console.error("Error fetching hop:", error);
+      throw error;
     }
   }
 };
 
 export const getHopFromLink = async (link: string) => {
   try {
-    // Make API call with updated value containing file URLs
-    const payload: AxiosResponse<SavedHopQueryResp, any> = await api.get(
+    const payload: AxiosResponse<APIResponse> = await api.get(
       `hop/published/${link}`
     );
-    return payload.data;
+    handleAPIError(payload.data);
+    return payload.data.response;
   } catch (error) {
-    console.error("Error fetching hops:", error);
-    throw error; // Rethrow the error to propagate it
+    console.error("Error fetching hop:", error);
+    throw error;
   }
 };
 
@@ -224,14 +195,10 @@ export const saveHop = async (
           Authorization: `Bearer ${session.user.access_token}`,
         },
       };
-
       const updatedProductValue = await patchAllProductImage(value);
       const updatedValue = await patchAllLanderImage(updatedProductValue);
       const allProducts = getAllProducts(updatedValue);
-      console.log("DEBUG_LOG service", { allProducts });
-
-      // Make API call with updated value containing file URLs
-      const payload: AxiosResponse<any, any> = await api.post(
+      const payload: AxiosResponse<APIResponse> = await api.post(
         `hop/saved-hop/save/${id}`,
         {
           blueprint: JSON.stringify(updatedValue) || "",
@@ -240,10 +207,11 @@ export const saveHop = async (
         },
         config
       );
-      return payload.data;
+      handleAPIError(payload.data);
+      return payload.data.response;
     } catch (error) {
-      console.error("Error fetching hops:", error);
-      throw error; // Rethrow the error to propagate it
+      console.error("Error saving hop:", error);
+      throw error;
     }
   }
 };

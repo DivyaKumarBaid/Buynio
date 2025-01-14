@@ -30,7 +30,7 @@ const Page = () => {
       ) : (
         <div className="w-full min-h-[calc(96vh-2rem)] flex flex-col gap-4 p-4">
           <h2>Your Saved Hops</h2>
-          {savedHops?.map((hops, index) => {
+          {savedHops?.map((hops: any, index: number) => {
             const blueprint = JSON.parse(hops.blueprint);
             console.log(blueprint);
             return (

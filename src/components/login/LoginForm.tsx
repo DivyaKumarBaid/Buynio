@@ -8,8 +8,9 @@ import { useEffect, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import Divider from "../general/Divider";
 import FormButton from "../general/FormButton";
-import GoogleSigninButton from "../general/GoogleSigninButton";
+import GoogleSigninButton from "../general/GoogleButton";
 import PageLoader from "../general/PageLoader";
+import InstagramSigninButton from "../general/InstagramButton";
 
 type UserLoginType = {
   email: string;
@@ -60,6 +61,7 @@ const LoginForm = () => {
       <PageLoader isLoading={loading} />
       <div className="bg-[var(--card-bg-color)] md:min-w-[25vw] min-w-full md:min-h-[25vh] rounded-xl border-[0.1px] border-[var(--card-border-color)] p-8 flex justify-center items-center flex-col gap-8 w-full h-full">
         <GoogleSigninButton />
+        <InstagramSigninButton />
         <Divider />
         <div className="w-full p-4 flex flex-col gap-8">
           {!!error && <div className="text-[rgba(255,0,0)]">{error}</div>}

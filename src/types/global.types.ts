@@ -4,8 +4,8 @@ enum Category {
   ELECTRONICS = "ELECTRONICS",
 }
 enum Role {
-  USER="USER",
-  ADMIN="ADMIN"
+  USER = "USER",
+  ADMIN = "ADMIN",
 }
 
 // enums
@@ -41,12 +41,24 @@ export type Hops = {
 };
 
 export type RefreshTokenResp = {
-  access_token : string;
-  refresh_token : string;
-}
+  access_token: string;
+  refresh_token: string;
+};
 
 export enum Gravity {
-  CENTER='center',
-  START='start',
-  END='end'
+  CENTER = "center",
+  START = "start",
+  END = "end",
 }
+
+export type APIResponse<T = Record<any, any>> =
+  | {
+      error: true;
+      developerMessage: string;
+      displayMessage: string;
+      response?: T;
+    }
+  | {
+      error: false;
+      response: T;
+    };

@@ -4,7 +4,7 @@ import {
   GOOGLE_PROVIDER_ID,
   INSTAGRAM_PROVIDER_ID,
 } from "@/lib/constants";
-import { User } from "@/types/global.types";
+import { APIResponse, User } from "@/types/global.types";
 import { AxiosResponse } from "axios";
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -73,20 +73,19 @@ export const authOptions: NextAuthOptions = {
         account.user = incUser;
         return true;
       }
-      if (account?.provder == GOOGLE_PROVIDER_ID) {
+      if (account?.provider == GOOGLE_PROVIDER_ID) {
         if (!profile?.email) {
-          console.log("DEBUG_LOG account", { account, profile, user: incUser });
           throw Error("No Profile Found");
         }
 
         // check for user and if it doesnt exit then create - call backend
-        const user: AxiosResponse<User> = await api.post("auth/google/login", {
+        const user: AxiosResponse<APIResponse<User>> = await api.post("auth/google/login", {
           token: account?.id_token,
         });
 
         // check if the response from server is ok
-        if (account && user.status === 201) {
-          account.user = user.data;
+        if (account && user.status === 201 && user.data.error == false) {
+          account.user = user.data.response;
         }
         return true;
       }
@@ -102,16 +101,16 @@ export const authOptions: NextAuthOptions = {
           process.env.INSTAGRAM_ACCESS_TOKEN_SECRET!,
           { expiresIn: "1h" }
         );
-        const user: AxiosResponse<User> = await api.post(
+        const user: AxiosResponse<APIResponse<User>> = await api.post(
           "auth/instagram/login",
           {
             token,
           }
         );
-        if (account && user.status === 201) {
-          account.user = user.data;
+        if (account && user.status === 201 && user.data.error==false) {
+          account.user = user.data.response;
         }
-        if (profile) profile.email = user.data.email;
+        if (profile && user.data.error==false) profile.email = user.data.response?.email;
         return true;
       }
       return false;

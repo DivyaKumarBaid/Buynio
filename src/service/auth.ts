@@ -1,69 +1,89 @@
 import api from "@/lib/axios";
-import { RefreshTokenResp, User } from "@/types/global.types";
+import { APIResponse } from "@/types/global.types";
 import {
-  CreateUserResp,
   CredentialForm,
-  VerifyOTPPayload,
-  VerifyOTPResp,
+  VerifyOTPPayload
 } from "@/types/signup.types";
 import { AxiosResponse } from "axios";
 import { Session } from "next-auth";
 import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
+
+const handleAPIError = (errorResponse: any) => {
+  if (errorResponse.error) {
+    console.error("Developer Message:", errorResponse.developerMessage);
+    toast.error(errorResponse.displayMessage || "An error occurred");
+    throw new Error(errorResponse.developerMessage);
+  }
+};
 
 export const fetchRefreshToken = async (session: Session | null) => {
   if (session?.user?.refresh_token) {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${session.user.refresh_token}`,
-      },
-    };
-    const payload: AxiosResponse<RefreshTokenResp, any> = await api.get(
-      "auth/refresh",
-      config
-    );
-    return payload.data;
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${session.user.refresh_token}`,
+        },
+      };
+      const payload: AxiosResponse<APIResponse> = await api.get(
+        "auth/refresh",
+        config
+      );
+      handleAPIError(payload.data);
+      return payload.data.response;
+    } catch (error) {
+      console.error("Error refreshing token:", error);
+      throw error;
+    }
   } else {
     redirect("/api/auth/signin");
   }
 };
 
 export const getUser = async (session: Session | null) => {
-  if (session && session.user && session.user?.access_token) {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${session.user.access_token}`,
-      },
-    };
-    const payload: AxiosResponse<User, any> = await api.get(
-      "user",
-      config
-    );
-    return payload.data;
+  if (session?.user?.access_token) {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${session.user.access_token}`,
+        },
+      };
+      const payload: AxiosResponse<APIResponse> = await api.get("user", config);
+      handleAPIError(payload.data);
+      return payload.data.response;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      throw error;
+    }
   } else {
     redirect("/api/auth/signin");
   }
 };
 
 export const createUser = async (user: CredentialForm) => {
-  const config = user;
-  const payload: AxiosResponse<CreateUserResp, any> = await api.post(
-    "auth/local/signup",
-    config
-  );
-  if (payload.status != 200 && payload.status != 201) {
-    throw new Error("User already exist");
+  try {
+    const payload: AxiosResponse<APIResponse> = await api.post(
+      "auth/local/signup",
+      user
+    );
+    handleAPIError(payload.data);
+    return payload.data.response;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw error;
   }
-  return payload.data;
 };
 
 export const verifyOtp = async (otp: VerifyOTPPayload) => {
-  const config = otp;
-  const payload: AxiosResponse<VerifyOTPResp, any> = await api.post(
-    "auth/local/verify",
-    config
-  );
-  if (payload.status != 200 && payload.status != 201) {
-    throw new Error("User already exist");
+  try {
+    const payload: AxiosResponse<APIResponse> = await api.post(
+      "auth/local/verify",
+      otp
+    );
+    handleAPIError(payload.data);
+    return payload.data.response;
+  } catch (error) {
+    console.error("Error verifying OTP:", error);
+    throw error;
   }
-  return payload.data;
 };
