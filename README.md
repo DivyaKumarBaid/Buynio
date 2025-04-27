@@ -1,10 +1,9 @@
 # Buynio
 
-**Buynio** is a modern website builder built with [Next.js](https://nextjs.org/), designed to help users quickly create beautiful landing pages for their businesses.
+**Buynio** is a simple website builder built with [Next.js](https://nextjs.org/), designed to help users quickly create beautiful landing pages for their businesses.
 
 Users can easily sign up and log in with **Google** or **Instagram**, and instantly start building their personalized landing website without needing any coding skills.
 
-<!-- You can upload your image later to `assets/buynio-preview.png` -->
 
 ## Features
 
