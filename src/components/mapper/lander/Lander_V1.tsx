@@ -1,17 +1,16 @@
-import React from "react";
-import { LanderProps } from "./Lander.types";
-import { SECTION_TYPE } from "@/types/mapper.types";
-import { PiImage } from "react-icons/pi";
-import Image from "next/image";
 import ImageUploader from "@/components/formComponents/components/ImageUploader";
 import { InputTypeEnum } from "@/components/formComponents/types/input.types";
+import { SECTION_TYPE } from "@/types/mapper.types";
+import Image from "next/image";
+import React from "react";
+import { LanderProps } from "./Lander.types";
 
 const Lander_V1 = (props: LanderProps) => {
   const bgImage = props.config.src;
   const UploadSection =
     bgImage == null || (typeof bgImage == "string" && bgImage == "") ? (
       <div className="min-h-[90vh] flex justify-center items-center">
-        <PiImage className="text-[150px] invert opacity-75" />
+        {/* <PiImage className="text-[150px] invert opacity-75" /> */}
         <ImageUploader
           name={"src"}
           error={""}
