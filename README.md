@@ -24,6 +24,7 @@ git clone https://github.com/DivyaKumarBaid/Buynio
 cd buynio
 
 ```
+Also Clone Backend Server from : https://github.com/DivyaKumarBaid/Buynio-service
 
 Install dependencies:
 
