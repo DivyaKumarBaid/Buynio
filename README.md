@@ -20,9 +20,7 @@ Users can easily sign up and log in with **Google** or **Instagram**, and instan
 Clone the repository:
 
 ```bash
-bash
-CopyEdit
-git clone https://github.com/yourusername/buynio.git
+git clone https://github.com/DivyaKumarBaid/Buynio
 cd buynio
 
 ```
@@ -30,8 +28,6 @@ cd buynio
 Install dependencies:
 
 ```bash
-bash
-CopyEdit
 npm install
 # or
 yarn install
@@ -41,8 +37,6 @@ yarn install
 Run the development server:
 
 ```bash
-bash
-CopyEdit
 npm run dev
 # or
 yarn dev
@@ -50,19 +44,6 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000/) in your browser to see the result.
-
-## Folder Structure
-
-```
-bash
-CopyEdit
-/components    # Reusable UI components
-/pages         # Next.js pages
-/public        # Public assets (upload your image here!)
-/styles        # Global styles
-/utils         # Helper functions
-
-```
 
 ## Authentication
 
