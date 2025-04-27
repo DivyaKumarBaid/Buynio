@@ -56,8 +56,8 @@ export const authOptions: NextAuthOptions = {
           password: credentials?.password,
         });
 
-        if (user?.status == 201) {
-          return user.data;
+        if (user?.status == 201 && user?.data?.error == false) {
+          return user.data?.response;
         }
 
         // Return the user object if successful
@@ -68,7 +68,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ account, profile, user: incUser }) {
-      console.log("DEBUG_LOG account", { account, profile, user: incUser });
       if (account?.provider == CREDENTIAL_PROVIDER_ID) {
         account.user = incUser;
         return true;

@@ -116,7 +116,10 @@ export const getSavedHops = async (session: Session | null) => {
         config
       );
       handleAPIError(payload.data);
-      return payload.data.response?.hops;
+      return {
+        savedHops: payload.data.response?.hops,
+        releasedHop: payload.data.response?.releasedHop,
+      };
     } catch (error) {
       console.error("Error fetching hops:", error);
       throw error;
@@ -124,24 +127,15 @@ export const getSavedHops = async (session: Session | null) => {
   }
 };
 
-export const getReleasedHops = async (session: Session | null) => {
-  if (session && session.user && session.user.access_token) {
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${session.user.access_token}`,
-        },
-      };
-      const payload: AxiosResponse<APIResponse> = await api.get(
-        "hop/all/published",
-        config
-      );
-      handleAPIError(payload.data);
-      return payload.data.response?.hops;
-    } catch (error) {
-      console.error("Error fetching hops:", error);
-      throw error;
-    }
+export const getReleasedHops = async () => {
+  try {
+    const payload: AxiosResponse<APIResponse> =
+      await api.get("hop/all/published");
+    handleAPIError(payload.data);
+    return payload.data.response?.hops;
+  } catch (error) {
+    console.error("Error fetching hops:", error);
+    throw error;
   }
 };
 
@@ -173,6 +167,19 @@ export const getHopFromLink = async (link: string) => {
   try {
     const payload: AxiosResponse<APIResponse> = await api.get(
       `hop/published/${link}`
+    );
+    handleAPIError(payload.data);
+    return payload.data.response;
+  } catch (error) {
+    console.error("Error fetching hop:", error);
+    throw error;
+  }
+};
+
+export const getLinkAvailability = async (query: Record<string, any>) => {
+  try {
+    const payload: AxiosResponse<APIResponse> = await api.get(
+      `hop/check-link?${new URLSearchParams(query).toString()}`
     );
     handleAPIError(payload.data);
     return payload.data.response;

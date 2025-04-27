@@ -68,14 +68,15 @@ const Editor = ({ params }: { params: { id: string } }) => {
     };
   }, [roomId, useMapper]);
 
+  // bg-[url('/editorBg.png')] bg-contain
   return (
-    <div className="flex justify-center items-center w-[100vw] max-h-[cal(100vh-2rem)] bg-[url('/editorBg.png')] bg-contain">
+    <div className="flex justify-center items-center w-[100vw] max-h-[cal(100vh-2rem)] bg-[var(--background-color)] ">
       <div className="flex w-full h-full justify-between">
         <div className="w-full h-[100vh] flex justify-center items-center relative pt-16">
           <Topbar />
           <iframe
             src={`/hops/simulator/${roomId}`}
-            className="rounded-2xl duration-300 shadow-[0px_0px_16px_rgba(0,0,0,0.4)]"
+            className="rounded-2xl duration-300 shadow-[0px_0px_16px_rgba(0,0,0,0.4)] border-4 border-[var(--card-border-color)]"
             style={{
               width: useMapper?.view === View.WEB ? "72vw" : "400px",
               height: useMapper?.view === View.WEB ? "744px" : "744px",

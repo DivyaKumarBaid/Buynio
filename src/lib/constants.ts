@@ -1,4 +1,5 @@
-import { OptionType } from "@/components/formComponents/types/input.types";
+import { DebounceFunctionsEnum, OptionType } from "@/components/formComponents/types/input.types";
+import { getLinkAvailability } from "@/service/hop";
 import { AddSectionType, SECTION_TYPE } from "@/types/mapper.types";
 
 export const ACCESS_TOKEN_STALE_TIME = 1000 * 60 * 10; //this is in ms -> 10 mins
@@ -8,7 +9,7 @@ export const INSTAGRAM_PROVIDER_ID = "instagram";
 export const CREDENTIAL_PROVIDER_ID = "credentials";
 export const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
-export const SiteName = "TheLocoop";
+export const SiteName = "Buynio";
 
 // url related stuff
 export const unrestrictedPaths = [
@@ -77,3 +78,8 @@ export const sectionNameMapper = {
   [SECTION_TYPE.PRODUCT]: "Product",
   [SECTION_TYPE.LANDER]: "Lander",
 };
+
+export const debounceFunctions : Record <DebounceFunctionsEnum, (query: Record<string, any>) => Promise<Record<any, any> | undefined>> = {
+  [DebounceFunctionsEnum.HOP_LINK] : getLinkAvailability,
+  [DebounceFunctionsEnum.UNKNOWN] : (() => Promise.resolve(undefined)),
+}

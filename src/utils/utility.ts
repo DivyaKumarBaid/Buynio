@@ -43,7 +43,6 @@ export const extractSectionConfig = (
 };
 
 export const getAllProducts = (json: Record<string, any>) => {
-  console.log("DEBUG_LOG getAllProds", json[JSONHeaders.SECTIONS]);
   const accProductProps = json[JSONHeaders.SECTIONS].filter(
     (section: Record<string, any>) => {
       return section.type == SECTION_TYPE.PRODUCT;
@@ -55,9 +54,7 @@ export const getAllProducts = (json: Record<string, any>) => {
 };
 
 export const getProducts = (configs: ProductProps[]): ProductsObject[] => {
-  console.log("DEBUG_LOG configs", configs);
   const allProds = configs.reduce<ProductsObject[]>((acc, product) => {
-    console.log("DEBUG_LOG getProducts", { acc });
     return [...acc, ...product.config.products];
   }, []);
   return allProds;

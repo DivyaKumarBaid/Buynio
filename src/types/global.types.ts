@@ -22,7 +22,7 @@ export type User = {
   access_token: string;
   refresh_token: string;
   onBoarded: boolean;
-  hops: Hops[];
+  brand: Hops[];
 };
 
 export type Hops = {

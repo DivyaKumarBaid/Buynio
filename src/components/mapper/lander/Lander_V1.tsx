@@ -29,8 +29,6 @@ const Lander_V1 = (props: LanderProps) => {
       </div>
     ) : null;
 
-  console.log(bgImage);
-
   return (
     <div
       className={`w-full h-max flex justify-center items-center`}

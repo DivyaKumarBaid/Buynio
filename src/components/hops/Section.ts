@@ -1,4 +1,5 @@
 import {
+  DebounceFunctionsEnum,
   GlobalInputIncomingType,
   InputTypeEnum,
 } from "../formComponents/types/input.types";
@@ -187,6 +188,15 @@ export const brandInfoSection: singleSectionType[] = [
         errorTextForRegex: "",
         required: true,
         maxLength: 20,
+        shouldCallAPIOnChange: {
+          key: "link",
+          debouceTime: 500,
+          shouldChangeOnError: true,
+          showLoader: true,
+          shouldShowError: true,
+          shouldShowSuccess: true,
+          serviceFunctionKey: DebounceFunctionsEnum.HOP_LINK
+        }
       },
     ],
   },

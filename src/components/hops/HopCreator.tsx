@@ -94,7 +94,7 @@ const HopCreator = () => {
 
   useEffect(() => {
     if (status != "loading") {
-      if (session?.user?.hops?.length && session?.user?.hops?.length > 1) {
+      if (session?.user?.brand?.length && session?.user?.brand?.length > 1) {
         toast.error("You already have a hop!");
         router.push("/");
       }
@@ -142,7 +142,7 @@ const HopCreator = () => {
             return (
               <div
                 key={"stepLine" + idx}
-                className={`w-full h-[1px] ${idx < step + 1 ? "bg-[--border-color]" : "bg-[var(--border-focus-color)]"}`}
+                className={`w-full h-[1px] ${idx < step + 1 ? "bg-[--border-color]" : "bg-[var(--border-secondary-color)]"}`}
               />
             );
           })}

@@ -1,6 +1,11 @@
 import { ManagerList } from "@/components/mapper/types";
 import { ChangeEvent, ReactNode } from "react";
 
+export enum DebounceFunctionsEnum {
+  HOP_LINK = "hopLinkFetcher",
+  UNKNOWN = "UNKNOWN"
+}
+
 export enum InputTypeEnum {
   IMAGE_UPLOADER = "imageUploader",
   MULTI_IMAGE_UPLOADER = "multiImageUploader",
@@ -19,7 +24,7 @@ export enum InputTypeEnum {
 
 export enum ListKey {
   SECTION = "section",
-  PRODUCT = "product"
+  PRODUCT = "product",
 }
 
 export type GlobalInputType =
@@ -69,6 +74,15 @@ export type TextInputIncomingType = {
   maxLength?: number;
   required: boolean;
   customIcon?: ReactNode;
+  shouldCallAPIOnChange?: {
+    key: string;
+    debouceTime: number;
+    shouldChangeOnError: boolean;
+    showLoader: boolean;
+    shouldShowError: boolean;
+    shouldShowSuccess: boolean;
+    serviceFunctionKey: DebounceFunctionsEnum
+  };
 };
 
 export type MultiTextInputIncomingType = {

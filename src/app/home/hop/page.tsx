@@ -1,6 +1,8 @@
 "use client";
+import { HorizontalDivider } from "@/components/general/Divider";
 import Loader from "@/components/general/Loader";
 import SavedCard from "@/components/mapper/pageComponents/SavedCard";
+import { fragmentMono } from "@/lib/Fonts";
 import { fetchSavedHops } from "@/lib/keys";
 import { getSavedHops } from "@/service/hop";
 import { useQuery } from "@tanstack/react-query";
@@ -29,10 +31,12 @@ const Page = () => {
         <Loader />
       ) : (
         <div className="w-full min-h-[calc(96vh-2rem)] flex flex-col gap-4 p-4">
-          <h2>Your Saved Hops</h2>
-          {savedHops?.map((hops: any, index: number) => {
+          <h2 className={`${fragmentMono.className} text-xl pb-0`}>
+            Your Saved Hops
+          </h2>
+          <HorizontalDivider />
+          {savedHops?.savedHops.map((hops: any, index: number) => {
             const blueprint = JSON.parse(hops.blueprint);
-            console.log(blueprint);
             return (
               <SavedCard
                 name={hops.name}
@@ -43,6 +47,7 @@ const Page = () => {
                 key={hops.name + index}
                 logo={blueprint["GENERAL"].logo}
                 id={hops.id.toString()}
+                isReleased={!!savedHops.releasedHop}
               />
             );
           })}

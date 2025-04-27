@@ -139,7 +139,7 @@ const SettingsMapper = ({
                 key={tab}
                 aria-label={tab}
                 title={<div className="w-[100%] mx-2">{tab}</div>}
-                className="border-[1px] px-2 border-[var(--card-border-hover-color)] bg-[rgba(255,255,255,0.1)] backdrop-blur-xl my-2 rounded-2xl"
+                className="border-[1px] px-2 border-[var(--card-border-color)] bg-[var(--card-bg-color)] backdrop-blur-xl my-2 rounded-2xl"
               >
                 <HorizontalDivider />
                 {useMapper?.webJson && (

@@ -1,11 +1,11 @@
 "use client";
-import FileUpload from "@/components/Test";
+
+import Landing from "@/components/home/Landing";
 
 export default async function Home() {
   return (
     <div>
-      {/* {JSON.stringify(user)} */}
-      <FileUpload />
+        <Landing/>
     </div>
   );
 }

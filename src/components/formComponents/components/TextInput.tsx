@@ -1,8 +1,9 @@
 "use client";
+import useThrottleQuery from "@/hooks/useThrottleQuery";
+import { debounceFunctions } from "@/lib/constants";
 import React, { useEffect, useRef } from "react";
-import { TextInputType } from "../types/input.types";
-
-
+import { TbLoader2 } from "react-icons/tb";
+import { DebounceFunctionsEnum, TextInputType } from "../types/input.types";
 
 const TextInput = ({
   name,
@@ -19,11 +20,25 @@ const TextInput = ({
   errorTextForRegex,
   maxLength,
   required,
-  customIcon
+  customIcon,
+  shouldCallAPIOnChange,
 }: TextInputType) => {
   const [error, setError] = React.useState<boolean>(false);
   const [focus, setFocus] = React.useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const {
+    data,
+    isPending,
+    error: queryError,
+    throttledMutate
+  } = useThrottleQuery(
+    shouldCallAPIOnChange?.key || "",
+    debounceFunctions[
+      shouldCallAPIOnChange?.serviceFunctionKey || DebounceFunctionsEnum.UNKNOWN
+    ],
+    shouldCallAPIOnChange?.debouceTime ?? 3000
+  );
 
   // const focusInput = () => {
   //   if (inputRef.current) {
@@ -34,10 +49,11 @@ const TextInput = ({
   useEffect(() => {
     setError(() => {
       if (value == "") return false;
+      if (queryError) return false;
       if (regexMatch) return !regexMatch.test(value);
       else return false;
     });
-  }, [value]);
+  }, [value, queryError]);
 
   return (
     <div className="w-min flex text-sm gap-2 flex-col relative my-1 mx-4 pt-2 duration-300">
@@ -74,6 +90,9 @@ const TextInput = ({
           onChange={(e) => {
             const newValue = valueTransformer(e.target.value || "");
             e.target.value = newValue;
+            if (shouldCallAPIOnChange) {
+              throttledMutate({ [shouldCallAPIOnChange.key]: newValue });
+            }
             onChange(e);
           }}
           maxLength={maxLength}
@@ -89,10 +108,23 @@ const TextInput = ({
             {postText}
           </div>
         )}
+        {shouldCallAPIOnChange?.showLoader && isPending && (
+            <TbLoader2 className="animate-spin duration-500 text-4xl" />
+        )}
       </div>
       {error && showError && (
         <span className="text-[var(--danger-secondary-color)] ml-2 text-xs max-w-[100%] break-words duration-300 ">
           {errorTextForRegex}
+        </span>
+      )}
+      {shouldCallAPIOnChange?.shouldShowError && queryError && (
+        <span className="text-[var(--danger-secondary-color)] ml-2 text-xs max-w-[100%] break-words duration-300 ">
+          {queryError.message}
+        </span>
+      )}
+      {shouldCallAPIOnChange?.shouldShowSuccess && data && (
+        <span className="text-[var(--danger-secondary-color)] ml-2 text-xs max-w-[100%] break-words duration-300 ">
+          {data.message}
         </span>
       )}
     </div>
