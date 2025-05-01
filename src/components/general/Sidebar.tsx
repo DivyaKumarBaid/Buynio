@@ -16,6 +16,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CgWebsite } from "react-icons/cg";
+import { FaGithubSquare } from "react-icons/fa";
 import { IoIosContact, IoLogoDesignernews } from "react-icons/io";
 import { LuChevronsRight } from "react-icons/lu";
 import { PiShoppingCartSimpleFill } from "react-icons/pi";
@@ -121,6 +122,19 @@ const navigations = [
     route: "/home/me",
     subcategory: "user",
     visible: false,
+  },
+  {
+    icon: (isSelected: boolean) => (
+      <FaGithubSquare
+        className={`md:text-[26px] text-[var(--text-secondary-low-color)] group-hover/tab:!text-[var(--text-primary-color)] ${isSelected && "!text-[var(--text-primary-color)]"}`}
+      />
+    ),
+    name: "Github",
+    key: "github",
+    route: "https://github.com/DivyaKumarBaid/Buynio",
+    routeToNewTab : true,
+    subcategory: "general",
+    visible: true,
   },
   {
     icon: (isSelected: boolean) => (
@@ -257,7 +271,7 @@ const Sidebar = ({
                     return null;
 
                   return (
-                    <Link href={tab.route} key={tab.key}>
+                    <Link href={tab.route} key={tab.key} target={tab.routeToNewTab?"_blank" : "_self"}>
                       <div
                         className={`flex flex-col items-center justify-center gap-2 w-full group/tab md:p-4 rounded-xl cursor-pointer h-full hover:!bg-[var(--card-bg-hover-color)] hover:!shadow-md`}
                       >
